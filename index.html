@@ -186,6 +186,57 @@ body::before {
 
 
 /* ─────────────────────────────────────────
+   HOW IT WORKS
+───────────────────────────────────────── */
+.how-section {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 24px 36px;
+  position: relative; z-index: 1;
+}
+.how-label {
+  text-align: center; font-size: 10px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase;
+  color: #334155; margin-bottom: 16px;
+}
+.how-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+.how-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 18px 16px;
+  transition: border-color .22s, background .22s, transform .2s;
+}
+.how-card:hover {
+  background: rgba(255,255,255,0.045);
+  border-color: rgba(96,165,250,0.22);
+  transform: translateY(-2px);
+}
+.how-step {
+  font-size: 9px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase;
+  color: var(--accent); background: rgba(37,99,235,0.12);
+  border: 1px solid rgba(96,165,250,0.2);
+  border-radius: 5px; padding: 2px 7px;
+  display: inline-block; margin-bottom: 13px;
+}
+.how-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 11px;
+}
+.how-icon--blue   { background: rgba(37,99,235,0.13);  color: #60a5fa; }
+.how-icon--green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
+.how-icon--purple { background: rgba(139,92,246,0.13); color: #a78bfa; }
+.how-icon--amber  { background: rgba(245,158,11,0.12); color: #fbbf24; }
+.how-card-title {
+  font-size: 13px; font-weight: 700; color: var(--text-1);
+  margin-bottom: 6px; letter-spacing: -0.2px;
+}
+.how-card-desc {
+  font-size: 11.5px; color: #475569; line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────
    VAULT SECTION
 ───────────────────────────────────────── */
 .vault-section {
@@ -518,6 +569,8 @@ body::before {
   .nav-inner { padding: 12px 16px; }
   .btn-faucet .faucet-label { display: none; }
   .hero { padding: 50px 16px 40px; }
+  .how-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-section { padding: 0 16px 28px; }
   .vault-section { padding: 0 16px 32px; }
   .toast-wrap { bottom: 14px; right: 14px; left: 14px; max-width: none; }
   .footer-links { display: none; }
@@ -624,9 +677,55 @@ body::before {
 </section>
 
 <!-- ═══════════════════════════════════════
+     HOW IT WORKS
+═══════════════════════════════════════ -->
+<section class="how-section">
+  <div class="how-label">How it works</div>
+  <div class="how-grid">
+
+    <div class="how-card">
+      <div class="how-step">Step 1</div>
+      <div class="how-icon how-icon--blue">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5C7.5 1.5 4 5 4 8a3.5 3.5 0 0 0 7 0c0-3-3.5-6.5-3.5-6.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="how-card-title">Get Test Tokens</div>
+      <div class="how-card-desc">Claim free testnet USDC or EURC from the Circle faucet to get started.</div>
+    </div>
+
+    <div class="how-card">
+      <div class="how-step">Step 2</div>
+      <div class="how-icon how-icon--purple">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="4" width="10" height="8" rx="1.8" stroke="currentColor" stroke-width="1.3"/><path d="M11 6.5h1.8A1.2 1.2 0 0 1 14 7.7v0A1.2 1.2 0 0 1 12.8 9H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="11" cy="8" r="0.7" fill="currentColor"/></svg>
+      </div>
+      <div class="how-card-title">Connect Wallet</div>
+      <div class="how-card-desc">Connect MetaMask, Rabby, or any EVM wallet. Arc Testnet is added automatically.</div>
+    </div>
+
+    <div class="how-card">
+      <div class="how-step">Step 3</div>
+      <div class="how-icon how-icon--amber">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="3" y="7" width="9" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7V5a2 2 0 1 1 4 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="how-card-title">Deposit &amp; Lock</div>
+      <div class="how-card-desc">Choose your token, enter the amount, and set a lock period. Your funds are secured onchain.</div>
+    </div>
+
+    <div class="how-card">
+      <div class="how-step">Step 4</div>
+      <div class="how-icon how-icon--green">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 10V3M4 6.5l3.5-3.5L11 6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="how-card-title">Withdraw</div>
+      <div class="how-card-desc">Once the timer expires, withdraw your full amount. No fees, no middleman.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
      VAULT SECTION
 ═══════════════════════════════════════ -->
-<section class="vault-section">
+<section class="vault-section" id="vault-app">
 
   <!-- Tabs -->
   <div class="vault-tabs" role="tablist">
