@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcStash — Lock savings. Build discipline.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Variables ─── */
+:root {
+  --cobalt-light:  #2563eb;
+  --royal:         #3b82f6;
+  --accent:        #60a5fa;
+  --accent-soft:   #38bdf8;
+  --glow:          rgba(37,99,235,0.35);
+
+  --text-1: #ffffff;
+  --text-2: #e2e8f0;
+  --text-3: #64748b;
+
+  --surface:       #141824;
+  --surface-hi:    #1c2235;
+  --surface-hover: #222a40;
+  --border:        #252d3d;
+  --border-hi:     #353f58;
+
+  --green:   #22c55e;
+  --amber:   #f59e0b;
+  --red:     #ef4444;
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+
+  --shadow:    0 8px 32px rgba(0,0,0,0.5);
+  --shadow-lg: 0 24px 64px rgba(0,0,0,0.6);
+}
+
+/* ─── Base ─── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-2);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(ellipse at 18% 10%, rgba(37,99,235,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 82% 90%, rgba(14,165,233,0.07) 0%, transparent 50%),
+    #0a0f1e;
+  background-attachment: fixed;
+}
+
+/* dot grid depth texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.055) 1px, transparent 0);
+  background-size: 32px 32px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ─── Keyframes ─── */
+@keyframes fadeUp   { from { opacity:0; transform:translateY(18px) } to { opacity:1; transform:translateY(0) } }
+@keyframes slideIn  { from { opacity:0; transform:translateX(110%) } to { opacity:1; transform:translateX(0) } }
+@keyframes slideOut { from { opacity:1; transform:translateX(0)    } to { opacity:0; transform:translateX(110%) } }
+@keyframes spin     { to   { transform:rotate(360deg) } }
+@keyframes pulse    { 0%,100% { opacity:1 } 50% { opacity:0.5 } }
+@keyframes countGlow{ 0%,100% { color:var(--accent-soft) } 50% { color:var(--accent) } }
+
+/* ─── Utility ─── */
+.hidden { display:none !important; }
+.z1 { position:relative; z-index:1; }
+
+/* ─────────────────────────────────────────
+   NAVBAR
+───────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,15,30,0.88);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+}
+
+/* Logo */
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: inherit;
+}
+.logo-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; }
+.logo-name { font-size: 20px; font-weight: 800; letter-spacing: -0.6px; }
+.logo-name em { color: var(--accent); font-style: normal; }
+
+/* Nav actions */
+.nav-actions { display: flex; align-items: center; gap: 9px; }
+
+.btn-faucet {
+  display: flex; align-items: center; gap: 5px;
+  padding: 8px 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-2); font-size: 13px; font-weight: 500;
+  text-decoration: none; cursor: pointer;
+  transition: all .2s; white-space: nowrap; font-family: inherit;
+}
+.btn-faucet:hover {
+  background: var(--surface-hover);
+  color: var(--text-1); border-color: var(--border-hi);
+}
+
+.btn-connect {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, var(--cobalt-light) 0%, var(--royal) 100%);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 11px;
+  color: #fff; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
+  transition: all .2s;
+}
+.btn-connect:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px rgba(37,99,235,0.65), 0 6px 24px rgba(37,99,235,0.4);
+}
+.btn-connect.connected {
+  background: var(--surface-hi); border-color: var(--border-hi);
+}
+
+.wallet-dot { width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; }
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero {
+  padding: 44px 24px 24px;
+  max-width: 1100px; margin: 0 auto;
+  text-align: center;
+  position: relative; z-index: 1;
+  animation: fadeUp .65s ease both;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 14px;
+  background: rgba(37,99,235,0.12);
+  border: 1px solid rgba(96,165,250,0.25);
+  border-radius: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 16px;
+}
+.badge-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+
+.hero h1 {
+  font-size: clamp(32px, 5.5vw, 54px);
+  font-weight: 900; letter-spacing: -2px; line-height: 1.07;
+  color: #ffffff; margin-bottom: 22px;
+}
+.hero h1 .grad {
+  background: linear-gradient(110deg, #60a5fa 0%, #22d3ee 55%, #38bdf8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 15px; color: #94a3b8; font-weight: 400;
+  max-width: 480px; margin: 0 auto 20px; line-height: 1.65;
+}
+
+
+
+/* ─────────────────────────────────────────
+   VAULT SECTION
+───────────────────────────────────────── */
+.vault-section {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 24px 48px;
+  position: relative; z-index: 1;
+}
+
+/* Tabs */
+.vault-tabs {
+  display: flex;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 5px;
+  width: fit-content; margin: 0 auto 18px;
+  gap: 4px;
+}
+.vault-tab {
+  padding: 10px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; background: none;
+  font-family: inherit; color: var(--text-3);
+  display: flex; align-items: center; gap: 7px;
+  transition: all .2s; letter-spacing: 0.2px;
+}
+.vault-tab:not(.active):hover { color: var(--text-2); background: rgba(255,255,255,0.04); }
+.vault-tab.active {
+  background: linear-gradient(135deg, var(--cobalt-light) 0%, var(--royal) 100%);
+  color: #fff; box-shadow: 0 4px 20px rgba(37,99,235,0.5);
+}
+.tab-pill {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 2px 6px; border-radius: 5px;
+  background: rgba(255,255,255,0.18);
+}
+
+/* Single vault card */
+.vault-single { display: flex; justify-content: center; }
+.vault-card {
+  width: 100%; max-width: 460px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: background .35s, border-color .35s, box-shadow .35s, padding .35s, border-radius .35s;
+}
+
+/* Premium skin applied when active/locked vault is shown */
+.vault-card--locked {
+  background:
+    linear-gradient(160deg, #0f1628 0%, #111c30 55%, #0d1420 100%) padding-box,
+    linear-gradient(135deg, rgba(59,130,246,0.6) 0%, rgba(139,92,246,0.55) 100%) border-box;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  padding: 44px 38px;
+  box-shadow:
+    0 0 80px rgba(59,130,246,0.07) inset,
+    0 12px 48px rgba(0,0,0,0.55),
+    0 1px 0 rgba(255,255,255,0.05) inset;
+}
+
+/* Exclusive state toggle */
+.vault-state { display: none; opacity: 0; transform: translateY(8px); }
+.vault-state.vs-active { display: block; animation: vsIn .32s ease forwards; }
+@keyframes vsIn { to { opacity: 1; transform: translateY(0); } }
+
+/* ─ Shared label row ─ */
+.vs-token-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-3);
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 8px;
+}
+.vs-status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.vs-status-dot.locked   { background: #f87171; box-shadow: 0 0 8px rgba(248,113,113,0.55); animation: dotPulse 2s ease infinite; }
+.vs-status-dot.unlocked { background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.55); }
+@keyframes dotPulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+/* ─ Active vault: amount ─ */
+.vs-amount-wrap { text-align: center; margin-bottom: 36px; }
+.vs-amount {
+  font-size: 72px; font-weight: 900; letter-spacing: -4px; line-height: 1; color: #ffffff;
+  text-shadow: 0 0 48px rgba(147,197,253,0.28), 0 2px 10px rgba(0,0,0,0.5);
+}
+.vs-symbol {
+  font-size: 20px; font-weight: 400; color: #7aa5cc;
+  margin-left: 8px; letter-spacing: 1px;
+}
+.vs-amount-sub {
+  font-size: 10px; color: #334155; margin-top: 10px;
+  text-transform: uppercase; letter-spacing: 1.2px;
+}
+
+/* ─ Countdown ─ */
+.vs-countdown {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin-bottom: 20px;
+}
+.vs-cd-block {
+  text-align: center; min-width: 72px;
+  background: rgba(6,10,22,0.75);
+  border: 1px solid rgba(59,130,246,0.18);
+  border-radius: 12px; padding: 14px 10px 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px rgba(59,130,246,0.04) inset;
+}
+.vs-cd-num {
+  font-size: 34px; font-weight: 700;
+  font-family: 'SF Mono','Fira Code','Cascadia Code',ui-monospace,monospace;
+  font-variant-numeric: tabular-nums;
+  color: #93c5fd; line-height: 1; letter-spacing: 1px;
+}
+.vs-cd-lbl { font-size: 9px; color: #334155; text-transform: uppercase; letter-spacing: 1px; margin-top: 7px; }
+.vs-cd-sep {
+  font-size: 22px; font-weight: 300; color: rgba(71,85,105,0.45);
+  margin-bottom: 18px; flex-shrink: 0;
+}
+/* Subtle pulse on the seconds box only */
+.vs-cd-block--secs {
+  animation: secsPulse 1s ease-in-out infinite;
+}
+@keyframes secsPulse {
+  0%,100% { border-color: rgba(59,130,246,0.18); box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+  50%      { border-color: rgba(59,130,246,0.42); box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 0 18px rgba(59,130,246,0.14); }
+}
+
+/* ─ Unlock date ─ */
+.vs-unlock-date {
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  text-align: center; font-size: 11px; color: #334155;
+  margin-bottom: 28px; letter-spacing: 0.3px;
+}
+.vs-unlock-date strong { color: #475569; font-weight: 500; }
+
+/* ─ Deposit form ─ */
+.vs-form-grp { margin-bottom: 20px; }
+.vs-field-lbl {
+  display: block; font-size: 11px; font-weight: 700;
+  color: var(--text-3); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
+}
+.vs-input-wrap { position: relative; }
+.vs-input {
+  width: 100%; padding: 14px 76px 14px 16px;
+  background: #0d1117; border: 1px solid var(--border);
+  border-radius: var(--r-sm); color: #ffffff;
+  font-size: 18px; font-weight: 600; font-family: inherit;
+  outline: none; transition: all .2s; box-sizing: border-box;
+}
+.vs-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(96,165,250,0.12); }
+.vs-input::placeholder { color: var(--text-3); font-weight: 400; font-size: 15px; }
+.vs-input:disabled { opacity:.4; cursor:not-allowed; }
+.vs-input-sym {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 11px; font-weight: 700; color: var(--text-3);
+  pointer-events: none; letter-spacing: 0.5px;
+}
+.vs-max-btn {
+  position: absolute; right: 52px; top: 50%; transform: translateY(-50%);
+  padding: 3px 7px; background: rgba(96,165,250,0.13);
+  border: 1px solid rgba(96,165,250,0.22); border-radius: 5px;
+  font-size: 10px; font-weight: 800; color: var(--accent);
+  cursor: pointer; letter-spacing: 0.4px; font-family: inherit; transition: all .18s;
+}
+.vs-max-btn:hover { background: rgba(96,165,250,0.25); }
+.vs-quick-days { display: flex; gap: 7px; margin-top: 9px; }
+.vs-qd {
+  flex: 1; padding: 9px 4px; text-align: center;
+  background: #0d1117; border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text-3);
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: all .18s;
+}
+.vs-qd:hover:not(:disabled), .vs-qd.active { background: rgba(37,99,235,0.14); border-color: rgba(96,165,250,0.35); color: #93c5fd; }
+.vs-qd:disabled { opacity:.3; cursor:not-allowed; }
+.vs-balance-hint {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--text-3); margin-top: 7px; padding: 0 2px;
+}
+.vs-balance-hint span { color: #e2e8f0; font-weight: 600; }
+
+/* ─ Action buttons ─ */
+.vs-btn {
+  width: 100%; padding: 15px 18px;
+  border-radius: var(--r-sm); font-size: 15px; font-weight: 700;
+  cursor: pointer; font-family: inherit; border: none;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .2s;
+}
+.vs-btn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.vs-btn-primary { background: linear-gradient(135deg, var(--cobalt-light) 0%, var(--royal) 100%); color: #fff; box-shadow: 0 4px 20px rgba(65,105,225,0.35); }
+.vs-btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 8px 28px rgba(65,105,225,0.5); }
+.vs-btn-withdraw { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: #fff; box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
+.vs-btn-withdraw:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 8px 24px rgba(16,185,129,0.4); }
+.vs-btn-locked {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: rgba(148,163,184,0.6);
+  cursor: not-allowed; opacity: 1 !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25) inset;
+}
+
+/* Spinner */
+.spin { width:16px; height:16px; border:2.5px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; }
+
+/* ─────────────────────────────────────────
+   WALLET MODAL
+───────────────────────────────────────── */
+.modal-ov {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(5,10,70,0.78); backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.modal-ov.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: #111827;
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-xl); padding: 30px;
+  width: 100%; max-width: 400px;
+  transform: scale(.94) translateY(12px);
+  transition: transform .22s; box-shadow: var(--shadow-lg);
+}
+.modal-ov.open .modal { transform: scale(1) translateY(0); }
+
+.modal-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 22px;
+}
+.modal-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+.modal-close {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text-2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; line-height: 1; transition: all .2s; font-family: inherit;
+}
+.modal-close:hover { background: var(--surface-hover); color: var(--text-1); }
+
+.modal-sub { font-size: 12px; color: var(--text-3); margin-bottom: 18px; line-height: 1.5; }
+
+.wallet-list { display: flex; flex-direction: column; gap: 9px; }
+.wallet-opt {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px; background: #0d1117;
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  cursor: pointer; transition: all .2s;
+  font-family: inherit; color: var(--text-1); text-align: left;
+}
+.wallet-opt:hover { background: var(--surface-hover); border-color: var(--border-hi); transform: translateX(3px); }
+.wallet-opt:disabled { opacity:.4; cursor:not-allowed; transform:none !important; }
+.wopt-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.wopt-info { flex: 1; }
+.wopt-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.wopt-desc { font-size: 11px; color: var(--text-3); }
+.wopt-arr  { color: var(--text-3); font-size: 14px; }
+
+/* ─────────────────────────────────────────
+   TOAST NOTIFICATIONS
+───────────────────────────────────────── */
+.toast-wrap {
+  position: fixed; bottom: 22px; right: 22px; z-index: 300;
+  display: flex; flex-direction: column; gap: 10px;
+  max-width: 350px;
+}
+.toast {
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 14px 16px; border-radius: var(--r-md);
+  backdrop-filter: blur(20px); animation: slideIn .3s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+.toast.toast-success { background:rgba(10,38,25,0.95);  border:1px solid rgba(52,211,153,0.3); }
+.toast.toast-error   { background:rgba(38,10,10,0.95);  border:1px solid rgba(252,129,129,0.3); }
+.toast.toast-info    { background:rgba(13,17,30,0.97);  border:1px solid rgba(96,165,250,0.3); }
+.toast.toast-loading { background:rgba(13,17,30,0.97);  border:1px solid rgba(96,165,250,0.3); }
+.toast-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.toast-body { flex: 1; }
+.toast-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.toast-msg   { font-size: 11px; color: var(--text-2); line-height: 1.5; }
+.toast-out { animation: slideOut .3s ease forwards; }
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 24px;
+  position: relative; z-index: 1;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px;
+}
+.footer-copy { font-size: 12px; color: var(--text-3); }
+.footer-links { display: flex; align-items: center; gap: 18px; }
+.footer-link { font-size: 12px; color: var(--text-3); text-decoration: none; transition: color .2s; }
+.footer-link:hover { color: var(--text-2); }
+.footer-x {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border);
+  color: var(--text-3); text-decoration: none;
+  transition: color .2s, border-color .2s, box-shadow .2s, background .2s;
+  flex-shrink: 0;
+}
+.footer-x:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 0 12px rgba(255,255,255,0.1);
+}
+.chain-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 11px; border-radius: 20px;
+  background: #0d1117; border: 1px solid var(--border);
+  font-size: 11px; color: #475569; font-weight: 500;
+}
+.chain-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .nav-inner { padding: 12px 16px; }
+  .btn-faucet .faucet-label { display: none; }
+  .hero { padding: 50px 16px 40px; }
+  .vault-section { padding: 0 16px 32px; }
+  .toast-wrap { bottom: 14px; right: 14px; left: 14px; max-width: none; }
+  .footer-links { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════
+     WALLET MODAL
+═══════════════════════════════════════ -->
+<div class="modal-ov" id="walletModal" onclick="modalBackdrop(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-hd">
+      <div class="modal-title" id="modalTitle">Connect Wallet</div>
+      <button class="modal-close" onclick="closeWalletModal()" aria-label="Close">✕</button>
+    </div>
+    <p class="modal-sub">Select a wallet to connect to ArcStash on Arc Testnet</p>
+    <div class="wallet-list">
+      <button class="wallet-opt" onclick="connectWallet('injected', 'MetaMask')" id="mmOpt">
+        <div class="wopt-icon" style="background:linear-gradient(135deg,#ff8c00,#ff6b00)">🦊</div>
+        <div class="wopt-info">
+          <div class="wopt-name">MetaMask</div>
+          <div class="wopt-desc">Most popular browser wallet</div>
+        </div>
+        <div class="wopt-arr">›</div>
+      </button>
+      <button class="wallet-opt" onclick="connectWallet('injected', 'Rabby')" id="rabbyOpt">
+        <div class="wopt-icon" style="background:linear-gradient(135deg,#7c5fe6,#5b4fcf)">🐇</div>
+        <div class="wopt-info">
+          <div class="wopt-name">Rabby Wallet</div>
+          <div class="wopt-desc">Smart transaction simulation</div>
+        </div>
+        <div class="wopt-arr">›</div>
+      </button>
+      <button class="wallet-opt" onclick="connectWallet('coinbase')">
+        <div class="wopt-icon" style="background:linear-gradient(135deg,#0052ff,#003dcc)">🔵</div>
+        <div class="wopt-info">
+          <div class="wopt-name">Coinbase Wallet</div>
+          <div class="wopt-desc">Coinbase's self-custody wallet</div>
+        </div>
+        <div class="wopt-arr">›</div>
+      </button>
+      <button class="wallet-opt" onclick="connectWallet('walletconnect')">
+        <div class="wopt-icon" style="background:linear-gradient(135deg,#3b99fc,#1470d8)">📱</div>
+        <div class="wopt-info">
+          <div class="wopt-name">WalletConnect</div>
+          <div class="wopt-desc">Scan QR with any mobile wallet</div>
+        </div>
+        <div class="wopt-arr">›</div>
+      </button>
+      <button class="wallet-opt" onclick="connectWallet('injected', 'Browser Wallet')">
+        <div class="wopt-icon" style="background:linear-gradient(135deg,#334155,#1e293b)">🌐</div>
+        <div class="wopt-info">
+          <div class="wopt-name">Browser Wallet</div>
+          <div class="wopt-desc">Any injected EVM wallet</div>
+        </div>
+        <div class="wopt-arr">›</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════ -->
+<nav class="navbar" role="navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="return false;">
+      <img src="arclogo.png.png" class="logo-icon" alt="Arc logo">
+      <div class="logo-name">Arc<em>Stash</em></div>
+    </a>
+
+    <div class="nav-actions">
+      <a class="btn-faucet" href="https://faucet.circle.com/" target="_blank" rel="noopener noreferrer" title="Get test USDC and EURC tokens">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1.5C6.5 1.5 3.5 4.5 3.5 7a3 3 0 0 0 6 0c0-2.5-3-5.5-3-5.5Z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
+        <span class="faucet-label">Get Test Tokens</span>
+        <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 7L7 2M7 2H3M7 2v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+
+      <button class="btn-connect" id="connectBtn" onclick="openWalletModal()">
+        <span id="connectBtnText">Connect Wallet</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero z1">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Live on Arc Testnet
+  </div>
+
+  <h1>Lock savings.<br><span class="grad">Build discipline.</span></h1>
+
+  <p class="hero-sub">
+    ArcStash is a non-custodial savings vault on Arc Testnet. Commit to a lock period, earn the habit, and unlock your funds on your terms.
+  </p>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+     VAULT SECTION
+═══════════════════════════════════════ -->
+<section class="vault-section">
+
+  <!-- Tabs -->
+  <div class="vault-tabs" role="tablist">
+    <button class="vault-tab active" id="tabUsdc" role="tab" aria-selected="true" onclick="switchTab('usdc')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M7 3.5v7M5 5.5h2.5a1.5 1.5 0 0 1 0 3H5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      USDC
+    </button>
+    <button class="vault-tab" id="tabEurc" role="tab" aria-selected="false" onclick="switchTab('eurc')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 5a3 3 0 1 0 0 4M4.5 7h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      EURC
+    </button>
+  </div>
+
+  <!-- Single card — shows one state at a time -->
+  <div class="vault-single">
+    <div class="vault-card">
+
+      <!-- ── State 1: Active vault ── -->
+      <div class="vault-state" id="activeVaultCard">
+        <div class="vs-token-label">
+          <span class="vs-status-dot locked" id="vsStatusDot"></span>
+          <span id="vsStatusLabel">USDC · Locked</span>
+        </div>
+
+        <div class="vs-amount-wrap">
+          <div>
+            <span class="vs-amount" id="vsAmount">100.00</span><span class="vs-symbol" id="vsSymbol">USDC</span>
+          </div>
+          <div class="vs-amount-sub">locked in vault</div>
+        </div>
+
+        <div class="vs-countdown">
+          <div class="vs-cd-block">
+            <div class="vs-cd-num" id="vsCdDays">00</div>
+            <div class="vs-cd-lbl">Days</div>
+          </div>
+          <div class="vs-cd-sep">:</div>
+          <div class="vs-cd-block">
+            <div class="vs-cd-num" id="vsCdHrs">00</div>
+            <div class="vs-cd-lbl">Hours</div>
+          </div>
+          <div class="vs-cd-sep">:</div>
+          <div class="vs-cd-block">
+            <div class="vs-cd-num" id="vsCdMins">00</div>
+            <div class="vs-cd-lbl">Mins</div>
+          </div>
+          <div class="vs-cd-sep">:</div>
+          <div class="vs-cd-block vs-cd-block--secs">
+            <div class="vs-cd-num" id="vsCdSecs">00</div>
+            <div class="vs-cd-lbl">Secs</div>
+          </div>
+        </div>
+
+        <div class="vs-unlock-date">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="opacity:.45;flex-shrink:0"><rect x="1" y="2" width="10" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 1v2M8 1v2M1 5h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Unlocks <strong id="vsUnlockDateVal">—</strong>
+        </div>
+
+        <button class="vs-btn vs-btn-locked" id="vsWithdrawBtn" onclick="handleWithdraw()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V4.5a2 2 0 1 1 4 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Locked
+        </button>
+      </div>
+
+      <!-- ── State 2: Deposit form ── -->
+      <div class="vault-state vs-active" id="depositFormCard">
+        <div class="vs-token-label">
+          <span id="dfTokenLabel">USDC Vault</span>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="dfAmount">Amount to lock</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="dfAmount" placeholder="0.00" step="0.01" min="0.01" oninput="onAmountInput()">
+            <button class="vs-max-btn" id="dfMaxBtn" onclick="setMax()" type="button">MAX</button>
+            <span class="vs-input-sym" id="dfAmountSuffix">USDC</span>
+          </div>
+          <div class="vs-balance-hint">
+            <span>Wallet balance</span>
+            <span id="dfWalletBal">— <span id="dfWalletBalSym">USDC</span></span>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="dfDays">Lock period</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="dfDays" placeholder="30" min="1" max="3650" oninput="onDaysInput()">
+            <span class="vs-input-sym">DAYS</span>
+          </div>
+          <div class="vs-quick-days">
+            <button class="vs-qd" onclick="setDays(7,this)">7d</button>
+            <button class="vs-qd" onclick="setDays(30,this)">30d</button>
+            <button class="vs-qd" onclick="setDays(90,this)">90d</button>
+            <button class="vs-qd" onclick="setDays(365,this)">1yr</button>
+          </div>
+        </div>
+
+        <button class="vs-btn vs-btn-primary" id="dfDepositBtn" onclick="handleDeposit()" disabled>
+          <span id="dfDepositBtnContent">Deposit USDC</span>
+        </button>
+      </div>
+
+    </div>
+  </div><!-- /vault-single -->
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 ArcStash</div>
+    <div class="chain-badge">
+      <span class="chain-dot"></span>
+      Arc Testnet · Chain 5042002
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://faucet.circle.com/" target="_blank" rel="noopener">Faucet ↗</a>
+      <a class="footer-link" href="https://testnet.arcscan.app" target="_blank" rel="noopener">Explorer ↗</a>
+      <a class="footer-x" href="https://x.com/arcstash" target="_blank" rel="noopener" aria-label="ArcStash on X">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
+<script>
+/* ════════════════════════════════════════
+   CONSTANTS
+════════════════════════════════════════ */
+const ARC_CHAIN_ID   = "0x4CEF52"; // Arc Testnet (5042002)
+const ARC_CHAIN_CFG  = {
+  chainId:           ARC_CHAIN_ID,
+  chainName:         "Arc Testnet",
+  nativeCurrency:    { name: "USDC", symbol: "USDC", decimals: 18 },
+  rpcUrls:           ["https://rpc.testnet.arc.network"],
+  blockExplorerUrls: ["https://testnet.arcscan.app"]
+};
+
+const VAULTS = {
+  usdc: {
+    symbol:       "USDC",
+    vaultAddress: "0x95DfA691160FF5be643473c5CC7fF82B4488d9De",
+    tokenAddress: "0x3600000000000000000000000000000000000000",
+    decimals:     6
+  },
+  eurc: {
+    symbol:       "EURC",
+    vaultAddress: "0x3DbeADa61778C45eF99b35c3068e7eBB92496D2B",
+    tokenAddress: "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
+    decimals:     6
+  }
+};
+
+const VAULT_ABI = [
+  "function deposit(uint256 _amount, uint256 _lockDays) external",
+  "function withdraw() external",
+  "function getVaultInfo(address _user) external view returns (uint256 amount, uint256 unlockTime, uint256 timeLeft)"
+];
+
+const ERC20_ABI = [
+  "function approve(address spender, uint256 amount) external returns (bool)",
+  "function allowance(address owner, address spender) external view returns (uint256)",
+  "function balanceOf(address account) external view returns (uint256)",
+  "function decimals() external view returns (uint8)"
+];
+
+/* ════════════════════════════════════════
+   DEMO STATE (preview without wallet)
+════════════════════════════════════════ */
+const DEMO = {
+  usdc: { balance: "0.00", vault: null },
+  eurc: { balance: "0.00", vault: null }
+};
+
+/* ════════════════════════════════════════
+   APP STATE
+════════════════════════════════════════ */
+const app = {
+  connected:  false,
+  address:    null,
+  provider:   null,
+  signer:     null,
+  tab:        "usdc",
+  vaultInfo:  { usdc: null, eurc: null },
+  balances:   { usdc: "0.00", eurc: "0.00" },
+  txPending:  false,
+  cdTimer:    null,
+  cdTarget:   null   // unix ms of unlock
+};
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+const el  = id => document.getElementById(id);
+const fmt = (n, d=2) => parseFloat(n).toFixed(d);
+
+function shortAddr(a) { return a.slice(0,6) + "…" + a.slice(-4); }
+
+function fmtDate(ts) {
+  return new Date(ts).toLocaleDateString("en-US", {
+    month:"short", day:"numeric", year:"numeric"
+  });
+}
+
+/* ════════════════════════════════════════
+   TOAST NOTIFICATIONS
+════════════════════════════════════════ */
+let toastId = 0;
+function toast(type, title, msg, dur=5000) {
+  const id  = "t" + (++toastId);
+  const ico = { success:"✅", error:"❌", info:"ℹ️", loading:"⏳" }[type] || "ℹ️";
+  const div = document.createElement("div");
+  div.id = id;
+  div.className = `toast toast-${type}`;
+  div.innerHTML = `
+    <div class="toast-icon">${ico}</div>
+    <div class="toast-body">
+      <div class="toast-title">${title}</div>
+      ${msg ? `<div class="toast-msg">${msg}</div>` : ""}
+    </div>`;
+  el("toastWrap").prepend(div);
+  if (dur > 0) setTimeout(() => removeToast(id), dur);
+  return id;
+}
+function removeToast(id) {
+  const t = el(id);
+  if (!t) return;
+  t.classList.add("toast-out");
+  setTimeout(() => t.remove(), 320);
+}
+function updateToast(id, type, title, msg) {
+  removeToast(id);
+  toast(type, title, msg, 4000);
+}
+
+/* ════════════════════════════════════════
+   WALLET MODAL
+════════════════════════════════════════ */
+function openWalletModal() {
+  if (app.connected) { handleDisconnect(); return; }
+  el("walletModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeWalletModal() {
+  el("walletModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+function modalBackdrop(e) {
+  if (e.target === el("walletModal")) closeWalletModal();
+}
+
+/* ════════════════════════════════════════
+   NETWORK HELPER
+════════════════════════════════════════ */
+async function ensureArcNetwork(ethereum) {
+  try {
+    await ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: ARC_CHAIN_ID }]
+    });
+  } catch (switchErr) {
+    // 4902 = chain unknown (MetaMask); -32603 = internal error used by Rabby/Coinbase
+    const code = switchErr.code ?? switchErr?.data?.originalError?.code;
+    if (code === 4902 || code === -32603) {
+      // Add the network, then switch to it
+      await ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [ARC_CHAIN_CFG]
+      });
+      // Some wallets (Rabby, Coinbase) don't auto-switch after add — retry silently
+      try {
+        await ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: ARC_CHAIN_ID }]
+        });
+      } catch { /* already on the chain, or wallet handled it — safe to ignore */ }
+    } else {
+      throw switchErr; // re-throw user rejection (4001) and unexpected errors
+    }
+  }
+}
+
+/* ════════════════════════════════════════
+   CONNECT WALLET
+════════════════════════════════════════ */
+async function connectWallet(type, label="Wallet") {
+  let statusToast = toast("loading", `Connecting ${label}…`, "Please approve in your wallet", 0);
+  let networkSwitchAttempted = false;
+
+  try {
+    let ethereum = window.ethereum;
+
+    if (type === "walletconnect") {
+      removeToast(statusToast);
+      toast("info", "WalletConnect", "Scan with your mobile wallet app (QR flow requires WalletConnect SDK setup with a project ID). Use any injected wallet instead.", 6000);
+      return;
+    }
+
+    if (type === "coinbase" && window.coinbaseWalletExtension) {
+      ethereum = window.coinbaseWalletExtension;
+    }
+
+    if (!ethereum) {
+      removeToast(statusToast);
+      toast("error", "No Wallet Found", `Install ${label} or another EVM wallet extension to continue.`, 6000);
+      return;
+    }
+
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    if (!accounts || accounts.length === 0) throw new Error("No accounts returned");
+
+    app.address  = accounts[0];
+    app.provider = new ethers.BrowserProvider(ethereum);
+    app.signer   = await app.provider.getSigner();
+
+    // ── Ensure user is on Arc Testnet ──
+    const currentChain = await ethereum.request({ method: "eth_chainId" });
+    if (currentChain.toLowerCase() !== ARC_CHAIN_ID.toLowerCase()) {
+      removeToast(statusToast);
+      statusToast = toast("loading", "Switching to Arc Testnet…", "Approve the network switch in your wallet", 0);
+      networkSwitchAttempted = true;
+      await ensureArcNetwork(ethereum);
+      // Re-init provider on the correct chain
+      app.provider = new ethers.BrowserProvider(ethereum);
+      app.signer   = await app.provider.getSigner();
+    }
+
+    app.connected = true;
+
+    el("connectBtn").classList.add("connected");
+    el("connectBtn").innerHTML = `<span class="wallet-dot"></span><span id="connectBtnText">${shortAddr(app.address)}</span>`;
+
+    closeWalletModal();
+    removeToast(statusToast);
+    toast("success", "Wallet Connected", shortAddr(app.address));
+
+    await loadData();
+
+    ethereum.on("accountsChanged", () => window.location.reload());
+    ethereum.on("chainChanged",    () => window.location.reload());
+
+  } catch (err) {
+    removeToast(statusToast);
+    if (err.code === 4001 && networkSwitchAttempted) {
+      toast("info", "Network Switch Cancelled", "Please switch to Arc Testnet to use ArcStash.", 6000);
+    } else if (err.code === 4001) {
+      toast("info", "Connection Cancelled", "You rejected the wallet request.");
+    } else {
+      toast("error", "Connection Failed", (err.message || "Unknown error").slice(0, 140));
+    }
+  }
+}
+
+function handleDisconnect() {
+  app.connected  = false;
+  app.address    = null;
+  app.provider   = null;
+  app.signer     = null;
+  app.vaultInfo  = { usdc: null, eurc: null };
+  app.balances   = { usdc: "0.00", eurc: "0.00" };
+
+  el("connectBtn").classList.remove("connected");
+  el("connectBtn").innerHTML = `<span id="connectBtnText">Connect Wallet</span>`;
+  stopCountdown();
+  renderUI();
+}
+
+/* ════════════════════════════════════════
+   LOAD ON-CHAIN DATA
+════════════════════════════════════════ */
+async function loadData() {
+  if (!app.connected || !app.signer) return;
+
+  for (const key of ["usdc", "eurc"]) {
+    const cfg = VAULTS[key];
+    try {
+      const tokenC = new ethers.Contract(cfg.tokenAddress, ERC20_ABI, app.provider);
+      const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.provider);
+
+      const [rawBal, vaultInfo] = await Promise.all([
+        tokenC.balanceOf(app.address),
+        vaultC.getVaultInfo(app.address)
+      ]);
+
+      app.balances[key] = fmt(ethers.formatUnits(rawBal, cfg.decimals));
+
+      const [vaultAmount, unlockTime, timeLeft] = vaultInfo;
+      if (vaultAmount > 0n) {
+        app.vaultInfo[key] = {
+          amount:   fmt(ethers.formatUnits(vaultAmount, cfg.decimals)),
+          unlockTs: Number(unlockTime) * 1000,
+          timeLeft: Number(timeLeft)
+        };
+      } else {
+        app.vaultInfo[key] = null;
+      }
+    } catch (err) {
+      console.error(`loadData [${key}]:`, err);
+    }
+  }
+
+  renderUI();
+}
+
+/* ════════════════════════════════════════
+   SWITCH TAB
+════════════════════════════════════════ */
+function switchTab(tab) {
+  app.tab = tab;
+  el("tabUsdc").classList.toggle("active", tab === "usdc");
+  el("tabEurc").classList.toggle("active", tab === "eurc");
+  el("tabUsdc").setAttribute("aria-selected", tab === "usdc");
+  el("tabEurc").setAttribute("aria-selected", tab === "eurc");
+  stopCountdown();
+  renderUI();
+}
+
+/* ════════════════════════════════════════
+   RENDER UI
+════════════════════════════════════════ */
+function showCard(id) {
+  document.querySelectorAll(".vault-state").forEach(s => s.classList.remove("vs-active"));
+  // Apply premium locked skin only when showing the active vault state
+  const card = document.querySelector(".vault-card");
+  if (card) card.classList.toggle("vault-card--locked", id === "activeVaultCard");
+  const target = document.getElementById(id);
+  if (!target) return;
+  target.style.display = "none";
+  void target.offsetHeight; // force reflow to re-trigger animation
+  target.style.display = "";
+  target.classList.add("vs-active");
+}
+
+function fmtDateLong(ts) {
+  return new Date(ts).toLocaleDateString("en-US", {
+    weekday: "short", month: "long", day: "numeric", year: "numeric"
+  });
+}
+
+function renderUI() {
+  const tab       = app.tab;
+  const cfg       = VAULTS[tab];
+  const sym       = cfg.symbol;
+  const isDemo    = !app.connected;
+  const balance   = isDemo ? DEMO[tab].balance : app.balances[tab];
+  const vaultData = isDemo ? DEMO[tab].vault   : app.vaultInfo[tab];
+  const hasVault  = vaultData && parseFloat(vaultData.amount) > 0;
+
+  if (hasVault) {
+    // ── Active vault card ──
+    const unlockTs = vaultData.unlockTs;
+    const isLocked = unlockTs > Date.now() && vaultData.timeLeft > 0;
+
+    el("vsAmount").textContent        = fmt(vaultData.amount);
+    el("vsSymbol").textContent        = sym;
+    el("vsUnlockDateVal").textContent = fmtDateLong(unlockTs);
+
+    const dot   = el("vsStatusDot");
+    const label = el("vsStatusLabel");
+
+    if (isLocked) {
+      dot.className     = "vs-status-dot locked";
+      label.textContent = `${sym} · Locked`;
+      startCountdown(vaultData.unlockTs, vaultData.timeLeft);
+
+      const wb = el("vsWithdrawBtn");
+      wb.className = "vs-btn vs-btn-locked";
+      wb.disabled  = true;
+      wb.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V4.5a2 2 0 1 1 4 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Locked until ${fmtDate(unlockTs)}`;
+    } else {
+      dot.className     = "vs-status-dot unlocked";
+      label.textContent = `${sym} · Unlocked`;
+      stopCountdown();
+      ["vsCdDays","vsCdHrs","vsCdMins","vsCdSecs"].forEach(i => el(i).textContent = "00");
+
+      const wb = el("vsWithdrawBtn");
+      if (isDemo) {
+        wb.className = "vs-btn vs-btn-primary";
+        wb.disabled  = true;
+        wb.innerHTML = "Connect wallet to withdraw";
+      } else {
+        wb.className = "vs-btn vs-btn-withdraw";
+        wb.disabled  = app.txPending;
+        wb.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V5a2 2 0 0 1 4 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M7 9v1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Withdraw ${sym}`;
+      }
+    }
+
+    showCard("activeVaultCard");
+
+  } else {
+    // ── Deposit form ──
+    stopCountdown();
+
+    el("dfTokenLabel").textContent  = `${sym} Vault`;
+    el("dfAmountSuffix").textContent = sym;
+    el("dfWalletBal").innerHTML     = `${balance} <span id="dfWalletBalSym">${sym}</span>`;
+
+    const disabled = isDemo || app.txPending;
+    el("dfAmount").disabled  = disabled;
+    el("dfDays").disabled    = disabled;
+    el("dfMaxBtn").disabled  = disabled;
+    document.querySelectorAll(".vs-qd").forEach(b => b.disabled = disabled);
+
+    const btn = el("dfDepositBtn");
+    if (isDemo) {
+      btn.disabled = false;
+      el("dfDepositBtnContent").textContent = "Connect Wallet to Deposit";
+    } else {
+      btn.disabled = app.txPending;
+      el("dfDepositBtnContent").textContent = `Deposit ${sym}`;
+    }
+
+    showCard("depositFormCard");
+  }
+}
+
+/* ════════════════════════════════════════
+   COUNTDOWN TIMER
+════════════════════════════════════════ */
+function startCountdown(unlockTs, initialSeconds) {
+  stopCountdown();
+  app.cdTarget = unlockTs;
+
+  function tick() {
+    const now       = Date.now();
+    const remaining = Math.max(0, Math.floor((app.cdTarget - now) / 1000));
+    const d  = Math.floor(remaining / 86400);
+    const h  = Math.floor((remaining % 86400) / 3600);
+    const m  = Math.floor((remaining % 3600)  / 60);
+    const s  = remaining % 60;
+    el("vsCdDays").textContent = String(d).padStart(2,"0");
+    el("vsCdHrs").textContent  = String(h).padStart(2,"0");
+    el("vsCdMins").textContent = String(m).padStart(2,"0");
+    el("vsCdSecs").textContent = String(s).padStart(2,"0");
+
+    if (remaining === 0) {
+      stopCountdown();
+      if (app.connected) {
+        loadData();
+      } else {
+        DEMO[app.tab].vault.timeLeft = 0;
+        renderUI();
+      }
+    }
+  }
+  tick();
+  app.cdTimer = setInterval(tick, 1000);
+}
+
+function stopCountdown() {
+  if (app.cdTimer) { clearInterval(app.cdTimer); app.cdTimer = null; }
+}
+
+/* ════════════════════════════════════════
+   FORM HELPERS
+════════════════════════════════════════ */
+function setDays(n, btnEl) {
+  el("dfDays").value = n;
+  document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
+  btnEl.classList.add("active");
+}
+
+function onDaysInput() {
+  document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
+}
+
+function onAmountInput() { /* live validation placeholder */ }
+
+function setMax() {
+  if (!app.connected) return;
+  const bal = app.balances[app.tab];
+  el("dfAmount").value = bal;
+}
+
+/* ════════════════════════════════════════
+   DEPOSIT  (approve → deposit)
+════════════════════════════════════════ */
+async function handleDeposit() {
+  if (!app.connected || !app.signer) { openWalletModal(); return; }
+
+  const amtInput  = el("dfAmount").value.trim();
+  const daysInput = el("dfDays").value.trim();
+  const cfg       = VAULTS[app.tab];
+  const sym       = cfg.symbol;
+
+  if (!amtInput || parseFloat(amtInput) <= 0)  { toast("error","Invalid amount","Enter a positive amount to lock."); return; }
+  if (!daysInput || parseInt(daysInput) < 1)    { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
+  if (parseInt(daysInput) > 3650)               { toast("error","Too long","Maximum lock period is 3650 days (10 years)."); return; }
+
+  app.txPending = true;
+  renderUI();
+
+  const tokenC = new ethers.Contract(cfg.tokenAddress, ERC20_ABI, app.signer);
+  const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
+  const amount = ethers.parseUnits(amtInput, cfg.decimals);
+  const days   = parseInt(daysInput);
+
+  let txId;
+  try {
+    // ── Step 1: Approve ──
+    const allowance = await tokenC.allowance(app.address, cfg.vaultAddress);
+    if (allowance < amount) {
+      txId = toast("loading", `Approving ${sym}…`, "Step 1 of 2 — confirm in wallet", 0);
+      el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Approving…`;
+      el("dfDepositBtn").disabled = true;
+
+      const approveTx = await tokenC.approve(cfg.vaultAddress, amount);
+      await approveTx.wait();
+      removeToast(txId);
+    }
+
+    // ── Step 2: Deposit ──
+    txId = toast("loading", `Depositing ${sym}…`, "Step 2 of 2 — confirm in wallet", 0);
+    el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Depositing…`;
+
+    const depositTx = await vaultC.deposit(amount, days);
+    await depositTx.wait();
+
+    removeToast(txId);
+    toast("success", "Vault Created! 🎉", `${fmt(amtInput)} ${sym} locked for ${days} day${days===1?"":"s"}.`, 7000);
+
+    // Reset form
+    el("dfAmount").value = "";
+    el("dfDays").value   = "";
+    document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
+
+    await loadData();
+
+  } catch (err) {
+    if (txId) removeToast(txId);
+    if (err.code === 4001 || err.code === "ACTION_REJECTED") {
+      toast("info", "Transaction Cancelled", "You rejected the transaction.");
+    } else {
+      const reason = err.reason || err.shortMessage || err.message;
+      toast("error", "Transaction Failed", reason?.slice(0, 150) || "Unknown error");
+    }
+  } finally {
+    app.txPending = false;
+    renderUI();
+  }
+}
+
+/* ════════════════════════════════════════
+   WITHDRAW
+════════════════════════════════════════ */
+async function handleWithdraw() {
+  if (!app.connected || !app.signer) return;
+
+  const cfg = VAULTS[app.tab];
+  const sym = cfg.symbol;
+
+  app.txPending = true;
+  renderUI();
+
+  const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
+  const txId   = toast("loading", `Withdrawing ${sym}…`, "Confirm in your wallet", 0);
+  el("vsWithdrawBtn").innerHTML = `<span class="spin"></span> Processing…`;
+
+  try {
+    const tx = await vaultC.withdraw();
+    await tx.wait();
+
+    removeToast(txId);
+    toast("success", "Withdrawal Complete 💸", `${sym} returned to your wallet!`, 6000);
+    await loadData();
+
+  } catch (err) {
+    removeToast(txId);
+    if (err.code === 4001 || err.code === "ACTION_REJECTED") {
+      toast("info", "Cancelled", "Transaction cancelled.");
+    } else {
+      const reason = err.reason || err.shortMessage || err.message;
+      toast("error", "Withdrawal Failed", reason?.slice(0, 150) || "Unknown error");
+    }
+  } finally {
+    app.txPending = false;
+    renderUI();
+  }
+}
+
+
+/* ════════════════════════════════════════
+   KEYBOARD
+════════════════════════════════════════ */
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeWalletModal();
+});
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+(function init() {
+  renderUI();
+})();
+</script>
+</body>
+</html>
