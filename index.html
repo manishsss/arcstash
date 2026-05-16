@@ -6,41 +6,46 @@
 <title>ArcStash — Lock savings. Build discipline.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ─── Reset ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Hide number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
 /* ─── Variables ─── */
 :root {
-  --cobalt-light:  #2563eb;
-  --royal:         #3b82f6;
-  --accent:        #60a5fa;
-  --accent-soft:   #38bdf8;
-  --glow:          rgba(37,99,235,0.35);
+  --primary:        #7c3aed;
+  --primary-hover:  #6d28d9;
+  --primary-soft:   #ede9fe;
+  --primary-bg:     rgba(124,58,237,0.06);
 
-  --text-1: #ffffff;
-  --text-2: #e2e8f0;
-  --text-3: #64748b;
+  --bg:             #f9f5ff;
+  --surface:        #ffffff;
+  --surface-hi:     #f4f0fb;
+  --surface-hover:  #ede9fe;
+  --border:         rgba(0,0,0,0.06);
+  --border-hi:      rgba(124,58,237,0.15);
 
-  --surface:       #141824;
-  --surface-hi:    #1c2235;
-  --surface-hover: #222a40;
-  --border:        #252d3d;
-  --border-hi:     #353f58;
+  --text-1: #1a1a2e;
+  --text-2: #6b7280;
+  --text-3: #9ca3af;
 
-  --green:   #22c55e;
-  --amber:   #f59e0b;
-  --red:     #ef4444;
+  --green:  #22c55e;
+  --amber:  #d97706;
+  --red:    #ef4444;
 
   --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 22px;
+  --r-md: 14px;
+  --r-lg: 20px;
   --r-xl: 28px;
 
-  --shadow:    0 8px 32px rgba(0,0,0,0.5);
-  --shadow-lg: 0 24px 64px rgba(0,0,0,0.6);
+  --shadow:    0 1px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.06);
 }
 
 /* ─── Base ─── */
@@ -52,30 +57,16 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  background:
-    radial-gradient(ellipse at 18% 10%, rgba(37,99,235,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 82% 90%, rgba(14,165,233,0.07) 0%, transparent 50%),
-    #0a0f1e;
-  background-attachment: fixed;
-}
-
-/* dot grid depth texture */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.055) 1px, transparent 0);
-  background-size: 32px 32px;
-  pointer-events: none; z-index: 0;
+  background: var(--bg);
 }
 
 /* ─── Keyframes ─── */
-@keyframes fadeUp   { from { opacity:0; transform:translateY(18px) } to { opacity:1; transform:translateY(0) } }
+@keyframes fadeUp   { from { opacity:0; transform:translateY(14px) } to { opacity:1; transform:translateY(0) } }
 @keyframes slideIn  { from { opacity:0; transform:translateX(110%) } to { opacity:1; transform:translateX(0) } }
 @keyframes slideOut { from { opacity:1; transform:translateX(0)    } to { opacity:0; transform:translateX(110%) } }
 @keyframes spin     { to   { transform:rotate(360deg) } }
-@keyframes pulse    { 0%,100% { opacity:1 } 50% { opacity:0.5 } }
-@keyframes countGlow{ 0%,100% { color:var(--accent-soft) } 50% { color:var(--accent) } }
+@keyframes pulse    { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
+@keyframes dotPulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
 
 /* ─── Utility ─── */
 .hidden { display:none !important; }
@@ -86,10 +77,9 @@ body::before {
 ───────────────────────────────────────── */
 .navbar {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(10,15,30,0.88);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border-bottom: 1px solid var(--border);
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .nav-inner {
   max-width: 1100px; margin: 0 auto;
@@ -102,400 +92,288 @@ body::before {
   display: flex; align-items: center; gap: 10px;
   text-decoration: none; color: inherit;
 }
-.logo-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; }
-.logo-name { font-size: 20px; font-weight: 800; letter-spacing: -0.6px; }
-.logo-name em { color: var(--accent); font-style: normal; }
+.logo-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); }
+.logo-name em { color: var(--primary); font-style: normal; }
 
 /* Nav actions */
 .nav-actions { display: flex; align-items: center; gap: 9px; }
 
 .btn-faucet {
   display: flex; align-items: center; gap: 5px;
-  padding: 8px 13px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  padding: 8px 12px;
+  background: transparent; border: none;
   border-radius: 10px;
-  color: var(--text-2); font-size: 13px; font-weight: 500;
+  color: var(--text-3); font-size: 13px; font-weight: 500;
   text-decoration: none; cursor: pointer;
-  transition: all .2s; white-space: nowrap; font-family: inherit;
+  transition: color .18s; white-space: nowrap; font-family: inherit;
 }
-.btn-faucet:hover {
-  background: var(--surface-hover);
-  color: var(--text-1); border-color: var(--border-hi);
-}
+.btn-faucet:hover { color: var(--text-1); }
 
 .btn-connect {
   display: flex; align-items: center; gap: 8px;
-  padding: 9px 18px;
-  background: linear-gradient(135deg, var(--cobalt-light) 0%, var(--royal) 100%);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 11px;
+  padding: 10px 20px;
+  background: var(--primary);
+  border: none; border-radius: 999px;
   color: #fff; font-size: 14px; font-weight: 600;
   cursor: pointer; font-family: inherit; white-space: nowrap;
-  transition: all .2s;
+  transition: background .18s, box-shadow .18s;
 }
 .btn-connect:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 22px rgba(37,99,235,0.65), 0 6px 24px rgba(37,99,235,0.4);
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
 }
-.btn-connect.connected {
-  background: var(--surface-hi); border-color: var(--border-hi);
-}
+.btn-connect.connected { background: var(--primary); }
 
-.wallet-dot { width:8px; height:8px; border-radius:50%; background:var(--green); flex-shrink:0; }
+.wallet-dot { width:8px; height:8px; border-radius:50%; background:#fff; opacity:.85; flex-shrink:0; }
 
 /* ─────────────────────────────────────────
    HERO
 ───────────────────────────────────────── */
 .hero {
-  padding: 44px 24px 24px;
+  padding: 40px 24px 20px;
   max-width: 1100px; margin: 0 auto;
   text-align: center;
   position: relative; z-index: 1;
-  animation: fadeUp .65s ease both;
+  animation: fadeUp .5s ease both;
 }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 7px;
-  padding: 5px 14px;
-  background: rgba(37,99,235,0.12);
-  border: 1px solid rgba(96,165,250,0.25);
-  border-radius: 20px;
-  font-size: 11px; font-weight: 700; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 16px;
+  padding: 6px 14px;
+  background: var(--primary-soft);
+  border: none; border-radius: 999px;
+  font-size: 12px; font-weight: 600; color: var(--primary);
+  margin-bottom: 18px;
 }
-.badge-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+.badge-dot { width:6px; height:6px; border-radius:50%; background:var(--primary); animation:pulse 2s infinite; }
 
 .hero h1 {
-  font-size: clamp(32px, 5.5vw, 54px);
-  font-weight: 900; letter-spacing: -2px; line-height: 1.07;
-  color: #ffffff; margin-bottom: 22px;
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: 700; letter-spacing: -1px; line-height: 1.12;
+  color: var(--text-1); margin-bottom: 14px;
 }
-.hero h1 .grad {
-  background: linear-gradient(110deg, #60a5fa 0%, #22d3ee 55%, #38bdf8 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+.hero h1 .grad { color: var(--primary); }
 
 .hero-sub {
-  font-size: 15px; color: #94a3b8; font-weight: 400;
-  max-width: 480px; margin: 0 auto 20px; line-height: 1.65;
+  font-size: 15px; color: var(--text-3); font-weight: 400;
+  max-width: 460px; margin: 0 auto 20px; line-height: 1.65;
 }
 
-
-
 /* ─────────────────────────────────────────
-   HOW IT WORKS
+   HOW IT WORKS (bottom, compact)
 ───────────────────────────────────────── */
 .how-section {
-  max-width: 1100px; margin: 0 auto;
-  padding: 0 24px 36px;
+  max-width: 1100px; margin: 2rem auto 0;
+  padding: 2rem 24px 2rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
   position: relative; z-index: 1;
 }
 .how-label {
-  text-align: center; font-size: 10px; font-weight: 700;
-  letter-spacing: 1.4px; text-transform: uppercase;
-  color: #334155; margin-bottom: 16px;
+  text-align: center; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 14px;
 }
-.how-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-}
+.how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .how-card {
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 14px; padding: 18px 16px;
-  transition: border-color .22s, background .22s, transform .2s;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  transition: box-shadow .22s, transform .2s;
 }
 .how-card:hover {
-  background: rgba(255,255,255,0.045);
-  border-color: rgba(96,165,250,0.22);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124,58,237,0.07);
+  transform: translateY(-1px);
 }
 .how-step {
-  font-size: 9px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase;
-  color: var(--accent); background: rgba(37,99,235,0.12);
-  border: 1px solid rgba(96,165,250,0.2);
-  border-radius: 5px; padding: 2px 7px;
-  display: inline-block; margin-bottom: 13px;
+  font-size: 10px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--primary);
+  display: inline-block; margin-bottom: 8px;
 }
 .how-icon {
-  width: 30px; height: 30px; border-radius: 8px;
+  width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 11px;
+  margin-bottom: 8px;
 }
-.how-icon--blue   { background: rgba(37,99,235,0.13);  color: #60a5fa; }
-.how-icon--green  { background: rgba(34,197,94,0.12);  color: #4ade80; }
-.how-icon--purple { background: rgba(139,92,246,0.13); color: #a78bfa; }
-.how-icon--amber  { background: rgba(245,158,11,0.12); color: #fbbf24; }
-.how-card-title {
-  font-size: 13px; font-weight: 700; color: var(--text-1);
-  margin-bottom: 6px; letter-spacing: -0.2px;
-}
-.how-card-desc {
-  font-size: 11.5px; color: #475569; line-height: 1.6;
-}
+.how-icon--blue   { color: var(--primary); }
+.how-icon--green  { color: var(--green); }
+.how-icon--purple { color: var(--primary); }
+.how-icon--amber  { color: var(--amber); }
+.how-card-title { font-size: 12px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+.how-card-desc  { font-size: 12px; color: var(--text-3); line-height: 1.6; }
 
 /* ─────────────────────────────────────────
    VAULT SECTION
 ───────────────────────────────────────── */
 .vault-section {
-  max-width: 1100px; margin: 0 auto;
-  padding: 0 24px 48px;
+  max-width: 840px; margin: 0 auto;
+  padding: 0 20px 48px;
   position: relative; z-index: 1;
 }
 
 /* Tabs */
 .vault-tabs {
   display: flex;
-  background: #0d1117;
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 5px;
+  background: var(--surface);
+  border: none; border-radius: 12px; padding: 4px;
   width: fit-content; margin: 0 auto 18px;
   gap: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .vault-tab {
-  padding: 10px 28px; border-radius: 10px;
-  font-size: 14px; font-weight: 700;
+  padding: 9px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 600;
   cursor: pointer; border: none; background: none;
   font-family: inherit; color: var(--text-3);
   display: flex; align-items: center; gap: 7px;
-  transition: all .2s; letter-spacing: 0.2px;
+  transition: all .18s;
 }
-.vault-tab:not(.active):hover { color: var(--text-2); background: rgba(255,255,255,0.04); }
-.vault-tab.active {
-  background: linear-gradient(135deg, var(--cobalt-light) 0%, var(--royal) 100%);
-  color: #fff; box-shadow: 0 4px 20px rgba(37,99,235,0.5);
-}
+.vault-tab:not(.active):hover { color: var(--text-2); background: var(--surface-hi); }
+.vault-tab.active { background: var(--primary); color: #fff; }
 .tab-pill {
   font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
   padding: 2px 6px; border-radius: 5px;
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.25);
 }
 
-/* Single vault card */
-.vault-single { display: flex; justify-content: center; }
+/* Deposit panel card */
 .vault-card {
-  width: 100%; max-width: 460px;
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 36px 32px;
+  border-radius: var(--r-lg); padding: 26px 24px;
   position: relative; overflow: hidden;
-  transition: background .35s, border-color .35s, box-shadow .35s, padding .35s, border-radius .35s;
+  box-shadow: var(--shadow);
 }
-
-/* Premium skin applied when active/locked vault is shown */
-.vault-card--locked {
-  background:
-    linear-gradient(160deg, #0f1628 0%, #111c30 55%, #0d1420 100%) padding-box,
-    linear-gradient(135deg, rgba(59,130,246,0.6) 0%, rgba(139,92,246,0.55) 100%) border-box;
-  border: 1px solid transparent;
-  border-radius: 20px;
-  padding: 44px 38px;
-  box-shadow:
-    0 0 80px rgba(59,130,246,0.07) inset,
-    0 12px 48px rgba(0,0,0,0.55),
-    0 1px 0 rgba(255,255,255,0.05) inset;
-}
-
-/* Exclusive state toggle */
-.vault-state { display: none; opacity: 0; transform: translateY(8px); }
-.vault-state.vs-active { display: block; animation: vsIn .32s ease forwards; }
-@keyframes vsIn { to { opacity: 1; transform: translateY(0); } }
 
 /* ─ Shared label row ─ */
 .vs-token-label {
   font-size: 11px; font-weight: 700; letter-spacing: 1px;
   text-transform: uppercase; color: var(--text-3);
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   display: flex; align-items: center; gap: 8px;
 }
 .vs-status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.vs-status-dot.locked   { background: #f87171; box-shadow: 0 0 8px rgba(248,113,113,0.55); animation: dotPulse 2s ease infinite; }
-.vs-status-dot.unlocked { background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.55); }
-@keyframes dotPulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-
-/* ─ Active vault: amount ─ */
-.vs-amount-wrap { text-align: center; margin-bottom: 36px; }
-.vs-amount {
-  font-size: 72px; font-weight: 900; letter-spacing: -4px; line-height: 1; color: #ffffff;
-  text-shadow: 0 0 48px rgba(147,197,253,0.28), 0 2px 10px rgba(0,0,0,0.5);
-}
-.vs-symbol {
-  font-size: 20px; font-weight: 400; color: #7aa5cc;
-  margin-left: 8px; letter-spacing: 1px;
-}
-.vs-amount-sub {
-  font-size: 10px; color: #334155; margin-top: 10px;
-  text-transform: uppercase; letter-spacing: 1.2px;
-}
-
-/* ─ Countdown ─ */
-.vs-countdown {
-  display: flex; align-items: center; justify-content: center;
-  gap: 8px; margin-bottom: 20px;
-}
-.vs-cd-block {
-  text-align: center; min-width: 72px;
-  background: rgba(6,10,22,0.75);
-  border: 1px solid rgba(59,130,246,0.18);
-  border-radius: 12px; padding: 14px 10px 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 0 0 1px rgba(59,130,246,0.04) inset;
-}
-.vs-cd-num {
-  font-size: 34px; font-weight: 700;
-  font-family: 'SF Mono','Fira Code','Cascadia Code',ui-monospace,monospace;
-  font-variant-numeric: tabular-nums;
-  color: #93c5fd; line-height: 1; letter-spacing: 1px;
-}
-.vs-cd-lbl { font-size: 9px; color: #334155; text-transform: uppercase; letter-spacing: 1px; margin-top: 7px; }
-.vs-cd-sep {
-  font-size: 22px; font-weight: 300; color: rgba(71,85,105,0.45);
-  margin-bottom: 18px; flex-shrink: 0;
-}
-/* Subtle pulse on the seconds box only */
-.vs-cd-block--secs {
-  animation: secsPulse 1s ease-in-out infinite;
-}
-@keyframes secsPulse {
-  0%,100% { border-color: rgba(59,130,246,0.18); box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
-  50%      { border-color: rgba(59,130,246,0.42); box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 0 18px rgba(59,130,246,0.14); }
-}
-
-/* ─ Unlock date ─ */
-.vs-unlock-date {
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-  text-align: center; font-size: 11px; color: #334155;
-  margin-bottom: 28px; letter-spacing: 0.3px;
-}
-.vs-unlock-date strong { color: #475569; font-weight: 500; }
+.vs-status-dot.locked   { background: #f87171; box-shadow: 0 0 6px rgba(248,113,113,0.4); animation: dotPulse 2s ease infinite; }
+.vs-status-dot.unlocked { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.4); }
 
 /* ─ Deposit form ─ */
-.vs-form-grp { margin-bottom: 20px; }
+.vs-form-grp { margin-bottom: 18px; }
 .vs-field-lbl {
-  display: block; font-size: 11px; font-weight: 700;
+  display: block; font-size: 11px; font-weight: 600;
   color: var(--text-3); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
 }
 .vs-input-wrap { position: relative; }
 .vs-input {
-  width: 100%; padding: 14px 76px 14px 16px;
-  background: #0d1117; border: 1px solid var(--border);
-  border-radius: var(--r-sm); color: #ffffff;
-  font-size: 18px; font-weight: 600; font-family: inherit;
-  outline: none; transition: all .2s; box-sizing: border-box;
+  width: 100%; padding: 13px 80px 13px 16px;
+  background: var(--surface-hi); border: 2px solid transparent;
+  border-radius: 12px; color: var(--text-1);
+  font-size: 22px; font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none; transition: all .18s; box-sizing: border-box;
 }
-.vs-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(96,165,250,0.12); }
-.vs-input::placeholder { color: var(--text-3); font-weight: 400; font-size: 15px; }
+.vs-input:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(124,58,237,0.08); }
+.vs-input::placeholder { color: var(--text-3); font-weight: 400; font-size: 16px; font-family: 'Inter', sans-serif; }
 .vs-input:disabled { opacity:.4; cursor:not-allowed; }
 .vs-input-sym {
-  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-  font-size: 11px; font-weight: 700; color: var(--text-3);
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 12px; font-weight: 700; color: var(--text-1);
   pointer-events: none; letter-spacing: 0.5px;
+  background: var(--surface); padding: 5px 10px;
+  border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.07);
 }
 .vs-max-btn {
-  position: absolute; right: 52px; top: 50%; transform: translateY(-50%);
-  padding: 3px 7px; background: rgba(96,165,250,0.13);
-  border: 1px solid rgba(96,165,250,0.22); border-radius: 5px;
-  font-size: 10px; font-weight: 800; color: var(--accent);
-  cursor: pointer; letter-spacing: 0.4px; font-family: inherit; transition: all .18s;
+  position: absolute; right: 74px; top: 50%; transform: translateY(-50%);
+  padding: 2px 6px; background: none; border: none;
+  font-size: 11px; font-weight: 700; color: var(--primary);
+  cursor: pointer; font-family: inherit; transition: opacity .18s;
 }
-.vs-max-btn:hover { background: rgba(96,165,250,0.25); }
+.vs-max-btn:hover { opacity: 0.65; }
 .vs-quick-days { display: flex; gap: 7px; margin-top: 9px; }
 .vs-qd {
-  flex: 1; padding: 9px 4px; text-align: center;
-  background: #0d1117; border: 1px solid var(--border);
-  border-radius: 8px; color: var(--text-3);
-  font-size: 12px; font-weight: 700; cursor: pointer;
+  flex: 1; padding: 8px 4px; text-align: center;
+  background: var(--surface-hi); border: 2px solid transparent;
+  border-radius: 10px; color: var(--text-3);
+  font-size: 12px; font-weight: 600; cursor: pointer;
   font-family: inherit; transition: all .18s;
 }
-.vs-qd:hover:not(:disabled), .vs-qd.active { background: rgba(37,99,235,0.14); border-color: rgba(96,165,250,0.35); color: #93c5fd; }
+.vs-qd:hover:not(:disabled) { background: var(--primary-soft); color: var(--primary); }
+.vs-qd.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); font-weight: 700; }
 .vs-qd:disabled { opacity:.3; cursor:not-allowed; }
 .vs-balance-hint {
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 11px; color: var(--text-3); margin-top: 7px; padding: 0 2px;
+  font-size: 12px; color: var(--text-3); margin-top: 7px; padding: 0 2px;
 }
-.vs-balance-hint span { color: #e2e8f0; font-weight: 600; }
+.vs-balance-hint span { color: var(--text-2); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
 
 /* ─ Action buttons ─ */
 .vs-btn {
   width: 100%; padding: 15px 18px;
-  border-radius: var(--r-sm); font-size: 15px; font-weight: 700;
+  border-radius: 14px; font-size: 15px; font-weight: 700;
   cursor: pointer; font-family: inherit; border: none;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: all .2s;
+  transition: all .18s; text-transform: uppercase; letter-spacing: 0.4px;
 }
-.vs-btn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-.vs-btn-primary { background: linear-gradient(135deg, var(--cobalt-light) 0%, var(--royal) 100%); color: #fff; box-shadow: 0 4px 20px rgba(65,105,225,0.35); }
-.vs-btn-primary:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 8px 28px rgba(65,105,225,0.5); }
-.vs-btn-withdraw { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: #fff; box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
-.vs-btn-withdraw:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 8px 24px rgba(16,185,129,0.4); }
+.vs-btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.vs-btn-primary { background: var(--primary); color: #fff; }
+.vs-btn-primary:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
+.vs-btn-withdraw { background: var(--primary); color: #fff; }
+.vs-btn-withdraw:hover:not(:disabled) { background: var(--primary-hover); }
 .vs-btn-locked {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.09);
-  color: rgba(148,163,184,0.6);
-  cursor: not-allowed; opacity: 1 !important;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25) inset;
+  background: var(--surface-hi); border: none;
+  color: var(--text-3); cursor: not-allowed; opacity: 1 !important; text-transform: none;
 }
 
 /* Spinner */
-.spin { width:16px; height:16px; border:2.5px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; }
+.spin { width:16px; height:16px; border:2.5px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; }
 
 /* ─────────────────────────────────────────
    WALLET MODAL
 ───────────────────────────────────────── */
 .modal-ov {
   position: fixed; inset: 0; z-index: 200;
-  background: rgba(5,10,70,0.78); backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.28);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center; padding: 20px;
   opacity: 0; pointer-events: none; transition: opacity .2s;
 }
 .modal-ov.open { opacity: 1; pointer-events: all; }
 
 .modal {
-  background: #111827;
-  border: 1px solid var(--border-hi);
-  border-radius: var(--r-xl); padding: 30px;
+  background: var(--surface);
+  border: none; border-radius: 20px; padding: 26px;
   width: 100%; max-width: 400px;
   transform: scale(.94) translateY(12px);
-  transition: transform .22s; box-shadow: var(--shadow-lg);
+  transition: transform .22s; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
 .modal-ov.open .modal { transform: scale(1) translateY(0); }
 
-.modal-hd {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 22px;
-}
-.modal-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+.modal-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.modal-title { font-size: 17px; font-weight: 700; color: var(--text-1); }
 .modal-close {
   width: 30px; height: 30px; border-radius: 8px;
-  background: var(--surface); border: 1px solid var(--border);
+  background: var(--surface-hi); border: none;
   color: var(--text-2); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; line-height: 1; transition: all .2s; font-family: inherit;
+  font-size: 15px; line-height: 1; transition: background .18s; font-family: inherit;
 }
 .modal-close:hover { background: var(--surface-hover); color: var(--text-1); }
+.modal-sub { font-size: 12px; color: var(--text-3); margin-bottom: 16px; line-height: 1.5; }
 
-.modal-sub { font-size: 12px; color: var(--text-3); margin-bottom: 18px; line-height: 1.5; }
-
-.wallet-list { display: flex; flex-direction: column; gap: 9px; }
+.wallet-list { display: flex; flex-direction: column; gap: 8px; }
 .wallet-opt {
   display: flex; align-items: center; gap: 14px;
-  padding: 15px; background: #0d1117;
-  border: 1px solid var(--border); border-radius: var(--r-md);
-  cursor: pointer; transition: all .2s;
+  padding: 13px 15px; background: var(--surface-hi);
+  border: none; border-radius: 12px;
+  cursor: pointer; transition: background .18s;
   font-family: inherit; color: var(--text-1); text-align: left;
 }
-.wallet-opt:hover { background: var(--surface-hover); border-color: var(--border-hi); transform: translateX(3px); }
-.wallet-opt:disabled { opacity:.4; cursor:not-allowed; transform:none !important; }
-.wopt-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
-}
+.wallet-opt:hover { background: var(--primary-soft); }
+.wallet-opt:disabled { opacity:.4; cursor:not-allowed; }
+.wopt-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
 .wopt-info { flex: 1; }
-.wopt-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.wopt-name { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; }
 .wopt-desc { font-size: 11px; color: var(--text-3); }
 .wopt-arr  { color: var(--text-3); font-size: 14px; }
 
@@ -504,31 +382,31 @@ body::before {
 ───────────────────────────────────────── */
 .toast-wrap {
   position: fixed; bottom: 22px; right: 22px; z-index: 300;
-  display: flex; flex-direction: column; gap: 10px;
-  max-width: 350px;
+  display: flex; flex-direction: column; gap: 10px; max-width: 350px;
 }
 .toast {
   display: flex; align-items: flex-start; gap: 11px;
-  padding: 14px 16px; border-radius: var(--r-md);
-  backdrop-filter: blur(20px); animation: slideIn .3s ease;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  padding: 13px 15px; border-radius: 14px;
+  animation: slideIn .3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
-.toast.toast-success { background:rgba(10,38,25,0.95);  border:1px solid rgba(52,211,153,0.3); }
-.toast.toast-error   { background:rgba(38,10,10,0.95);  border:1px solid rgba(252,129,129,0.3); }
-.toast.toast-info    { background:rgba(13,17,30,0.97);  border:1px solid rgba(96,165,250,0.3); }
-.toast.toast-loading { background:rgba(13,17,30,0.97);  border:1px solid rgba(96,165,250,0.3); }
+.toast.toast-success { background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; }
+.toast.toast-error   { background:#fef2f2; border:1px solid #fecaca; color:#991b1b; }
+.toast.toast-info    { background:#ede9fe; border:1px solid #c4b5fd; color:#5b21b6; }
+.toast.toast-loading { background:#ede9fe; border:1px solid #c4b5fd; color:#5b21b6; }
 .toast-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 .toast-body { flex: 1; }
 .toast-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-.toast-msg   { font-size: 11px; color: var(--text-2); line-height: 1.5; }
+.toast-msg   { font-size: 11px; opacity: 0.75; line-height: 1.5; }
 .toast-out { animation: slideOut .3s ease forwards; }
 
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
 .footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 24px;
+  background: var(--surface);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 24px 24px;
   position: relative; z-index: 1;
 }
 .footer-inner {
@@ -538,29 +416,188 @@ body::before {
 }
 .footer-copy { font-size: 12px; color: var(--text-3); }
 .footer-links { display: flex; align-items: center; gap: 18px; }
-.footer-link { font-size: 12px; color: var(--text-3); text-decoration: none; transition: color .2s; }
-.footer-link:hover { color: var(--text-2); }
+.footer-link { font-size: 12px; color: var(--text-3); text-decoration: none; transition: color .18s; }
+.footer-link:hover { color: var(--text-1); }
 .footer-x {
   display: flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border-radius: 50%;
   border: 1px solid var(--border);
   color: var(--text-3); text-decoration: none;
-  transition: color .2s, border-color .2s, box-shadow .2s, background .2s;
-  flex-shrink: 0;
+  transition: color .18s, border-color .18s, background .18s; flex-shrink: 0;
 }
-.footer-x:hover {
-  color: #fff;
-  border-color: rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.07);
-  box-shadow: 0 0 12px rgba(255,255,255,0.1);
-}
+.footer-x:hover { color: var(--primary); border-color: var(--border-hi); background: var(--primary-soft); }
 .chain-badge {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 4px 11px; border-radius: 20px;
-  background: #0d1117; border: 1px solid var(--border);
-  font-size: 11px; color: #475569; font-weight: 500;
+  background: var(--surface-hi); border: 1px solid var(--border);
+  font-size: 11px; color: var(--primary); font-weight: 500;
 }
 .chain-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+
+/* ─────────────────────────────────────────
+   V2 META ROW (TVL + vault counter)
+───────────────────────────────────────── */
+.v2-meta-row {
+  text-align: center; margin-bottom: 16px;
+  font-size: 13px; color: var(--text-3); font-weight: 500;
+}
+.v2-tvl-amount { color: var(--text-1); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+.v2-vault-counter-inline { color: var(--text-3); }
+
+/* ─────────────────────────────────────────
+   VAULT SECTION HEADERS
+───────────────────────────────────────── */
+.vc-section-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.vc-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--text-3);
+}
+.vc-section-count { font-size: 11px; font-weight: 600; color: var(--primary); }
+
+/* ─────────────────────────────────────────
+   VAULT LIST (single-column ledger)
+───────────────────────────────────────── */
+.vc-grid {
+  display: flex; flex-direction: column;
+  gap: 0; max-width: 440px;
+  margin: 0 auto 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  border-radius: 14px; overflow: hidden;
+}
+.vc-grid:empty { display: none; }
+
+/* individual row */
+.vault-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #ffffff;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  animation: fadeUp .3s ease both;
+}
+.vault-row:first-child { border-radius: 14px 14px 0 0; }
+.vault-row:last-child  { border-radius: 0 0 14px 14px; border-bottom: none; }
+.vault-row:only-child  { border-radius: 14px; }
+.vault-row.unlocked    { background: #f9fef9; }
+
+/* left: timer + date */
+.vault-row-left { display: flex; flex-direction: column; gap: 3px; }
+.vault-row-timer {
+  font-size: 15px; font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--primary); line-height: 1;
+}
+.vault-row-timer.ready { color: var(--green); font-size: 13px; font-family: 'Inter', sans-serif; }
+.vault-row-date { font-size: 11px; color: var(--text-3); }
+
+/* right: amount + button */
+.vault-row-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.vault-row-amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 600;
+  color: var(--text-1); text-align: right;
+}
+.vault-row-unit { font-size: 11px; color: var(--text-3); font-weight: 500; margin-left: 2px; }
+.vault-row-btn {
+  border: none; border-radius: 10px;
+  padding: 7px 14px; font-size: 11px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  white-space: nowrap; transition: opacity .15s;
+}
+.vault-row-btn:disabled { opacity: .4; cursor: not-allowed; }
+.vault-row-btn.early    { background: #fef3c7; color: #d97706; }
+.vault-row-btn.early:hover:not(:disabled)    { background: #fde68a; }
+.vault-row-btn.withdraw { background: #7c3aed; color: #fff; }
+.vault-row-btn.withdraw:hover:not(:disabled) { background: #6d28d9; }
+
+/* Countdown blocks */
+.v2-mini-cd { display: flex; align-items: center; justify-content: center; gap: 4px; margin: 10px 0 4px; }
+.v2-mcd-block {
+  text-align: center; min-width: 42px;
+  background: var(--surface-hi); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 5px 5px;
+}
+.v2-mcd-num {
+  font-size: 16px; font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary); line-height: 1;
+}
+.v2-mcd-lbl { font-size: 7px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.7px; margin-top: 3px; }
+.v2-mcd-sep { font-size: 13px; font-weight: 400; color: var(--text-3); margin-bottom: 8px; }
+
+.vs-btn-early {
+  background: #fef3c7; border: none;
+  color: #d97706; border-radius: 10px;
+  letter-spacing: 0.1px; font-size: 13px; font-weight: 700;
+}
+.vs-btn-early:hover:not(:disabled) { background: #fde68a; color: #b45309; transform: none; box-shadow: none; }
+.vs-btn-locked { background: var(--surface-hi); border: none; color: var(--text-3); cursor: not-allowed; opacity: 1 !important; text-transform: none; letter-spacing: 0; }
+
+/* ─────────────────────────────────────────
+   V2 DEPOSIT PANEL
+───────────────────────────────────────── */
+.v2-deposit-panel { max-width: 520px; margin: 0 auto 28px; }
+.v2-deposit-panel .vault-card { width: 100%; }
+.v2-vault-count-hint { text-align: center; font-size: 11px; color: var(--text-3); margin-bottom: 14px; font-weight: 500; min-height: 16px; }
+.v2-vault-count-hint strong { color: var(--primary); }
+
+/* ─────────────────────────────────────────
+   V2 VAULT HISTORY
+───────────────────────────────────────── */
+.v2-history-section { max-width: 520px; margin: 0 auto 12px; }
+.v2-history-hd { margin-bottom: 10px; }
+.v2-history-title { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); }
+.v2-history-table {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden; box-shadow: var(--shadow);
+}
+.v2-history-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 8px; padding: 12px 16px; font-size: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.04); align-items: center;
+}
+.v2-history-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v2-history-row:last-child { border-bottom: none; }
+.v2-history-row.hdr { font-size: 10px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.6px; background: var(--surface-hi); }
+.v2-hist-amount { color: var(--text-1); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.v2-hist-duration { color: var(--text-2); }
+.v2-hist-created { color: var(--text-3); }
+.v2-hist-status {
+  display: inline-block; background: var(--primary-soft); color: var(--primary);
+  font-weight: 600; font-size: 11px; padding: 4px 10px; border-radius: 8px;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────
+   EARLY WITHDRAW MODAL
+───────────────────────────────────────── */
+.ewm-warning { background: #fef3c7; border: none; border-radius: 12px; padding: 14px; margin-bottom: 18px; }
+.ewm-warning-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.ewm-warning-desc { font-size: 12px; color: #78350f; line-height: 1.55; }
+.ewm-breakdown { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.ewm-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-2); padding: 0 2px; }
+.ewm-row.total { padding-top: 10px; border-top: 1px solid var(--border); color: var(--text-1); font-weight: 700; font-size: 14px; }
+.ewm-row span:last-child { font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+.ewm-row.total span:last-child { color: var(--primary); }
+.ewm-actions { display: flex; gap: 9px; }
+.ewm-cancel {
+  flex: 1; padding: 13px;
+  background: var(--surface-hi); border: none;
+  border-radius: 12px; color: var(--text-2);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: background .18s;
+}
+.ewm-cancel:hover { background: var(--surface-hover); color: var(--text-1); }
+.ewm-confirm {
+  flex: 1.5; padding: 13px;
+  background: var(--primary);
+  border: none; border-radius: 12px; color: #fff;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: all .18s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.ewm-confirm:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
+.ewm-confirm:disabled { opacity: .5; cursor: not-allowed; }
 
 /* ─────────────────────────────────────────
    RESPONSIVE
@@ -568,10 +605,17 @@ body::before {
 @media (max-width: 640px) {
   .nav-inner { padding: 12px 16px; }
   .btn-faucet .faucet-label { display: none; }
-  .hero { padding: 50px 16px 40px; }
+  .hero { padding: 32px 16px 20px; }
   .how-grid { grid-template-columns: repeat(2, 1fr); }
-  .how-section { padding: 0 16px 28px; }
-  .vault-section { padding: 0 16px 32px; }
+  .how-section { padding: 1.5rem 16px; }
+  .vault-section { padding: 0 14px 32px; }
+  .how-grid { grid-template-columns: repeat(2, 1fr); }
+  .v2-history-row { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .v2-history-row.hdr span:nth-child(3),
+  .v2-history-row.hdr span:nth-child(4),
+  .v2-history-row:not(.hdr) .v2-hist-created,
+  .v2-history-row:not(.hdr) .v2-hist-status { display: none; }
+  .ewm-actions { flex-direction: column; }
   .toast-wrap { bottom: 14px; right: 14px; left: 14px; max-width: none; }
   .footer-links { display: none; }
 }
@@ -636,12 +680,37 @@ body::before {
 </div>
 
 <!-- ═══════════════════════════════════════
+     EARLY WITHDRAW MODAL
+═══════════════════════════════════════ -->
+<div class="modal-ov" id="earlyWithdrawModal" onclick="ewModalBackdrop(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ewModalTitle">
+    <div class="modal-hd">
+      <div class="modal-title" id="ewModalTitle">Early Withdraw</div>
+      <button class="modal-close" onclick="closeEarlyWithdrawModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="ewm-warning">
+      <div class="ewm-warning-title">⚠️ 10% Penalty applies</div>
+      <div class="ewm-warning-desc">Withdrawing before the lock period ends incurs a 10% penalty on the locked amount. The penalty is non-refundable and this action cannot be undone.</div>
+    </div>
+    <div class="ewm-breakdown">
+      <div class="ewm-row"><span>Locked amount</span><span id="ewmLocked">—</span></div>
+      <div class="ewm-row"><span>Penalty (10%)</span><span id="ewmPenalty" style="color:#f87171">—</span></div>
+      <div class="ewm-row total"><span>You receive</span><span id="ewmReceive">—</span></div>
+    </div>
+    <div class="ewm-actions">
+      <button class="ewm-cancel" onclick="closeEarlyWithdrawModal()">Cancel</button>
+      <button class="ewm-confirm" id="ewmConfirmBtn" onclick="confirmEarlyWithdraw()">Confirm Early Withdraw</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
      NAVBAR
 ═══════════════════════════════════════ -->
 <nav class="navbar" role="navigation">
   <div class="nav-inner">
     <a class="nav-logo" href="#" onclick="return false;">
-      <img src="arclogo.png.png" class="logo-icon" alt="Arc logo">
+      <img src="arclogo.png.png" style="width:32px;height:32px;border-radius:8px;" alt="ArcStash logo">
       <div class="logo-name">Arc<em>Stash</em></div>
     </a>
 
@@ -673,6 +742,94 @@ body::before {
   <p class="hero-sub">
     ArcStash is a non-custodial savings vault on Arc Testnet. Commit to a lock period, earn the habit, and unlock your funds on your terms.
   </p>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+     VAULT SECTION
+═══════════════════════════════════════ -->
+<section class="vault-section" id="vault-app">
+
+  <!-- Tabs -->
+  <div class="vault-tabs" role="tablist">
+    <button class="vault-tab active" id="tabUsdc" role="tab" aria-selected="true" onclick="switchTab('usdc')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M7 3.5v7M5 5.5h2.5a1.5 1.5 0 0 1 0 3H5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      USDC
+    </button>
+    <button class="vault-tab" id="tabEurc" role="tab" aria-selected="false" onclick="switchTab('eurc')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 5a3 3 0 1 0 0 4M4.5 7h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      EURC
+    </button>
+  </div>
+
+  <!-- TVL + vault counter row -->
+  <div class="v2-meta-row" id="v2MetaRow">
+    TVL: <span class="v2-tvl-amount" id="tvlDisplay">—</span> &nbsp;·&nbsp; <span class="v2-vault-counter-inline" id="vaultCounter">0 / 5 vaults used</span>
+  </div>
+
+  <!-- ── Create Vault ── -->
+  <div class="vc-section-hd">
+    <span class="vc-section-label">Create Vault</span>
+  </div>
+  <div class="v2-deposit-panel" id="v2DepositPanel">
+    <div class="vault-card">
+      <div class="vs-token-label">
+        <span id="dfTokenLabel">USDC Vault</span>
+      </div>
+      <div class="v2-vault-count-hint" id="v2VaultCountHint"></div>
+
+      <div class="vs-form-grp">
+        <label class="vs-field-lbl" for="dfAmount">Amount to lock</label>
+        <div class="vs-input-wrap">
+          <input type="number" class="vs-input" id="dfAmount" placeholder="0.00" step="0.01" min="0.01" oninput="onAmountInput()">
+          <button class="vs-max-btn" id="dfMaxBtn" onclick="setMax()" type="button">MAX</button>
+          <span class="vs-input-sym" id="dfAmountSuffix">USDC</span>
+        </div>
+        <div class="vs-balance-hint">
+          <span>Wallet balance</span>
+          <span id="dfWalletBal">— <span id="dfWalletBalSym">USDC</span></span>
+        </div>
+      </div>
+
+      <div class="vs-form-grp">
+        <label class="vs-field-lbl" for="dfDays">Lock period</label>
+        <div class="vs-input-wrap">
+          <input type="number" class="vs-input" id="dfDays" placeholder="30" min="1" max="3650" oninput="onDaysInput()">
+          <span class="vs-input-sym">DAYS</span>
+        </div>
+        <div class="vs-quick-days">
+          <button class="vs-qd" onclick="setDays(7,this)">7d</button>
+          <button class="vs-qd" onclick="setDays(30,this)">30d</button>
+          <button class="vs-qd" onclick="setDays(90,this)">90d</button>
+          <button class="vs-qd" onclick="setDays(365,this)">1yr</button>
+        </div>
+      </div>
+
+      <button class="vs-btn vs-btn-primary" id="dfDepositBtn" onclick="handleDeposit()" disabled>
+        <span id="dfDepositBtnContent">Deposit USDC</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Your Vaults (compact 2-col grid, populated by JS) ── -->
+  <div class="vc-section-hd hidden" id="vcVaultsHd">
+    <span class="vc-section-label">Your Vaults</span>
+    <span class="vc-section-count" id="vcVaultsSectionCount"></span>
+  </div>
+  <div class="vc-grid" id="v2VaultsGrid"></div>
+
+  <!-- Vault history (shown only when past vaults exist) -->
+  <div class="v2-history-section hidden" id="v2HistorySection">
+    <div class="v2-history-hd">
+      <div class="v2-history-title">Vault History</div>
+    </div>
+    <div class="v2-history-table">
+      <div class="v2-history-row hdr">
+        <span>Amount</span><span>Duration</span><span>Created</span><span>Status</span>
+      </div>
+      <div id="v2HistoryList"></div>
+    </div>
+  </div>
 
 </section>
 
@@ -723,116 +880,6 @@ body::before {
 </section>
 
 <!-- ═══════════════════════════════════════
-     VAULT SECTION
-═══════════════════════════════════════ -->
-<section class="vault-section" id="vault-app">
-
-  <!-- Tabs -->
-  <div class="vault-tabs" role="tablist">
-    <button class="vault-tab active" id="tabUsdc" role="tab" aria-selected="true" onclick="switchTab('usdc')">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M7 3.5v7M5 5.5h2.5a1.5 1.5 0 0 1 0 3H5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      USDC
-    </button>
-    <button class="vault-tab" id="tabEurc" role="tab" aria-selected="false" onclick="switchTab('eurc')">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 5a3 3 0 1 0 0 4M4.5 7h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      EURC
-    </button>
-  </div>
-
-  <!-- Single card — shows one state at a time -->
-  <div class="vault-single">
-    <div class="vault-card">
-
-      <!-- ── State 1: Active vault ── -->
-      <div class="vault-state" id="activeVaultCard">
-        <div class="vs-token-label">
-          <span class="vs-status-dot locked" id="vsStatusDot"></span>
-          <span id="vsStatusLabel">USDC · Locked</span>
-        </div>
-
-        <div class="vs-amount-wrap">
-          <div>
-            <span class="vs-amount" id="vsAmount">100.00</span><span class="vs-symbol" id="vsSymbol">USDC</span>
-          </div>
-          <div class="vs-amount-sub">locked in vault</div>
-        </div>
-
-        <div class="vs-countdown">
-          <div class="vs-cd-block">
-            <div class="vs-cd-num" id="vsCdDays">00</div>
-            <div class="vs-cd-lbl">Days</div>
-          </div>
-          <div class="vs-cd-sep">:</div>
-          <div class="vs-cd-block">
-            <div class="vs-cd-num" id="vsCdHrs">00</div>
-            <div class="vs-cd-lbl">Hours</div>
-          </div>
-          <div class="vs-cd-sep">:</div>
-          <div class="vs-cd-block">
-            <div class="vs-cd-num" id="vsCdMins">00</div>
-            <div class="vs-cd-lbl">Mins</div>
-          </div>
-          <div class="vs-cd-sep">:</div>
-          <div class="vs-cd-block vs-cd-block--secs">
-            <div class="vs-cd-num" id="vsCdSecs">00</div>
-            <div class="vs-cd-lbl">Secs</div>
-          </div>
-        </div>
-
-        <div class="vs-unlock-date">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="opacity:.45;flex-shrink:0"><rect x="1" y="2" width="10" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 1v2M8 1v2M1 5h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Unlocks <strong id="vsUnlockDateVal">—</strong>
-        </div>
-
-        <button class="vs-btn vs-btn-locked" id="vsWithdrawBtn" onclick="handleWithdraw()">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V4.5a2 2 0 1 1 4 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          Locked
-        </button>
-      </div>
-
-      <!-- ── State 2: Deposit form ── -->
-      <div class="vault-state vs-active" id="depositFormCard">
-        <div class="vs-token-label">
-          <span id="dfTokenLabel">USDC Vault</span>
-        </div>
-
-        <div class="vs-form-grp">
-          <label class="vs-field-lbl" for="dfAmount">Amount to lock</label>
-          <div class="vs-input-wrap">
-            <input type="number" class="vs-input" id="dfAmount" placeholder="0.00" step="0.01" min="0.01" oninput="onAmountInput()">
-            <button class="vs-max-btn" id="dfMaxBtn" onclick="setMax()" type="button">MAX</button>
-            <span class="vs-input-sym" id="dfAmountSuffix">USDC</span>
-          </div>
-          <div class="vs-balance-hint">
-            <span>Wallet balance</span>
-            <span id="dfWalletBal">— <span id="dfWalletBalSym">USDC</span></span>
-          </div>
-        </div>
-
-        <div class="vs-form-grp">
-          <label class="vs-field-lbl" for="dfDays">Lock period</label>
-          <div class="vs-input-wrap">
-            <input type="number" class="vs-input" id="dfDays" placeholder="30" min="1" max="3650" oninput="onDaysInput()">
-            <span class="vs-input-sym">DAYS</span>
-          </div>
-          <div class="vs-quick-days">
-            <button class="vs-qd" onclick="setDays(7,this)">7d</button>
-            <button class="vs-qd" onclick="setDays(30,this)">30d</button>
-            <button class="vs-qd" onclick="setDays(90,this)">90d</button>
-            <button class="vs-qd" onclick="setDays(365,this)">1yr</button>
-          </div>
-        </div>
-
-        <button class="vs-btn vs-btn-primary" id="dfDepositBtn" onclick="handleDeposit()" disabled>
-          <span id="dfDepositBtnContent">Deposit USDC</span>
-        </button>
-      </div>
-
-    </div>
-  </div><!-- /vault-single -->
-</section>
-
-<!-- ═══════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════ -->
 <footer class="footer">
@@ -875,22 +922,27 @@ const ARC_CHAIN_CFG  = {
 const VAULTS = {
   usdc: {
     symbol:       "USDC",
-    vaultAddress: "0x95DfA691160FF5be643473c5CC7fF82B4488d9De",
+    vaultAddress: "0x487C0a96D51e6064c15B81466f78Cc1Fe9396af5",
     tokenAddress: "0x3600000000000000000000000000000000000000",
     decimals:     6
   },
   eurc: {
     symbol:       "EURC",
-    vaultAddress: "0x3DbeADa61778C45eF99b35c3068e7eBB92496D2B",
+    vaultAddress: "0x1A3f16C32cD001d34803532fc4CE1513A3531061",
     tokenAddress: "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
     decimals:     6
   }
 };
 
 const VAULT_ABI = [
-  "function deposit(uint256 _amount, uint256 _lockDays) external",
-  "function withdraw() external",
-  "function getVaultInfo(address _user) external view returns (uint256 amount, uint256 unlockTime, uint256 timeLeft)"
+  "function deposit(uint256 amount, uint256 lockDays) external",
+  "function withdraw(uint256 vaultIndex) external",
+  "function earlyWithdraw(uint256 vaultIndex) external",
+  "function getUserVaults(address user) external view returns (tuple(uint256 amount, uint256 unlockTime, uint256 createdAt, bool active)[])",
+  "function getVaultInfo(address user, uint256 vaultIndex) external view returns (uint256 amount, uint256 unlockTime, uint256 createdAt, uint256 timeLeft, bool active)",
+  "function getActiveVaultCount(address user) external view returns (uint256)",
+  "function totalLocked() external view returns (uint256)",
+  "function token() external view returns (address)"
 ];
 
 const ERC20_ABI = [
@@ -901,27 +953,21 @@ const ERC20_ABI = [
 ];
 
 /* ════════════════════════════════════════
-   DEMO STATE (preview without wallet)
-════════════════════════════════════════ */
-const DEMO = {
-  usdc: { balance: "0.00", vault: null },
-  eurc: { balance: "0.00", vault: null }
-};
-
-/* ════════════════════════════════════════
    APP STATE
 ════════════════════════════════════════ */
 const app = {
-  connected:  false,
-  address:    null,
-  provider:   null,
-  signer:     null,
-  tab:        "usdc",
-  vaultInfo:  { usdc: null, eurc: null },
-  balances:   { usdc: "0.00", eurc: "0.00" },
-  txPending:  false,
-  cdTimer:    null,
-  cdTarget:   null   // unix ms of unlock
+  connected:           false,
+  address:             null,
+  provider:            null,
+  signer:              null,
+  tab:                 "usdc",
+  vaults:              { usdc: [], eurc: [] },
+  history:             { usdc: [], eurc: [] },
+  balances:            { usdc: "0.00", eurc: "0.00" },
+  tvl:                 { usdc: "—", eurc: "—" },
+  txPending:           false,
+  cdTimers:            {},
+  earlyWithdrawTarget: null
 };
 
 /* ════════════════════════════════════════
@@ -929,6 +975,100 @@ const app = {
 ════════════════════════════════════════ */
 const el  = id => document.getElementById(id);
 const fmt = (n, d=2) => parseFloat(n).toFixed(d);
+
+function withTimeout(promise, ms = 45000) {
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new Error("TIMEOUT")), ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+// Arc Testnet requires EIP-1559 (type-2) txs; legacy gasPrice txs are not mined.
+// Minimum observed base fee is ~20 gwei. This helper fetches live fee data and
+// enforces a floor so wallets that return null/zero don't produce stuck txs.
+async function getEIP1559Overrides(gasLimit) {
+  const GWEI        = 1_000_000_000n;
+  const MIN_BASE    = 20n * GWEI;   // 20 gwei floor — Arc Testnet minimum
+  const MIN_TIP     = 1n  * GWEI;   // 1 gwei priority fee floor
+
+  let maxFeePerGas, maxPriorityFeePerGas;
+
+  try {
+    const feeData = await app.provider.getFeeData();
+    console.log('[Fees] Raw feeData from provider:', {
+      gasPrice:             feeData.gasPrice            != null ? feeData.gasPrice.toString()             + ' wei' : 'null',
+      maxFeePerGas:         feeData.maxFeePerGas        != null ? feeData.maxFeePerGas.toString()         + ' wei' : 'null',
+      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas != null ? feeData.maxPriorityFeePerGas.toString() + ' wei' : 'null',
+    });
+
+    maxPriorityFeePerGas =
+      (feeData.maxPriorityFeePerGas != null && feeData.maxPriorityFeePerGas > MIN_TIP)
+        ? feeData.maxPriorityFeePerGas
+        : MIN_TIP;
+
+    const baseFeeFloor = MIN_BASE + maxPriorityFeePerGas;
+    maxFeePerGas =
+      (feeData.maxFeePerGas != null && feeData.maxFeePerGas > baseFeeFloor)
+        ? feeData.maxFeePerGas
+        : baseFeeFloor;
+
+  } catch (feeErr) {
+    console.warn('[Fees] getFeeData() threw — using floor values:', feeErr.message);
+    maxPriorityFeePerGas = MIN_TIP;
+    maxFeePerGas         = MIN_BASE + MIN_TIP;
+  }
+
+  const overrides = { type: 2, gasLimit, maxFeePerGas, maxPriorityFeePerGas };
+  console.log('[Fees] EIP-1559 overrides applied:', {
+    type:                 overrides.type,
+    gasLimit:             gasLimit.toString(),
+    maxFeePerGas:         (maxFeePerGas         / GWEI).toString() + ' gwei',
+    maxPriorityFeePerGas: (maxPriorityFeePerGas / GWEI).toString() + ' gwei',
+  });
+  return overrides;
+}
+
+async function waitForReceipt(txHash, timeoutMs = 90000, intervalMs = 2500) {
+  const start = Date.now();
+  let attempt = 0;
+  while (Date.now() - start < timeoutMs) {
+    attempt++;
+    try {
+      const res = await fetch("https://rpc.testnet.arc.network", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: "eth_getTransactionReceipt",
+          params: [txHash],
+          id: 1
+        })
+      });
+      const data = await res.json();
+      if (data.result && data.result.status) {
+        console.log('[Receipt] Got receipt on attempt', attempt, '— status:', data.result.status, '| block:', data.result.blockNumber);
+        if (data.result.status === "0x0") throw new Error("Transaction reverted on-chain");
+        return data.result;
+      }
+    } catch (err) {
+      if (err.message === "Transaction reverted on-chain") throw err;
+      console.warn('[Receipt] Poll error (will retry):', err.message);
+    }
+    console.log('[Receipt] Attempt', attempt, '— not yet mined, retrying...');
+    await new Promise(r => setTimeout(r, intervalMs));
+  }
+  throw new Error("TIMEOUT");
+}
+
+function txErrMsg(err) {
+  if (err.message === "TIMEOUT") return "Transaction timed out after 90s — please try again.";
+  if (err.message === "Transaction reverted on-chain") return "Transaction reverted on-chain. Check contract conditions.";
+  if (err.code === 4001 || err.code === "ACTION_REJECTED" ||
+      err.message?.includes("user rejected") ||
+      err.message?.includes("User rejected")) return null; // null = silent cancel
+  return (err.reason || err.shortMessage || err.message || "Unknown error").slice(0, 160);
+}
 
 function shortAddr(a) { return a.slice(0,6) + "…" + a.slice(-4); }
 
@@ -1092,12 +1232,15 @@ function handleDisconnect() {
   app.address    = null;
   app.provider   = null;
   app.signer     = null;
-  app.vaultInfo  = { usdc: null, eurc: null };
+  app.vaults     = { usdc: [], eurc: [] };
+  app.history    = { usdc: [], eurc: [] };
   app.balances   = { usdc: "0.00", eurc: "0.00" };
+  app.tvl        = { usdc: "—", eurc: "—" };
+  app.earlyWithdrawTarget = null;
 
   el("connectBtn").classList.remove("connected");
   el("connectBtn").innerHTML = `<span id="connectBtnText">Connect Wallet</span>`;
-  stopCountdown();
+  stopAllCountdowns();
   renderUI();
 }
 
@@ -1113,23 +1256,31 @@ async function loadData() {
       const tokenC = new ethers.Contract(cfg.tokenAddress, ERC20_ABI, app.provider);
       const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.provider);
 
-      const [rawBal, vaultInfo] = await Promise.all([
+      const [rawBal, rawVaults, rawTvl] = await Promise.all([
         tokenC.balanceOf(app.address),
-        vaultC.getVaultInfo(app.address)
+        vaultC.getUserVaults(app.address),
+        vaultC.totalLocked()
       ]);
 
       app.balances[key] = fmt(ethers.formatUnits(rawBal, cfg.decimals));
+      app.tvl[key]      = fmt(ethers.formatUnits(rawTvl, cfg.decimals));
 
-      const [vaultAmount, unlockTime, timeLeft] = vaultInfo;
-      if (vaultAmount > 0n) {
-        app.vaultInfo[key] = {
-          amount:   fmt(ethers.formatUnits(vaultAmount, cfg.decimals)),
-          unlockTs: Number(unlockTime) * 1000,
-          timeLeft: Number(timeLeft)
+      const active  = [];
+      const history = [];
+      rawVaults.forEach((v, i) => {
+        const vObj = {
+          index:     i,
+          amount:    fmt(ethers.formatUnits(v.amount, cfg.decimals)),
+          unlockTs:  Number(v.unlockTime) * 1000,
+          createdTs: Number(v.createdAt)  * 1000,
+          active:    v.active
         };
-      } else {
-        app.vaultInfo[key] = null;
-      }
+        if (v.active) active.push(vObj);
+        else          history.push(vObj);
+      });
+
+      app.vaults[key]  = active;
+      app.history[key] = history;
     } catch (err) {
       console.error(`loadData [${key}]:`, err);
     }
@@ -1147,26 +1298,13 @@ function switchTab(tab) {
   el("tabEurc").classList.toggle("active", tab === "eurc");
   el("tabUsdc").setAttribute("aria-selected", tab === "usdc");
   el("tabEurc").setAttribute("aria-selected", tab === "eurc");
-  stopCountdown();
+  stopAllCountdowns();
   renderUI();
 }
 
 /* ════════════════════════════════════════
    RENDER UI
 ════════════════════════════════════════ */
-function showCard(id) {
-  document.querySelectorAll(".vault-state").forEach(s => s.classList.remove("vs-active"));
-  // Apply premium locked skin only when showing the active vault state
-  const card = document.querySelector(".vault-card");
-  if (card) card.classList.toggle("vault-card--locked", id === "activeVaultCard");
-  const target = document.getElementById(id);
-  if (!target) return;
-  target.style.display = "none";
-  void target.offsetHeight; // force reflow to re-trigger animation
-  target.style.display = "";
-  target.classList.add("vs-active");
-}
-
 function fmtDateLong(ts) {
   return new Date(ts).toLocaleDateString("en-US", {
     weekday: "short", month: "long", day: "numeric", year: "numeric"
@@ -1174,117 +1312,182 @@ function fmtDateLong(ts) {
 }
 
 function renderUI() {
-  const tab       = app.tab;
-  const cfg       = VAULTS[tab];
-  const sym       = cfg.symbol;
-  const isDemo    = !app.connected;
-  const balance   = isDemo ? DEMO[tab].balance : app.balances[tab];
-  const vaultData = isDemo ? DEMO[tab].vault   : app.vaultInfo[tab];
-  const hasVault  = vaultData && parseFloat(vaultData.amount) > 0;
+  const key     = app.tab;
+  const cfg     = VAULTS[key];
+  const sym     = cfg.symbol;
+  const isDemo  = !app.connected;
+  const balance = isDemo ? "0.00" : app.balances[key];
+  const active  = isDemo ? [] : app.vaults[key];
+  const hist    = isDemo ? [] : app.history[key];
+  const tvlVal  = isDemo ? "—" : app.tvl[key];
 
-  if (hasVault) {
-    // ── Active vault card ──
-    const unlockTs = vaultData.unlockTs;
-    const isLocked = unlockTs > Date.now() && vaultData.timeLeft > 0;
+  // ── TVL + counter ──
+  el("tvlDisplay").textContent = tvlVal === "—" ? "—" : `${tvlVal} ${sym}`;
+  const count = active.length;
+  el("vaultCounter").textContent = `${count} / 5 vaults used`;
 
-    el("vsAmount").textContent        = fmt(vaultData.amount);
-    el("vsSymbol").textContent        = sym;
-    el("vsUnlockDateVal").textContent = fmtDateLong(unlockTs);
+  // ── Deposit panel ──
+  el("dfTokenLabel").textContent   = `${sym} Vault`;
+  el("dfAmountSuffix").textContent = sym;
+  el("dfWalletBal").innerHTML      = `${balance} <span id="dfWalletBalSym">${sym}</span>`;
 
-    const dot   = el("vsStatusDot");
-    const label = el("vsStatusLabel");
+  const maxed    = count >= 5 && !isDemo;
+  const formDis  = isDemo || app.txPending || maxed;
 
-    if (isLocked) {
-      dot.className     = "vs-status-dot locked";
-      label.textContent = `${sym} · Locked`;
-      startCountdown(vaultData.unlockTs, vaultData.timeLeft);
+  el("dfAmount").disabled = formDis;
+  el("dfDays").disabled   = formDis;
+  el("dfMaxBtn").disabled = formDis;
+  document.querySelectorAll(".vs-qd").forEach(b => b.disabled = formDis);
 
-      const wb = el("vsWithdrawBtn");
-      wb.className = "vs-btn vs-btn-locked";
-      wb.disabled  = true;
-      wb.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V4.5a2 2 0 1 1 4 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Locked until ${fmtDate(unlockTs)}`;
-    } else {
-      dot.className     = "vs-status-dot unlocked";
-      label.textContent = `${sym} · Unlocked`;
-      stopCountdown();
-      ["vsCdDays","vsCdHrs","vsCdMins","vsCdSecs"].forEach(i => el(i).textContent = "00");
+  const hint = el("v2VaultCountHint");
+  const btn  = el("dfDepositBtn");
 
-      const wb = el("vsWithdrawBtn");
-      if (isDemo) {
-        wb.className = "vs-btn vs-btn-primary";
-        wb.disabled  = true;
-        wb.innerHTML = "Connect wallet to withdraw";
-      } else {
-        wb.className = "vs-btn vs-btn-withdraw";
-        wb.disabled  = app.txPending;
-        wb.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V5a2 2 0 0 1 4 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M7 9v1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Withdraw ${sym}`;
-      }
-    }
-
-    showCard("activeVaultCard");
-
+  if (maxed) {
+    hint.innerHTML = '';
+    btn.disabled = true;
+    el("dfDepositBtnContent").textContent = "Maximum 5 vaults reached";
+  } else if (isDemo) {
+    hint.innerHTML = '';
+    btn.disabled   = false;
+    el("dfDepositBtnContent").textContent = "Connect Wallet to Deposit";
   } else {
-    // ── Deposit form ──
-    stopCountdown();
+    const slots = 5 - count;
+    hint.innerHTML = count > 0
+      ? `<strong>${slots}</strong> slot${slots !== 1 ? "s" : ""} remaining`
+      : "";
+    btn.disabled = app.txPending;
+    el("dfDepositBtnContent").textContent = `Deposit ${sym}`;
+  }
 
-    el("dfTokenLabel").textContent  = `${sym} Vault`;
-    el("dfAmountSuffix").textContent = sym;
-    el("dfWalletBal").innerHTML     = `${balance} <span id="dfWalletBalSym">${sym}</span>`;
+  // ── Your Vaults section header ──
+  const vcHd    = el("vcVaultsHd");
+  const vcCount = el("vcVaultsSectionCount");
+  if (active.length > 0) {
+    vcHd.classList.remove("hidden");
+    vcCount.textContent = `${active.length} / 5 active`;
+  } else {
+    vcHd.classList.add("hidden");
+  }
 
-    const disabled = isDemo || app.txPending;
-    el("dfAmount").disabled  = disabled;
-    el("dfDays").disabled    = disabled;
-    el("dfMaxBtn").disabled  = disabled;
-    document.querySelectorAll(".vs-qd").forEach(b => b.disabled = disabled);
+  // ── Active vault cards — rebuild DOM and restart timers ──
+  stopAllCountdowns();    // clear before rebuilding so no orphaned intervals
+  const grid = el("v2VaultsGrid");
+  grid.innerHTML = "";
 
-    const btn = el("dfDepositBtn");
-    if (isDemo) {
-      btn.disabled = false;
-      el("dfDepositBtnContent").textContent = "Connect Wallet to Deposit";
-    } else {
-      btn.disabled = app.txPending;
-      el("dfDepositBtnContent").textContent = `Deposit ${sym}`;
-    }
+  active.forEach(v => {
+    const isLocked = v.unlockTs > Date.now();
+    const card     = document.createElement("div");
+    card.className = `vault-row${isLocked ? "" : " unlocked"}`;
+    card.dataset.key   = key;
+    card.dataset.index = v.index;
 
-    showCard("depositFormCard");
+    card.innerHTML = `
+      <div class="vault-row-left">
+        ${isLocked
+          ? `<div class="vault-row-timer" id="vc-remain-${key}-${v.index}">—</div>`
+          : `<div class="vault-row-timer ready">Ready to withdraw</div>`
+        }
+        <div class="vault-row-date">${isLocked ? "unlocks" : "unlocked"} ${fmtDate(v.unlockTs)}</div>
+      </div>
+      <div class="vault-row-right">
+        <div class="vault-row-amount">${v.amount}<span class="vault-row-unit">${sym}</span></div>
+        ${isLocked ? `
+          <button class="vault-row-btn early" ${app.txPending ? "disabled" : ""}
+                  onclick="event.stopPropagation();openEarlyWithdrawModal('${key}',${v.index},'${v.amount}')">−10%</button>
+        ` : `
+          <button class="vault-row-btn withdraw" ${app.txPending ? "disabled" : ""}
+                  onclick="event.stopPropagation();handleWithdraw('${key}',${v.index})">Withdraw</button>
+        `}
+      </div>
+    `;
+
+    grid.appendChild(card);
+    if (isLocked) startVaultCountdown(key, v.index, v.unlockTs);
+  });
+
+  // ── Vault history ──
+  const histSection = el("v2HistorySection");
+  const histList    = el("v2HistoryList");
+  if (hist.length > 0) {
+    histSection.classList.remove("hidden");
+    histList.innerHTML = hist.map(v => {
+      const dur = Math.max(1, Math.round((v.unlockTs - v.createdTs) / 86400000));
+      return `<div class="v2-history-row">
+        <span class="v2-hist-amount">${v.amount} ${sym}</span>
+        <span class="v2-hist-duration">${dur} day${dur !== 1 ? "s" : ""}</span>
+        <span class="v2-hist-created">${fmtDate(v.createdTs)}</span>
+        <span class="v2-hist-status">Withdrawn</span>
+      </div>`;
+    }).join("");
+  } else {
+    histSection.classList.add("hidden");
   }
 }
 
 /* ════════════════════════════════════════
-   COUNTDOWN TIMER
+   COUNTDOWN TIMERS (per vault)
 ════════════════════════════════════════ */
-function startCountdown(unlockTs, initialSeconds) {
-  stopCountdown();
-  app.cdTarget = unlockTs;
+function startVaultCountdown(key, index, unlockTs) {
+  const tKey = `${key}-${index}`;
+  if (app.cdTimers[tKey]) clearInterval(app.cdTimers[tKey]);
 
   function tick() {
-    const now       = Date.now();
-    const remaining = Math.max(0, Math.floor((app.cdTarget - now) / 1000));
-    const d  = Math.floor(remaining / 86400);
-    const h  = Math.floor((remaining % 86400) / 3600);
-    const m  = Math.floor((remaining % 3600)  / 60);
-    const s  = remaining % 60;
-    el("vsCdDays").textContent = String(d).padStart(2,"0");
-    el("vsCdHrs").textContent  = String(h).padStart(2,"0");
-    el("vsCdMins").textContent = String(m).padStart(2,"0");
-    el("vsCdSecs").textContent = String(s).padStart(2,"0");
+    const remaining = Math.max(0, Math.floor((unlockTs - Date.now()) / 1000));
+    const d = Math.floor(remaining / 86400);
+    const h = Math.floor((remaining % 86400) / 3600);
+    const m = Math.floor((remaining % 3600) / 60);
+    const s = remaining % 60;
+
+    // Compact one-liner (always visible on the card)
+    const remEl = el(`vc-remain-${key}-${index}`);
+    if (!remEl) { clearInterval(app.cdTimers[tKey]); return; }
+    remEl.textContent = d > 0
+      ? `${d}d ${String(h).padStart(2,"0")}h left`
+      : h > 0
+        ? `${h}h ${String(m).padStart(2,"0")}m left`
+        : `${m}m ${String(s).padStart(2,"0")}s left`;
+
+    // Full D:H:M:S blocks (only present when the card is expanded)
+    const dEl = el(`mcd-${key}-${index}-d`);
+    if (dEl) {
+      dEl.textContent                         = String(d).padStart(2, "0");
+      el(`mcd-${key}-${index}-h`).textContent = String(h).padStart(2, "0");
+      el(`mcd-${key}-${index}-m`).textContent = String(m).padStart(2, "0");
+      el(`mcd-${key}-${index}-s`).textContent = String(s).padStart(2, "0");
+    }
 
     if (remaining === 0) {
-      stopCountdown();
-      if (app.connected) {
-        loadData();
-      } else {
-        DEMO[app.tab].vault.timeLeft = 0;
-        renderUI();
-      }
+      clearInterval(app.cdTimers[tKey]);
+      delete app.cdTimers[tKey];
+      if (app.connected) loadData();
     }
   }
   tick();
-  app.cdTimer = setInterval(tick, 1000);
+  app.cdTimers[tKey] = setInterval(tick, 1000);
 }
 
-function stopCountdown() {
-  if (app.cdTimer) { clearInterval(app.cdTimer); app.cdTimer = null; }
+function stopAllCountdowns() {
+  Object.values(app.cdTimers).forEach(t => clearInterval(t));
+  app.cdTimers = {};
+}
+
+function toggleVaultExpand(key, index) {
+  const card   = document.querySelector(`.vc-card[data-key="${key}"][data-index="${index}"]`);
+  if (!card) return;
+  const expand    = el(`vc-expand-${key}-${index}`);
+  const isOpen    = card.classList.contains("expanded");
+
+  // Collapse any other open card first
+  document.querySelectorAll(".vc-card.expanded").forEach(c => {
+    c.classList.remove("expanded");
+    const ex = c.querySelector(".vc-expand");
+    if (ex) ex.style.display = "none";
+  });
+
+  if (!isOpen) {
+    card.classList.add("expanded");
+    if (expand) expand.style.display = "block";
+  }
 }
 
 /* ════════════════════════════════════════
@@ -1323,6 +1526,20 @@ async function handleDeposit() {
   if (!daysInput || parseInt(daysInput) < 1)    { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
   if (parseInt(daysInput) > 3650)               { toast("error","Too long","Maximum lock period is 3650 days (10 years)."); return; }
 
+  // ── Nonce check — detect stuck pending transactions ──
+  try {
+    const pendingNonce   = await app.provider.getTransactionCount(app.address, "pending");
+    const confirmedNonce = await app.provider.getTransactionCount(app.address, "latest");
+    console.log('[Nonce] pending:', pendingNonce, '| confirmed:', confirmedNonce);
+    if (pendingNonce > confirmedNonce) {
+      toast("error", "Stuck Transactions Detected",
+        "You have pending stuck transactions. Go to MetaMask → Settings → Advanced → Clear activity tab data, then try again.", 10000);
+      return;
+    }
+  } catch (nonceErr) {
+    console.warn('[Nonce] check failed (continuing):', nonceErr.message);
+  }
+
   app.txPending = true;
   renderUI();
 
@@ -1331,31 +1548,48 @@ async function handleDeposit() {
   const amount = ethers.parseUnits(amtInput, cfg.decimals);
   const days   = parseInt(daysInput);
 
+  console.log('[Deposit] Tab:', app.tab, '| Token:', cfg.tokenAddress, '| Vault:', cfg.vaultAddress);
+  console.log('[Deposit] Amount (raw):', amount.toString(), '| Days:', days);
+
   let txId;
   try {
-    // ── Step 1: Approve ──
-    const allowance = await tokenC.allowance(app.address, cfg.vaultAddress);
+    // ── Step 1: Approve exact amount if needed ──
+    const allowance = await withTimeout(tokenC.allowance(app.address, cfg.vaultAddress));
+    console.log('[Deposit] Current allowance:', allowance.toString(), '| Needed:', amount.toString(), '| Skip approve:', allowance >= amount);
+
     if (allowance < amount) {
       txId = toast("loading", `Approving ${sym}…`, "Step 1 of 2 — confirm in wallet", 0);
       el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Approving…`;
-      el("dfDepositBtn").disabled = true;
 
-      const approveTx = await tokenC.approve(cfg.vaultAddress, amount);
-      await approveTx.wait();
+      // Use exact amount — Arc's USDC at 0x360... is a precompile; MaxUint256 may fail to mine
+      console.log('[Deposit] Calling approve — token:', cfg.tokenAddress, '| spender:', cfg.vaultAddress, '| amount:', amount.toString());
+      const approveOverrides = await getEIP1559Overrides(200000n);
+      const approveTx = await withTimeout(
+        tokenC.approve(cfg.vaultAddress, amount, approveOverrides)
+      );
+      console.log('[Deposit] Approve tx sent:', approveTx.hash, '| type:', approveTx.type);
+      const approveReceipt = await waitForReceipt(approveTx.hash);
+      console.log('[Deposit] Approve confirmed — block:', approveReceipt.blockNumber);
       removeToast(txId);
+      txId = null;
     }
 
     // ── Step 2: Deposit ──
-    txId = toast("loading", `Depositing ${sym}…`, "Step 2 of 2 — confirm in wallet", 0);
+    txId = toast("loading", `Depositing ${sym}…`, `Step ${allowance < amount ? "2 of 2" : "1 of 1"} — confirm in wallet`, 0);
     el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Depositing…`;
 
-    const depositTx = await vaultC.deposit(amount, days);
-    await depositTx.wait();
+    console.log('[Deposit] Calling deposit — amount:', amount.toString(), '| lockDays:', days);
+    const depositOverrides = await getEIP1559Overrides(300000n);
+    const depositTx = await withTimeout(
+      vaultC.deposit(amount, BigInt(days), depositOverrides)
+    );
+    console.log('[Deposit] Deposit tx sent:', depositTx.hash, '| type:', depositTx.type);
+    const depositReceipt = await waitForReceipt(depositTx.hash);
+    console.log('[Deposit] Deposit confirmed — block:', depositReceipt.blockNumber);
 
     removeToast(txId);
     toast("success", "Vault Created! 🎉", `${fmt(amtInput)} ${sym} locked for ${days} day${days===1?"":"s"}.`, 7000);
 
-    // Reset form
     el("dfAmount").value = "";
     el("dfDays").value   = "";
     document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
@@ -1364,11 +1598,11 @@ async function handleDeposit() {
 
   } catch (err) {
     if (txId) removeToast(txId);
-    if (err.code === 4001 || err.code === "ACTION_REJECTED") {
-      toast("info", "Transaction Cancelled", "You rejected the transaction.");
+    const msg = txErrMsg(err);
+    if (msg === null) {
+      toast("info", "Cancelled", "Transaction cancelled.");
     } else {
-      const reason = err.reason || err.shortMessage || err.message;
-      toast("error", "Transaction Failed", reason?.slice(0, 150) || "Unknown error");
+      toast("error", "Transaction Failed", msg);
     }
   } finally {
     app.txPending = false;
@@ -1379,10 +1613,10 @@ async function handleDeposit() {
 /* ════════════════════════════════════════
    WITHDRAW
 ════════════════════════════════════════ */
-async function handleWithdraw() {
+async function handleWithdraw(key, vaultIndex) {
   if (!app.connected || !app.signer) return;
 
-  const cfg = VAULTS[app.tab];
+  const cfg = VAULTS[key];
   const sym = cfg.symbol;
 
   app.txPending = true;
@@ -1390,11 +1624,14 @@ async function handleWithdraw() {
 
   const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
   const txId   = toast("loading", `Withdrawing ${sym}…`, "Confirm in your wallet", 0);
-  el("vsWithdrawBtn").innerHTML = `<span class="spin"></span> Processing…`;
 
+  console.log('[Withdraw] Key:', key, '| Vault:', cfg.vaultAddress, '| vaultIndex:', vaultIndex);
   try {
-    const tx = await vaultC.withdraw();
-    await tx.wait();
+    const withdrawOverrides = await getEIP1559Overrides(200000n);
+    const tx = await withTimeout(vaultC.withdraw(BigInt(vaultIndex), withdrawOverrides));
+    console.log('[Withdraw] Tx sent:', tx.hash, '| type:', tx.type);
+    const receipt = await waitForReceipt(tx.hash);
+    console.log('[Withdraw] Confirmed — block:', receipt.blockNumber);
 
     removeToast(txId);
     toast("success", "Withdrawal Complete 💸", `${sym} returned to your wallet!`, 6000);
@@ -1402,13 +1639,75 @@ async function handleWithdraw() {
 
   } catch (err) {
     removeToast(txId);
-    if (err.code === 4001 || err.code === "ACTION_REJECTED") {
-      toast("info", "Cancelled", "Transaction cancelled.");
-    } else {
-      const reason = err.reason || err.shortMessage || err.message;
-      toast("error", "Withdrawal Failed", reason?.slice(0, 150) || "Unknown error");
-    }
+    const msg = txErrMsg(err);
+    if (msg === null) toast("info", "Cancelled", "Transaction cancelled.");
+    else toast("error", "Withdrawal Failed", msg);
   } finally {
+    app.txPending = false;
+    renderUI();
+  }
+}
+
+/* ════════════════════════════════════════
+   EARLY WITHDRAW
+════════════════════════════════════════ */
+function openEarlyWithdrawModal(key, vaultIndex, amount) {
+  app.earlyWithdrawTarget = { key, vaultIndex, amount };
+  const sym     = VAULTS[key].symbol;
+  const penalty = fmt(parseFloat(amount) * 0.1);
+  const receive = fmt(parseFloat(amount) * 0.9);
+
+  el("ewmLocked").textContent  = `${amount} ${sym}`;
+  el("ewmPenalty").textContent = `−${penalty} ${sym}`;
+  el("ewmReceive").textContent = `${receive} ${sym}`;
+  el("earlyWithdrawModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeEarlyWithdrawModal() {
+  el("earlyWithdrawModal").classList.remove("open");
+  document.body.style.overflow = "";
+  app.earlyWithdrawTarget = null;
+}
+
+function ewModalBackdrop(e) {
+  if (e.target === el("earlyWithdrawModal")) closeEarlyWithdrawModal();
+}
+
+async function confirmEarlyWithdraw() {
+  if (!app.earlyWithdrawTarget || !app.connected || !app.signer) return;
+
+  const { key, vaultIndex, amount } = app.earlyWithdrawTarget;
+  const cfg = VAULTS[key];
+  const sym = cfg.symbol;
+
+  closeEarlyWithdrawModal();
+  app.txPending = true;
+  renderUI();
+
+  const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
+  const txId   = toast("loading", `Early Withdrawing ${sym}…`, "Confirm in your wallet", 0);
+
+  console.log('[EarlyWithdraw] Key:', key, '| Vault:', cfg.vaultAddress, '| vaultIndex:', vaultIndex);
+  try {
+    const ewOverrides = await getEIP1559Overrides(300000n);
+    const tx = await withTimeout(vaultC.earlyWithdraw(BigInt(vaultIndex), ewOverrides));
+    console.log('[EarlyWithdraw] Tx sent:', tx.hash, '| type:', tx.type);
+    const ewReceipt = await waitForReceipt(tx.hash);
+    console.log('[EarlyWithdraw] Confirmed — block:', ewReceipt.blockNumber);
+
+    removeToast(txId);
+    const receive = fmt(parseFloat(amount) * 0.9);
+    toast("success", "Early Withdrawal Complete", `Received ${receive} ${sym} after 10% penalty.`, 7000);
+    await loadData();
+
+  } catch (err) {
+    removeToast(txId);
+    const msg = txErrMsg(err);
+    if (msg === null) toast("info", "Cancelled", "Transaction cancelled.");
+    else toast("error", "Early Withdrawal Failed", msg);
+  } finally {
+    // Always clear loading state — no stuck spinner
     app.txPending = false;
     renderUI();
   }
@@ -1419,14 +1718,46 @@ async function handleWithdraw() {
    KEYBOARD
 ════════════════════════════════════════ */
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeWalletModal();
+  if (e.key === "Escape") {
+    closeWalletModal();
+    closeEarlyWithdrawModal();
+  }
 });
 
 /* ════════════════════════════════════════
    INIT
 ════════════════════════════════════════ */
-(function init() {
+(async function init() {
   renderUI();
+
+  // Silent auto-reconnect — no popup, uses cached permission only
+  try {
+    const ethereum = window.ethereum;
+    if (!ethereum) return;
+
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+    if (!accounts || accounts.length === 0) return;
+
+    const chainId = await ethereum.request({ method: "eth_chainId" });
+    if (chainId.toLowerCase() !== ARC_CHAIN_ID.toLowerCase()) return;
+
+    // Already authorised on the right chain — reconnect silently
+    app.address   = accounts[0];
+    app.provider  = new ethers.BrowserProvider(ethereum);
+    app.signer    = await app.provider.getSigner();
+    app.connected = true;
+
+    el("connectBtn").classList.add("connected");
+    el("connectBtn").innerHTML = `<span class="wallet-dot"></span><span id="connectBtnText">${shortAddr(app.address)}</span>`;
+
+    ethereum.on("accountsChanged", () => window.location.reload());
+    ethereum.on("chainChanged",    () => window.location.reload());
+
+    await loadData();
+  } catch (e) {
+    // Fail silently — user can connect manually
+    console.log("[Init] Auto-reconnect skipped:", e.message);
+  }
 })();
 </script>
 </body>
