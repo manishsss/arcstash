@@ -20,17 +20,17 @@ input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 
 /* ─── Variables ─── */
 :root {
-  --primary:        #7c3aed;
-  --primary-hover:  #6d28d9;
-  --primary-soft:   #ede9fe;
-  --primary-bg:     rgba(124,58,237,0.06);
+  --primary:        #2a36d9;
+  --primary-hover:  #1e2ab3;
+  --primary-soft:   #e8eafd;
+  --primary-bg:     rgba(42,54,217,0.06);
 
-  --bg:             #f9f5ff;
+  --bg:             #f5f7ff;
   --surface:        #ffffff;
-  --surface-hi:     #f4f0fb;
-  --surface-hover:  #ede9fe;
+  --surface-hi:     #f0f2fb;
+  --surface-hover:  #e8eafd;
   --border:         rgba(0,0,0,0.06);
-  --border-hi:      rgba(124,58,237,0.15);
+  --border-hi:      rgba(42,54,217,0.15);
 
   --text-1: #1a1a2e;
   --text-2: #6b7280;
@@ -39,6 +39,7 @@ input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
   --green:  #22c55e;
   --amber:  #d97706;
   --red:    #ef4444;
+  --blue:   #3b82f6;
 
   --r-sm: 10px;
   --r-md: 14px;
@@ -88,7 +89,6 @@ body {
   padding: 14px 24px;
 }
 
-/* Logo */
 .nav-logo {
   display: flex; align-items: center; gap: 10px;
   text-decoration: none; color: inherit;
@@ -96,7 +96,6 @@ body {
 .logo-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); }
 .logo-name em { color: var(--primary); font-style: normal; }
 
-/* Nav actions */
 .nav-actions { display: flex; align-items: center; gap: 9px; }
 
 .btn-faucet {
@@ -104,7 +103,7 @@ body {
   padding: 8px 12px;
   background: transparent; border: none;
   border-radius: 10px;
-  color: var(--text-3); font-size: 13px; font-weight: 500;
+  color: var(--text-2); font-size: 13px; font-weight: 500;
   text-decoration: none; cursor: pointer;
   transition: color .18s; white-space: nowrap; font-family: inherit;
 }
@@ -119,12 +118,8 @@ body {
   cursor: pointer; font-family: inherit; white-space: nowrap;
   transition: background .18s, box-shadow .18s;
 }
-.btn-connect:hover {
-  background: var(--primary-hover);
-  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
-}
+.btn-connect:hover { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(42,54,217,0.35); }
 .btn-connect.connected { background: var(--primary); }
-
 .wallet-dot { width:8px; height:8px; border-radius:50%; background:#fff; opacity:.85; flex-shrink:0; }
 
 /* ─────────────────────────────────────────
@@ -176,27 +171,14 @@ body {
 }
 .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .how-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 14px 12px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   transition: box-shadow .22s, transform .2s;
 }
-.how-card:hover {
-  box-shadow: 0 4px 12px rgba(124,58,237,0.07);
-  transform: translateY(-1px);
-}
-.how-step {
-  font-size: 10px; font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--primary);
-  display: inline-block; margin-bottom: 8px;
-}
-.how-icon {
-  width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 8px;
-}
+.how-card:hover { box-shadow: 0 4px 12px rgba(42,54,217,0.07); transform: translateY(-1px); }
+.how-step { font-size: 10px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--primary); display: inline-block; margin-bottom: 8px; }
+.how-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
 .how-icon--blue   { color: var(--primary); }
 .how-icon--green  { color: var(--green); }
 .how-icon--purple { color: var(--primary); }
@@ -223,26 +205,21 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .vault-tab {
-  padding: 9px 28px; border-radius: 10px;
+  padding: 9px 22px; border-radius: 10px;
   font-size: 14px; font-weight: 600;
   cursor: pointer; border: none; background: none;
-  font-family: inherit; color: var(--text-3);
+  font-family: inherit; color: var(--text-2);
   display: flex; align-items: center; gap: 7px;
   transition: all .18s;
 }
-.vault-tab:not(.active):hover { color: var(--text-2); background: var(--surface-hi); }
+.vault-tab:not(.active):hover { color: var(--text-1); background: var(--surface-hi); }
 .vault-tab.active { background: var(--primary); color: #fff; }
-.tab-pill {
-  font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
-  padding: 2px 6px; border-radius: 5px;
-  background: rgba(255,255,255,0.25);
-}
 
-/* Deposit panel card */
+/* Deposit/vault card */
 .vault-card {
   width: 100%;
   background: var(--surface);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: var(--r-lg); padding: 2rem 1.75rem;
   position: relative; overflow: hidden;
   box-shadow: var(--shadow);
@@ -251,7 +228,7 @@ body {
 /* ─ Shared label row ─ */
 .vs-token-label {
   font-size: 11px; font-weight: 700; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--text-3);
+  text-transform: uppercase; color: var(--text-2);
   margin-bottom: 20px;
   display: flex; align-items: center; gap: 8px;
 }
@@ -259,13 +236,15 @@ body {
 .vs-status-dot.locked   { background: #f87171; box-shadow: 0 0 6px rgba(248,113,113,0.4); animation: dotPulse 2s ease infinite; }
 .vs-status-dot.unlocked { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.4); }
 
-/* ─ Deposit form ─ */
-.vs-form-grp { margin-bottom: 18px; }
+/* ─ Form groups ─ */
+.vs-form-grp { margin-bottom: 16px; }
 .vs-field-lbl {
   display: block; font-size: 11px; font-weight: 600;
-  color: var(--text-3); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
 }
 .vs-input-wrap { position: relative; }
+
+/* large number input */
 .vs-input {
   width: 100%; padding: 13px 80px 13px 16px;
   background: var(--surface-hi); border: 2px solid transparent;
@@ -274,9 +253,23 @@ body {
   font-family: 'JetBrains Mono', monospace;
   outline: none; transition: all .18s; box-sizing: border-box;
 }
-.vs-input:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(124,58,237,0.08); }
-.vs-input::placeholder { color: var(--text-3); font-weight: 400; font-size: 16px; font-family: 'Inter', sans-serif; }
+.vs-input:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(42,54,217,0.08); }
+.vs-input::placeholder { color: #9ca3af; opacity: 1; font-weight: 400; font-size: 16px; font-family: 'Inter', sans-serif; }
 .vs-input:disabled { opacity:.4; cursor:not-allowed; }
+
+/* smaller text input (address, label) */
+.vs-input-text {
+  width: 100%; padding: 11px 16px;
+  background: var(--surface-hi); border: 2px solid transparent;
+  border-radius: 12px; color: var(--text-1);
+  font-size: 14px; font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  outline: none; transition: all .18s;
+}
+.vs-input-text:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(42,54,217,0.08); }
+.vs-input-text::placeholder { color: #9ca3af; opacity: 1; font-weight: 400; }
+.vs-input-text:disabled { opacity:.4; cursor:not-allowed; }
+
 .vs-input-sym {
   position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
   font-size: 12px; font-weight: 700; color: var(--text-1);
@@ -294,8 +287,8 @@ body {
 .vs-quick-days { display: flex; gap: 7px; margin-top: 9px; }
 .vs-qd {
   flex: 1; padding: 8px 4px; text-align: center;
-  background: var(--surface-hi); border: 2px solid transparent;
-  border-radius: 10px; color: var(--text-3);
+  background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.12);
+  border-radius: 10px; color: var(--text-2);
   font-size: 12px; font-weight: 600; cursor: pointer;
   font-family: inherit; transition: all .18s;
 }
@@ -304,9 +297,9 @@ body {
 .vs-qd:disabled { opacity:.3; cursor:not-allowed; }
 .vs-balance-hint {
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: var(--text-3); margin-top: 7px; padding: 0 2px;
+  font-size: 12px; color: var(--text-2); margin-top: 7px; padding: 0 2px;
 }
-.vs-balance-hint span { color: var(--text-2); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+.vs-balance-hint span { color: var(--text-1); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
 
 /* ─ Action buttons ─ */
 .vs-btn {
@@ -318,38 +311,71 @@ body {
 }
 .vs-btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 .vs-btn-primary { background: var(--primary); color: #fff; }
-.vs-btn-primary:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
-.vs-btn-withdraw { background: var(--primary); color: #fff; }
-.vs-btn-withdraw:hover:not(:disabled) { background: var(--primary-hover); }
-.vs-btn-locked {
-  background: var(--surface-hi); border: none;
-  color: var(--text-3); cursor: not-allowed; opacity: 1 !important; text-transform: none;
-}
+.vs-btn-primary:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(42,54,217,0.35); }
 
 /* Spinner */
 .spin { width:16px; height:16px; border:2.5px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; }
+
+/* ─────────────────────────────────────────
+   PAY TAB — Token selector + bulk
+───────────────────────────────────────── */
+.pay-token-sel { display: flex; gap: 6px; margin-bottom: 0; }
+.pay-token-btn {
+  flex: 1; padding: 9px; border-radius: 10px;
+  background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.10);
+  color: var(--text-2); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all .18s;
+}
+.pay-token-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+
+.bulk-toggle-btn {
+  width: 100%; background: none; border: 1.5px dashed var(--border-hi);
+  border-radius: 10px; padding: 9px 16px; margin-top: 14px;
+  color: var(--primary); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all .18s;
+}
+.bulk-toggle-btn:hover { background: var(--primary-soft); }
+
+.bulk-rows-wrap { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.bulk-row {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr 28px;
+  gap: 6px; align-items: center;
+}
+.bulk-row .vs-input-text { padding: 9px 12px; font-size: 13px; }
+.bulk-row-del {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: #fef2f2; border: none; color: #ef4444;
+  font-size: 16px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: background .15s; font-family: inherit; flex-shrink: 0;
+}
+.bulk-row-del:hover { background: #fecaca; }
+.bulk-add-btn {
+  width: 100%; background: none; border: 1.5px dashed var(--border);
+  border-radius: 10px; padding: 8px;
+  color: var(--text-2); font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all .18s; margin-top: 4px;
+}
+.bulk-add-btn:hover { border-color: var(--border-hi); color: var(--primary); background: var(--primary-soft); }
 
 /* ─────────────────────────────────────────
    WALLET MODAL
 ───────────────────────────────────────── */
 .modal-ov {
   position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,0.28);
-  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.5);
   display: flex; align-items: center; justify-content: center; padding: 20px;
   opacity: 0; pointer-events: none; transition: opacity .2s;
 }
 .modal-ov.open { opacity: 1; pointer-events: all; }
-
 .modal {
   background: var(--surface);
   border: none; border-radius: 20px; padding: 26px;
   width: 100%; max-width: 400px;
   transform: scale(.94) translateY(12px);
-  transition: transform .22s; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transition: transform .22s; box-shadow: 0 8px 32px rgba(0,0,0,0.16);
 }
 .modal-ov.open .modal { transform: scale(1) translateY(0); }
-
 .modal-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
 .modal-title { font-size: 17px; font-weight: 700; color: var(--text-1); }
 .modal-close {
@@ -381,20 +407,16 @@ body {
 /* ─────────────────────────────────────────
    TOAST NOTIFICATIONS
 ───────────────────────────────────────── */
-.toast-wrap {
-  position: fixed; bottom: 22px; right: 22px; z-index: 300;
-  display: flex; flex-direction: column; gap: 10px; max-width: 350px;
-}
+.toast-wrap { position: fixed; bottom: 22px; right: 22px; z-index: 300; display: flex; flex-direction: column; gap: 10px; max-width: 350px; }
 .toast {
   display: flex; align-items: flex-start; gap: 11px;
   padding: 13px 15px; border-radius: 14px;
-  animation: slideIn .3s ease;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  animation: slideIn .3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 .toast.toast-success { background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; }
 .toast.toast-error   { background:#fef2f2; border:1px solid #fecaca; color:#991b1b; }
-.toast.toast-info    { background:#ede9fe; border:1px solid #c4b5fd; color:#5b21b6; }
-.toast.toast-loading { background:#ede9fe; border:1px solid #c4b5fd; color:#5b21b6; }
+.toast.toast-info    { background:#e8eafd; border:1px solid #a5b4fc; color:#1e2ab3; }
+.toast.toast-loading { background:#e8eafd; border:1px solid #a5b4fc; color:#1e2ab3; }
 .toast-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 .toast-body { flex: 1; }
 .toast-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
@@ -404,17 +426,8 @@ body {
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
-.footer {
-  background: var(--surface);
-  border-top: 1px solid rgba(0,0,0,0.06);
-  padding: 24px 24px;
-  position: relative; z-index: 1;
-}
-.footer-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 14px;
-}
+.footer { background: var(--surface); border-top: 1px solid rgba(0,0,0,0.06); padding: 24px; position: relative; z-index: 1; }
+.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
 .footer-copy { font-size: 12px; color: var(--text-3); }
 .footer-links { display: flex; align-items: center; gap: 18px; }
 .footer-link { font-size: 12px; color: var(--text-3); text-decoration: none; transition: color .18s; }
@@ -422,9 +435,8 @@ body {
 .footer-x {
   display: flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border-radius: 50%;
-  border: 1px solid var(--border);
-  color: var(--text-3); text-decoration: none;
-  transition: color .18s, border-color .18s, background .18s; flex-shrink: 0;
+  border: 1px solid var(--border); color: var(--text-3); text-decoration: none;
+  transition: color .18s, border-color .18s, background .18s;
 }
 .footer-x:hover { color: var(--primary); border-color: var(--border-hi); background: var(--primary-soft); }
 .chain-badge {
@@ -436,23 +448,16 @@ body {
 .chain-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
 
 /* ─────────────────────────────────────────
-   V2 META ROW (TVL + vault counter)
+   META ROW (TVL + counter)
 ───────────────────────────────────────── */
-.v2-meta-row {
-  text-align: center; margin-bottom: 16px;
-  font-size: 13px; color: var(--text-3); font-weight: 500;
-}
+.v2-meta-row { text-align: center; margin-bottom: 16px; font-size: 13px; color: var(--text-2); font-weight: 500; }
 .v2-tvl-amount { color: var(--text-1); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-.v2-vault-counter-inline { color: var(--text-3); }
 
 /* ─────────────────────────────────────────
-   VAULT SECTION HEADERS
+   SECTION HEADERS
 ───────────────────────────────────────── */
 .vc-section-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.vc-section-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
-  text-transform: uppercase; color: var(--text-3);
-}
+.vc-section-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-2); }
 .vc-section-count { font-size: 11px; font-weight: 600; color: var(--primary); }
 
 /* ─────────────────────────────────────────
@@ -460,18 +465,16 @@ body {
 ───────────────────────────────────────── */
 .vc-grid {
   display: flex; flex-direction: column;
-  gap: 0; max-width: 440px;
+  gap: 0; max-width: 550px;
   margin: 0 auto 28px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   border-radius: 14px; overflow: hidden;
 }
 .vc-grid:empty { display: none; }
 
-/* individual row */
 .vault-row {
   display: flex; align-items: center; justify-content: space-between;
-  background: #ffffff;
-  padding: 16px 18px;
+  background: #ffffff; padding: 14px 18px;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   animation: fadeUp .3s ease both;
 }
@@ -479,95 +482,77 @@ body {
 .vault-row:last-child  { border-radius: 0 0 14px 14px; border-bottom: none; }
 .vault-row:only-child  { border-radius: 14px; }
 .vault-row.unlocked    { background: #f9fef9; }
+.vault-row.incoming    { border-left: 3px solid var(--blue); padding-left: 15px; }
 
-/* left: timer + date */
-.vault-row-left { display: flex; flex-direction: column; gap: 3px; }
+.vault-row-left { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.vault-row-label {
+  font-size: 13px; font-weight: 600; color: var(--text-1); line-height: 1.2;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+}
 .vault-row-timer {
-  font-size: 15px; font-weight: 600;
+  font-size: 13px; font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
   color: var(--primary); line-height: 1;
 }
-.vault-row-timer.ready { color: var(--green); font-size: 13px; font-family: 'Inter', sans-serif; }
+.vault-row-timer.ready { color: var(--green); font-family: 'Inter', sans-serif; }
 .vault-row-date { font-size: 11px; color: var(--text-3); }
+.vault-row-from { font-size: 10px; color: var(--blue); font-family: 'JetBrains Mono', monospace; }
 
-/* right: amount + button */
-.vault-row-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.vault-row-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: 10px; }
 .vault-row-amount {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px; font-weight: 600;
-  color: var(--text-1); text-align: right;
+  font-size: 15px; font-weight: 600;
+  color: var(--text-1); text-align: right; white-space: nowrap;
 }
-.vault-row-unit { font-size: 11px; color: var(--text-3); font-weight: 500; margin-left: 2px; }
+.vault-row-unit { font-size: 10px; color: var(--text-3); font-weight: 500; margin-left: 2px; }
 .vault-row-btn {
   border: none; border-radius: 10px;
-  padding: 7px 14px; font-size: 11px; font-weight: 700;
-  cursor: pointer; font-family: inherit;
-  white-space: nowrap; transition: opacity .15s;
+  padding: 7px 12px; font-size: 11px; font-weight: 700;
+  cursor: pointer; font-family: inherit; white-space: nowrap; transition: opacity .15s;
 }
 .vault-row-btn:disabled { opacity: .4; cursor: not-allowed; }
 .vault-row-btn.early    { background: #fef3c7; color: #d97706; }
 .vault-row-btn.early:hover:not(:disabled)    { background: #fde68a; }
-.vault-row-btn.withdraw { background: #7c3aed; color: #fff; }
-.vault-row-btn.withdraw:hover:not(:disabled) { background: #6d28d9; }
-
-/* Countdown blocks */
-.v2-mini-cd { display: flex; align-items: center; justify-content: center; gap: 4px; margin: 10px 0 4px; }
-.v2-mcd-block {
-  text-align: center; min-width: 42px;
-  background: var(--surface-hi); border: 1px solid var(--border);
-  border-radius: 8px; padding: 7px 5px 5px;
-}
-.v2-mcd-num {
-  font-size: 16px; font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-  font-variant-numeric: tabular-nums;
-  color: var(--primary); line-height: 1;
-}
-.v2-mcd-lbl { font-size: 7px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.7px; margin-top: 3px; }
-.v2-mcd-sep { font-size: 13px; font-weight: 400; color: var(--text-3); margin-bottom: 8px; }
-
-.vs-btn-early {
-  background: #fef3c7; border: none;
-  color: #d97706; border-radius: 10px;
-  letter-spacing: 0.1px; font-size: 13px; font-weight: 700;
-}
-.vs-btn-early:hover:not(:disabled) { background: #fde68a; color: #b45309; transform: none; box-shadow: none; }
-.vs-btn-locked { background: var(--surface-hi); border: none; color: var(--text-3); cursor: not-allowed; opacity: 1 !important; text-transform: none; letter-spacing: 0; }
+.vault-row-btn.withdraw { background: #2a36d9; color: #fff; }
+.vault-row-btn.withdraw:hover:not(:disabled) { background: #1e2ab3; }
 
 /* ─────────────────────────────────────────
-   V2 DEPOSIT PANEL
+   DEPOSIT PANEL
 ───────────────────────────────────────── */
-.v2-deposit-panel { max-width: 520px; margin: 0 auto 28px; padding: 0 1rem; }
+.v2-deposit-panel { max-width: 550px; margin: 0 auto 28px; padding: 0 1rem; }
 .v2-deposit-panel .vault-card { width: 100%; }
 .v2-vault-count-hint { text-align: center; font-size: 11px; color: var(--text-3); margin-bottom: 14px; font-weight: 500; min-height: 16px; }
 .v2-vault-count-hint strong { color: var(--primary); }
 
 /* ─────────────────────────────────────────
-   V2 VAULT HISTORY
+   PAY PANEL
 ───────────────────────────────────────── */
-.v2-history-section { max-width: 520px; margin: 0 auto 12px; }
+.pay-panel { max-width: 550px; margin: 0 auto; padding: 0 1rem; }
+.pay-panel .vault-card { margin-bottom: 16px; }
+
+/* ─────────────────────────────────────────
+   VAULT HISTORY
+───────────────────────────────────────── */
+.v2-history-section { max-width: 550px; margin: 0 auto 12px; }
 .v2-history-hd { margin-bottom: 10px; }
 .v2-history-title { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); }
-.v2-history-table {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden; box-shadow: var(--shadow);
-}
+.v2-history-table { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
 .v2-history-row {
-  display: grid; grid-template-columns: 1fr 1fr 1fr auto;
-  gap: 8px; padding: 12px 16px; font-size: 12px;
+  display: grid; grid-template-columns: 1.2fr 1.4fr auto;
+  gap: 8px; padding: 11px 16px; font-size: 12px;
   border-bottom: 1px solid rgba(0,0,0,0.04); align-items: center;
 }
 .v2-history-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .v2-history-row:last-child { border-bottom: none; }
 .v2-history-row.hdr { font-size: 10px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.6px; background: var(--surface-hi); }
 .v2-hist-amount { color: var(--text-1); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-.v2-hist-duration { color: var(--text-2); }
-.v2-hist-created { color: var(--text-3); }
+.v2-hist-label  { color: var(--text-2); font-style: italic; }
 .v2-hist-status {
-  display: inline-block; background: var(--primary-soft); color: var(--primary);
-  font-weight: 600; font-size: 11px; padding: 4px 10px; border-radius: 8px;
-  white-space: nowrap;
+  display: inline-block; font-weight: 600; font-size: 11px;
+  padding: 3px 8px; border-radius: 8px; white-space: nowrap;
 }
+.v2-hist-status.withdrawn      { background: #f0fdf4; color: #166534; }
+.v2-hist-status.early-withdrawn { background: #fef3c7; color: #92400e; }
 
 /* ─────────────────────────────────────────
    EARLY WITHDRAW MODAL
@@ -582,22 +567,18 @@ body {
 .ewm-row.total span:last-child { color: var(--primary); }
 .ewm-actions { display: flex; gap: 9px; }
 .ewm-cancel {
-  flex: 1; padding: 13px;
-  background: var(--surface-hi); border: none;
-  border-radius: 12px; color: var(--text-2);
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  font-family: inherit; transition: background .18s;
+  flex: 1; padding: 13px; background: var(--surface-hi); border: none;
+  border-radius: 12px; color: var(--text-2); font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .18s;
 }
 .ewm-cancel:hover { background: var(--surface-hover); color: var(--text-1); }
 .ewm-confirm {
-  flex: 1.5; padding: 13px;
-  background: var(--primary);
-  border: none; border-radius: 12px; color: #fff;
-  font-size: 14px; font-weight: 700; cursor: pointer;
-  font-family: inherit; transition: all .18s;
+  flex: 1.5; padding: 13px; background: var(--primary); border: none;
+  border-radius: 12px; color: #fff; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: all .18s;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.ewm-confirm:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(124,58,237,0.35); }
+.ewm-confirm:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(42,54,217,0.35); }
 .ewm-confirm:disabled { opacity: .5; cursor: not-allowed; }
 
 /* ─────────────────────────────────────────
@@ -610,12 +591,12 @@ body {
   .how-grid { grid-template-columns: repeat(2, 1fr); }
   .how-section { padding: 1.5rem 16px; }
   .vault-section { padding: 0 14px 32px; }
-  .how-grid { grid-template-columns: repeat(2, 1fr); }
-  .v2-history-row { grid-template-columns: 1fr 1fr; gap: 4px; }
-  .v2-history-row.hdr span:nth-child(3),
-  .v2-history-row.hdr span:nth-child(4),
-  .v2-history-row:not(.hdr) .v2-hist-created,
-  .v2-history-row:not(.hdr) .v2-hist-status { display: none; }
+  .v2-history-row { grid-template-columns: 1fr auto; }
+  .v2-history-row.hdr span:nth-child(2),
+  .v2-history-row:not(.hdr) .v2-hist-label { display: none; }
+  .bulk-row { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .bulk-row :nth-child(3),
+  .bulk-row :nth-child(4) { display: none; }
   .ewm-actions { flex-direction: column; }
   .toast-wrap { bottom: 14px; right: 14px; left: 14px; max-width: none; }
   .footer-links { display: none; }
@@ -638,42 +619,27 @@ body {
     <div class="wallet-list">
       <button class="wallet-opt" onclick="connectWallet('injected', 'MetaMask')" id="mmOpt">
         <div class="wopt-icon" style="background:linear-gradient(135deg,#ff8c00,#ff6b00)">🦊</div>
-        <div class="wopt-info">
-          <div class="wopt-name">MetaMask</div>
-          <div class="wopt-desc">Most popular browser wallet</div>
-        </div>
+        <div class="wopt-info"><div class="wopt-name">MetaMask</div><div class="wopt-desc">Most popular browser wallet</div></div>
         <div class="wopt-arr">›</div>
       </button>
       <button class="wallet-opt" onclick="connectWallet('injected', 'Rabby')" id="rabbyOpt">
         <div class="wopt-icon" style="background:linear-gradient(135deg,#7c5fe6,#5b4fcf)">🐇</div>
-        <div class="wopt-info">
-          <div class="wopt-name">Rabby Wallet</div>
-          <div class="wopt-desc">Smart transaction simulation</div>
-        </div>
+        <div class="wopt-info"><div class="wopt-name">Rabby Wallet</div><div class="wopt-desc">Smart transaction simulation</div></div>
         <div class="wopt-arr">›</div>
       </button>
       <button class="wallet-opt" onclick="connectWallet('coinbase')">
         <div class="wopt-icon" style="background:linear-gradient(135deg,#0052ff,#003dcc)">🔵</div>
-        <div class="wopt-info">
-          <div class="wopt-name">Coinbase Wallet</div>
-          <div class="wopt-desc">Coinbase's self-custody wallet</div>
-        </div>
+        <div class="wopt-info"><div class="wopt-name">Coinbase Wallet</div><div class="wopt-desc">Coinbase's self-custody wallet</div></div>
         <div class="wopt-arr">›</div>
       </button>
       <button class="wallet-opt" onclick="connectWallet('walletconnect')">
         <div class="wopt-icon" style="background:linear-gradient(135deg,#3b99fc,#1470d8)">📱</div>
-        <div class="wopt-info">
-          <div class="wopt-name">WalletConnect</div>
-          <div class="wopt-desc">Scan QR with any mobile wallet</div>
-        </div>
+        <div class="wopt-info"><div class="wopt-name">WalletConnect</div><div class="wopt-desc">Scan QR with any mobile wallet</div></div>
         <div class="wopt-arr">›</div>
       </button>
       <button class="wallet-opt" onclick="connectWallet('injected', 'Browser Wallet')">
         <div class="wopt-icon" style="background:linear-gradient(135deg,#334155,#1e293b)">🌐</div>
-        <div class="wopt-info">
-          <div class="wopt-name">Browser Wallet</div>
-          <div class="wopt-desc">Any injected EVM wallet</div>
-        </div>
+        <div class="wopt-info"><div class="wopt-name">Browser Wallet</div><div class="wopt-desc">Any injected EVM wallet</div></div>
         <div class="wopt-arr">›</div>
       </button>
     </div>
@@ -690,12 +656,12 @@ body {
       <button class="modal-close" onclick="closeEarlyWithdrawModal()" aria-label="Close">✕</button>
     </div>
     <div class="ewm-warning">
-      <div class="ewm-warning-title">⚠️ 10% Penalty applies</div>
-      <div class="ewm-warning-desc">Withdrawing before the lock period ends incurs a 10% penalty on the locked amount. The penalty is non-refundable and this action cannot be undone.</div>
+      <div class="ewm-warning-title" id="ewmWarningTitle">⚠️ 10% Penalty applies</div>
+      <div class="ewm-warning-desc">Withdrawing before the lock period ends incurs a penalty on the locked amount. The penalty is non-refundable and cannot be undone.</div>
     </div>
     <div class="ewm-breakdown">
       <div class="ewm-row"><span>Locked amount</span><span id="ewmLocked">—</span></div>
-      <div class="ewm-row"><span>Penalty (10%)</span><span id="ewmPenalty" style="color:#f87171">—</span></div>
+      <div class="ewm-row"><span id="ewmPenaltyLabel">Penalty (10%)</span><span id="ewmPenalty" style="color:#f87171">—</span></div>
       <div class="ewm-row total"><span>You receive</span><span id="ewmReceive">—</span></div>
     </div>
     <div class="ewm-actions">
@@ -714,14 +680,12 @@ body {
       <img src="arclogo.png.png" style="width:32px;height:32px;border-radius:8px;" alt="ArcStash logo">
       <div class="logo-name">Arc<em>Stash</em></div>
     </a>
-
     <div class="nav-actions">
       <a class="btn-faucet" href="https://faucet.circle.com/" target="_blank" rel="noopener noreferrer" title="Get test USDC and EURC tokens">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1.5C6.5 1.5 3.5 4.5 3.5 7a3 3 0 0 0 6 0c0-2.5-3-5.5-3-5.5Z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
         <span class="faucet-label">Get Test Tokens</span>
         <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 7L7 2M7 2H3M7 2v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-
       <button class="btn-connect" id="connectBtn" onclick="openWalletModal()">
         <span id="connectBtnText">Connect Wallet</span>
       </button>
@@ -737,13 +701,10 @@ body {
     <span class="badge-dot"></span>
     Live on Arc Testnet
   </div>
-
-  <h1>Lock savings.<br><span class="grad">Build discipline.</span></h1>
-
+  <h1>Lock. Hold.<br><span class="grad">Earn.</span></h1>
   <p class="hero-sub">
-    ArcStash is a non-custodial savings vault on Arc Testnet. Commit to a lock period, earn the habit, and unlock your funds on your terms.
+    Time-locked stablecoin vaults on Arc. Yield coming soon.
   </p>
-
 </section>
 
 <!-- ═══════════════════════════════════════
@@ -761,76 +722,176 @@ body {
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 5a3 3 0 1 0 0 4M4.5 7h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
       EURC
     </button>
+    <button class="vault-tab" id="tabPay" role="tab" aria-selected="false" onclick="switchTab('pay')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Pay Someone
+    </button>
   </div>
 
-  <!-- TVL + vault counter row -->
-  <div class="v2-meta-row" id="v2MetaRow">
-    TVL: <span class="v2-tvl-amount" id="tvlDisplay">—</span> &nbsp;·&nbsp; <span class="v2-vault-counter-inline" id="vaultCounter">0 / 5 vaults used</span>
-  </div>
+  <!-- ── Deposit / Vault section (USDC + EURC tabs) ── -->
+  <div id="depositSection">
 
-  <!-- ── Create Vault ── -->
-  <div class="vc-section-hd">
-    <span class="vc-section-label">Create Vault</span>
-  </div>
-  <div class="v2-deposit-panel" id="v2DepositPanel">
-    <div class="vault-card">
-      <div class="vs-token-label">
-        <span id="dfTokenLabel">USDC Vault</span>
-      </div>
-      <div class="v2-vault-count-hint" id="v2VaultCountHint"></div>
-
-      <div class="vs-form-grp">
-        <label class="vs-field-lbl" for="dfAmount">Amount to lock</label>
-        <div class="vs-input-wrap">
-          <input type="number" class="vs-input" id="dfAmount" placeholder="0.00" step="0.01" min="0.01" oninput="onAmountInput()">
-          <button class="vs-max-btn" id="dfMaxBtn" onclick="setMax()" type="button">MAX</button>
-          <span class="vs-input-sym" id="dfAmountSuffix">USDC</span>
-        </div>
-        <div class="vs-balance-hint">
-          <span>Wallet balance</span>
-          <span id="dfWalletBal">— <span id="dfWalletBalSym">USDC</span></span>
-        </div>
-      </div>
-
-      <div class="vs-form-grp">
-        <label class="vs-field-lbl" for="dfDays">Lock period</label>
-        <div class="vs-input-wrap">
-          <input type="number" class="vs-input" id="dfDays" placeholder="30" min="1" max="3650" oninput="onDaysInput()">
-          <span class="vs-input-sym">DAYS</span>
-        </div>
-        <div class="vs-quick-days">
-          <button class="vs-qd" onclick="setDays(7,this)">7d</button>
-          <button class="vs-qd" onclick="setDays(30,this)">30d</button>
-          <button class="vs-qd" onclick="setDays(90,this)">90d</button>
-          <button class="vs-qd" onclick="setDays(365,this)">1yr</button>
-        </div>
-      </div>
-
-      <button class="vs-btn vs-btn-primary" id="dfDepositBtn" onclick="handleDeposit()" disabled>
-        <span id="dfDepositBtnContent">Deposit USDC</span>
-      </button>
+    <!-- TVL + vault counter row -->
+    <div class="v2-meta-row" id="v2MetaRow">
+      TVL: <span class="v2-tvl-amount" id="tvlDisplay">—</span> &nbsp;·&nbsp; <span id="vaultCounter">0 / 5 vaults used</span>
     </div>
-  </div>
 
-  <!-- ── Your Vaults (compact 2-col grid, populated by JS) ── -->
-  <div class="vc-section-hd hidden" id="vcVaultsHd">
-    <span class="vc-section-label">Your Vaults</span>
-    <span class="vc-section-count" id="vcVaultsSectionCount"></span>
-  </div>
-  <div class="vc-grid" id="v2VaultsGrid"></div>
-
-  <!-- Vault history (shown only when past vaults exist) -->
-  <div class="v2-history-section hidden" id="v2HistorySection">
-    <div class="v2-history-hd">
-      <div class="v2-history-title">Vault History</div>
+    <!-- Create Vault form -->
+    <div class="vc-section-hd">
+      <span class="vc-section-label">Create Vault</span>
     </div>
-    <div class="v2-history-table">
-      <div class="v2-history-row hdr">
-        <span>Amount</span><span>Duration</span><span>Created</span><span>Status</span>
+    <div class="v2-deposit-panel" id="v2DepositPanel">
+      <div class="vault-card">
+        <div class="vs-token-label">
+          <span id="dfTokenLabel">USDC Vault</span>
+        </div>
+        <div class="v2-vault-count-hint" id="v2VaultCountHint"></div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="dfAmount">Amount to lock</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="dfAmount" placeholder="0.00" step="0.01" min="0.01" oninput="onAmountInput()">
+            <button class="vs-max-btn" id="dfMaxBtn" onclick="setMax()" type="button">MAX</button>
+            <span class="vs-input-sym" id="dfAmountSuffix">USDC</span>
+          </div>
+          <div class="vs-balance-hint">
+            <span>Wallet balance</span>
+            <span id="dfWalletBal">— <span id="dfWalletBalSym">USDC</span></span>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="dfDays">Lock period</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="dfDays" placeholder="30" min="1" max="3650" oninput="onDaysInput()">
+            <span class="vs-input-sym">DAYS</span>
+          </div>
+          <div class="vs-quick-days">
+            <button class="vs-qd" onclick="setDays(7,this)">7d</button>
+            <button class="vs-qd" onclick="setDays(30,this)">30d</button>
+            <button class="vs-qd" onclick="setDays(90,this)">90d</button>
+            <button class="vs-qd" onclick="setDays(365,this)">1yr</button>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="dfLabel">Vault Name <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="text" class="vs-input-text" id="dfLabel" placeholder="e.g. Vacation fund, Rent, Savings" maxlength="50">
+        </div>
+
+        <button class="vs-btn vs-btn-primary" id="dfDepositBtn" onclick="handleDeposit()" disabled>
+          <span id="dfDepositBtnContent">Deposit USDC</span>
+        </button>
       </div>
-      <div id="v2HistoryList"></div>
     </div>
-  </div>
+
+    <!-- Your Vaults -->
+    <div class="vc-section-hd hidden" id="vcVaultsHd">
+      <span class="vc-section-label">Your Vaults</span>
+      <span class="vc-section-count" id="vcVaultsSectionCount"></span>
+    </div>
+    <div class="vc-grid" id="v2VaultsGrid"></div>
+
+    <!-- Incoming Payments -->
+    <div class="vc-section-hd hidden" id="incomingHd">
+      <span class="vc-section-label">Incoming Payments</span>
+      <span class="vc-section-count" id="incomingSectionCount"></span>
+    </div>
+    <div class="vc-grid" id="incomingGrid"></div>
+
+    <!-- Vault History -->
+    <div class="v2-history-section hidden" id="v2HistorySection">
+      <div class="v2-history-hd">
+        <div class="v2-history-title">Vault History</div>
+      </div>
+      <div class="v2-history-table">
+        <div class="v2-history-row hdr">
+          <span>Amount</span><span>Label</span><span>Status</span>
+        </div>
+        <div id="v2HistoryList"></div>
+      </div>
+    </div>
+
+  </div><!-- /depositSection -->
+
+  <!-- ── Pay Someone tab ── -->
+  <div id="paySection" class="hidden">
+
+    <!-- Single pay form -->
+    <div class="pay-panel" id="singlePayPanel">
+      <div class="vault-card">
+        <div class="vs-token-label">Pay Someone</div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl">Token</label>
+          <div class="pay-token-sel">
+            <button class="pay-token-btn active" id="payBtnUsdc" onclick="setPayToken('usdc')">USDC</button>
+            <button class="pay-token-btn" id="payBtnEurc" onclick="setPayToken('eurc')">EURC</button>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="payRecipient">Recipient Address</label>
+          <input type="text" class="vs-input-text" id="payRecipient" placeholder="0x...">
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="payAmount">Amount</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="payAmount" placeholder="0.00" step="0.01" min="0.01">
+            <span class="vs-input-sym" id="payAmountSuffix">USDC</span>
+          </div>
+          <div class="vs-balance-hint">
+            <span>Wallet balance</span>
+            <span id="payWalletBal">—</span>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="payDays">Lock period</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="payDays" placeholder="30" min="1" max="3650" oninput="onPayDaysInput()">
+            <span class="vs-input-sym">DAYS</span>
+          </div>
+          <div class="vs-quick-days">
+            <button class="vs-qd pay-qd" onclick="setPayDays(7,this)">7d</button>
+            <button class="vs-qd pay-qd" onclick="setPayDays(30,this)">30d</button>
+            <button class="vs-qd pay-qd" onclick="setPayDays(90,this)">90d</button>
+            <button class="vs-qd pay-qd" onclick="setPayDays(365,this)">1yr</button>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="payLabel">Label <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="text" class="vs-input-text" id="payLabel" placeholder="e.g. May salary, Bonus, Freelance" maxlength="50">
+        </div>
+
+        <button class="vs-btn vs-btn-primary" id="payBtn" onclick="handleDepositFor()">
+          <span id="payBtnContent">Send &amp; Lock</span>
+        </button>
+
+        <button class="bulk-toggle-btn" id="bulkToggleBtn" onclick="toggleBulkForm()">Pay multiple people</button>
+      </div>
+    </div>
+
+    <!-- Bulk pay form -->
+    <div class="pay-panel hidden" id="bulkPayPanel">
+      <div class="vault-card">
+        <div class="vs-token-label" style="justify-content:space-between">
+          <span>Bulk Payroll — <span id="bulkSymLabel">USDC</span></span>
+          <button onclick="toggleBulkForm()" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:12px;font-family:inherit;">← Single pay</button>
+        </div>
+
+        <div class="bulk-rows-wrap" id="bulkRows"></div>
+        <button class="bulk-add-btn" id="bulkAddBtn" onclick="addBulkRow()">+ Add recipient</button>
+
+        <button class="vs-btn vs-btn-primary" id="bulkSendBtn" onclick="handleBulkDeposit()" style="margin-top:16px">
+          <span id="bulkSendContent">Send All</span>
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /paySection -->
 
 </section>
 
@@ -840,7 +901,6 @@ body {
 <section class="how-section">
   <div class="how-label">How it works</div>
   <div class="how-grid">
-
     <div class="how-card">
       <div class="how-step">Step 1</div>
       <div class="how-icon how-icon--blue">
@@ -849,7 +909,6 @@ body {
       <div class="how-card-title">Get Test Tokens</div>
       <div class="how-card-desc">Claim free testnet USDC or EURC from the Circle faucet to get started.</div>
     </div>
-
     <div class="how-card">
       <div class="how-step">Step 2</div>
       <div class="how-icon how-icon--purple">
@@ -858,25 +917,22 @@ body {
       <div class="how-card-title">Connect Wallet</div>
       <div class="how-card-desc">Connect MetaMask, Rabby, or any EVM wallet. Arc Testnet is added automatically.</div>
     </div>
-
     <div class="how-card">
       <div class="how-step">Step 3</div>
       <div class="how-icon how-icon--amber">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="3" y="7" width="9" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7V5a2 2 0 1 1 4 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
       </div>
       <div class="how-card-title">Deposit &amp; Lock</div>
-      <div class="how-card-desc">Choose your token, enter the amount, and set a lock period. Your funds are secured onchain.</div>
+      <div class="how-card-desc">Lock tokens for yourself, or pay someone — set the amount, period, and let the vault do the rest.</div>
     </div>
-
     <div class="how-card">
       <div class="how-step">Step 4</div>
       <div class="how-icon how-icon--green">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 10V3M4 6.5l3.5-3.5L11 6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
       </div>
       <div class="how-card-title">Withdraw</div>
-      <div class="how-card-desc">Once the timer expires, withdraw your full amount. No fees, no middleman.</div>
+      <div class="how-card-desc">Withdraw when the timer expires. Withdraw early with a small penalty — the closer to unlock, the less you pay.</div>
     </div>
-
   </div>
 </section>
 
@@ -886,10 +942,7 @@ body {
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-copy">© 2026 ArcStash</div>
-    <div class="chain-badge">
-      <span class="chain-dot"></span>
-      Arc Testnet · Chain 5042002
-    </div>
+    <div class="chain-badge"><span class="chain-dot"></span>Arc Testnet · Chain 5042002</div>
     <div class="footer-links">
       <a class="footer-link" href="https://faucet.circle.com/" target="_blank" rel="noopener">Faucet ↗</a>
       <a class="footer-link" href="https://testnet.arcscan.app" target="_blank" rel="noopener">Explorer ↗</a>
@@ -911,8 +964,8 @@ body {
 /* ════════════════════════════════════════
    CONSTANTS
 ════════════════════════════════════════ */
-const ARC_CHAIN_ID   = "0x4CEF52"; // Arc Testnet (5042002)
-const ARC_CHAIN_CFG  = {
+const ARC_CHAIN_ID  = "0x4CEF52"; // Arc Testnet (5042002)
+const ARC_CHAIN_CFG = {
   chainId:           ARC_CHAIN_ID,
   chainName:         "Arc Testnet",
   nativeCurrency:    { name: "USDC", symbol: "USDC", decimals: 18 },
@@ -923,26 +976,30 @@ const ARC_CHAIN_CFG  = {
 const VAULTS = {
   usdc: {
     symbol:       "USDC",
-    vaultAddress: "0x487C0a96D51e6064c15B81466f78Cc1Fe9396af5",
+    vaultAddress: "0xB66a7FBbe950E9D37D396CEB4998b9f2E83aC25F",
     tokenAddress: "0x3600000000000000000000000000000000000000",
     decimals:     6
   },
   eurc: {
     symbol:       "EURC",
-    vaultAddress: "0x1A3f16C32cD001d34803532fc4CE1513A3531061",
+    vaultAddress: "0x8d5921fFb9b0B925daA6D009A0581D20697c5444",
     tokenAddress: "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
     decimals:     6
   }
 };
 
 const VAULT_ABI = [
-  "function deposit(uint256 amount, uint256 lockDays) external",
-  "function withdraw(uint256 vaultIndex) external",
-  "function earlyWithdraw(uint256 vaultIndex) external",
-  "function getUserVaults(address user) external view returns (tuple(uint256 amount, uint256 unlockTime, uint256 createdAt, bool active)[])",
-  "function getVaultInfo(address user, uint256 vaultIndex) external view returns (uint256 amount, uint256 unlockTime, uint256 createdAt, uint256 timeLeft, bool active)",
+  "function deposit(uint256 amount, uint256 lockDays, string label) external",
+  "function depositFor(address recipient, uint256 amount, uint256 lockDays, string label) external",
+  "function bulkDepositFor(address[] calldata recipients, uint256[] calldata amounts, uint256[] calldata lockDays, string[] calldata labels) external",
+  "function withdraw(uint256 vaultId) external",
+  "function earlyWithdraw(uint256 vaultId) external",
+  "function getVault(uint256 vaultId) external view returns (uint256 amount, uint256 unlockTime, uint256 createdAt, address depositor, address recipient, string label, bool active, bool earlyWithdrawn, uint256 timeLeft)",
+  "function getUserDepositedVaults(address user) external view returns (uint256[])",
+  "function getUserReceivableVaults(address user) external view returns (uint256[])",
   "function getActiveVaultCount(address user) external view returns (uint256)",
   "function totalLocked() external view returns (uint256)",
+  "function getTotalVaults() external view returns (uint256)",
   "function token() external view returns (address)"
 ];
 
@@ -962,13 +1019,16 @@ const app = {
   provider:            null,
   signer:              null,
   tab:                 "usdc",
+  payToken:            "usdc",
   vaults:              { usdc: [], eurc: [] },
+  incoming:            { usdc: [], eurc: [] },
   history:             { usdc: [], eurc: [] },
   balances:            { usdc: "0.00", eurc: "0.00" },
-  tvl:                 { usdc: "—", eurc: "—" },
+  tvl:                 { usdc: "—",   eurc: "—" },
   txPending:           false,
   cdTimers:            {},
-  earlyWithdrawTarget: null
+  earlyWithdrawTarget: null,
+  bulkRowCount:        0
 };
 
 /* ════════════════════════════════════════
@@ -985,49 +1045,25 @@ function withTimeout(promise, ms = 45000) {
   return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
-// Arc Testnet requires EIP-1559 (type-2) txs; legacy gasPrice txs are not mined.
-// Minimum observed base fee is ~20 gwei. This helper fetches live fee data and
-// enforces a floor so wallets that return null/zero don't produce stuck txs.
+// Arc Testnet requires EIP-1559 type-2 txs with ≥20 gwei base fee.
 async function getEIP1559Overrides(gasLimit) {
-  const GWEI        = 1_000_000_000n;
-  const MIN_BASE    = 20n * GWEI;   // 20 gwei floor — Arc Testnet minimum
-  const MIN_TIP     = 1n  * GWEI;   // 1 gwei priority fee floor
-
+  const GWEI     = 1_000_000_000n;
+  const MIN_BASE = 20n * GWEI;
+  const MIN_TIP  = 1n  * GWEI;
   let maxFeePerGas, maxPriorityFeePerGas;
-
   try {
     const feeData = await app.provider.getFeeData();
-    console.log('[Fees] Raw feeData from provider:', {
-      gasPrice:             feeData.gasPrice            != null ? feeData.gasPrice.toString()             + ' wei' : 'null',
-      maxFeePerGas:         feeData.maxFeePerGas        != null ? feeData.maxFeePerGas.toString()         + ' wei' : 'null',
-      maxPriorityFeePerGas: feeData.maxPriorityFeePerGas != null ? feeData.maxPriorityFeePerGas.toString() + ' wei' : 'null',
-    });
-
-    maxPriorityFeePerGas =
-      (feeData.maxPriorityFeePerGas != null && feeData.maxPriorityFeePerGas > MIN_TIP)
-        ? feeData.maxPriorityFeePerGas
-        : MIN_TIP;
-
-    const baseFeeFloor = MIN_BASE + maxPriorityFeePerGas;
-    maxFeePerGas =
-      (feeData.maxFeePerGas != null && feeData.maxFeePerGas > baseFeeFloor)
-        ? feeData.maxFeePerGas
-        : baseFeeFloor;
-
-  } catch (feeErr) {
-    console.warn('[Fees] getFeeData() threw — using floor values:', feeErr.message);
+    maxPriorityFeePerGas = (feeData.maxPriorityFeePerGas != null && feeData.maxPriorityFeePerGas > MIN_TIP)
+      ? feeData.maxPriorityFeePerGas : MIN_TIP;
+    const floor = MIN_BASE + maxPriorityFeePerGas;
+    maxFeePerGas = (feeData.maxFeePerGas != null && feeData.maxFeePerGas > floor)
+      ? feeData.maxFeePerGas : floor;
+  } catch {
     maxPriorityFeePerGas = MIN_TIP;
     maxFeePerGas         = MIN_BASE + MIN_TIP;
   }
-
-  const overrides = { type: 2, gasLimit, maxFeePerGas, maxPriorityFeePerGas };
-  console.log('[Fees] EIP-1559 overrides applied:', {
-    type:                 overrides.type,
-    gasLimit:             gasLimit.toString(),
-    maxFeePerGas:         (maxFeePerGas         / GWEI).toString() + ' gwei',
-    maxPriorityFeePerGas: (maxPriorityFeePerGas / GWEI).toString() + ' gwei',
-  });
-  return overrides;
+  console.log('[Fees] type:2 maxFee:', (maxFeePerGas/GWEI).toString(), 'gwei | tip:', (maxPriorityFeePerGas/GWEI).toString(), 'gwei');
+  return { type: 2, gasLimit, maxFeePerGas, maxPriorityFeePerGas };
 }
 
 async function waitForReceipt(txHash, timeoutMs = 90000, intervalMs = 2500) {
@@ -1036,47 +1072,64 @@ async function waitForReceipt(txHash, timeoutMs = 90000, intervalMs = 2500) {
   while (Date.now() - start < timeoutMs) {
     attempt++;
     try {
-      const res = await fetch("https://rpc.testnet.arc.network", {
+      const res  = await fetch("https://rpc.testnet.arc.network", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          jsonrpc: "2.0",
-          method: "eth_getTransactionReceipt",
-          params: [txHash],
-          id: 1
-        })
+        body: JSON.stringify({ jsonrpc: "2.0", method: "eth_getTransactionReceipt", params: [txHash], id: 1 })
       });
       const data = await res.json();
       if (data.result && data.result.status) {
-        console.log('[Receipt] Got receipt on attempt', attempt, '— status:', data.result.status, '| block:', data.result.blockNumber);
         if (data.result.status === "0x0") throw new Error("Transaction reverted on-chain");
+        console.log('[Receipt] Confirmed attempt', attempt, 'block:', data.result.blockNumber);
         return data.result;
       }
     } catch (err) {
       if (err.message === "Transaction reverted on-chain") throw err;
-      console.warn('[Receipt] Poll error (will retry):', err.message);
     }
-    console.log('[Receipt] Attempt', attempt, '— not yet mined, retrying...');
     await new Promise(r => setTimeout(r, intervalMs));
   }
   throw new Error("TIMEOUT");
 }
 
 function txErrMsg(err) {
-  if (err.message === "TIMEOUT") return "Transaction timed out after 90s — please try again.";
-  if (err.message === "Transaction reverted on-chain") return "Transaction reverted on-chain. Check contract conditions.";
+  if (err.message === "TIMEOUT") return "Transaction timed out — please try again.";
+  if (err.message === "Transaction reverted on-chain") return "Transaction reverted. Check contract conditions.";
   if (err.code === 4001 || err.code === "ACTION_REJECTED" ||
-      err.message?.includes("user rejected") ||
-      err.message?.includes("User rejected")) return null; // null = silent cancel
+      err.message?.includes("user rejected") || err.message?.includes("User rejected")) return null;
   return (err.reason || err.shortMessage || err.message || "Unknown error").slice(0, 160);
 }
 
 function shortAddr(a) { return a.slice(0,6) + "…" + a.slice(-4); }
 
 function fmtDate(ts) {
-  return new Date(ts).toLocaleDateString("en-US", {
-    month:"short", day:"numeric", year:"numeric"
-  });
+  return new Date(ts).toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
+}
+
+/* ════════════════════════════════════════
+   APPROVAL HELPER (EURC reset + approve)
+════════════════════════════════════════ */
+async function approveIfNeeded(tokenC, spender, amount, sym, isEurc) {
+  const allowance = await withTimeout(tokenC.allowance(app.address, spender));
+  console.log('[Approve]', sym, '| allowance:', allowance.toString(), '| needed:', amount.toString());
+
+  if (allowance >= amount) return; // sufficient
+
+  // EURC: reset to 0 first if there's an existing non-zero allowance
+  if (isEurc && allowance > 0n) {
+    const tid = toast("loading", `Resetting ${sym} allowance…`, "Step 1 — confirm in wallet", 0);
+    const ov  = await getEIP1559Overrides(200000n);
+    const tx  = await withTimeout(tokenC.approve(spender, 0n, ov));
+    console.log('[Approve] EURC reset tx:', tx.hash);
+    await waitForReceipt(tx.hash);
+    removeToast(tid);
+  }
+
+  const tid = toast("loading", `Approving ${sym}…`, "Confirm in wallet", 0);
+  const ov  = await getEIP1559Overrides(200000n);
+  const tx  = await withTimeout(tokenC.approve(spender, amount, ov));
+  console.log('[Approve] Approve tx:', tx.hash);
+  await waitForReceipt(tx.hash);
+  removeToast(tid);
 }
 
 /* ════════════════════════════════════════
@@ -1089,12 +1142,7 @@ function toast(type, title, msg, dur=5000) {
   const div = document.createElement("div");
   div.id = id;
   div.className = `toast toast-${type}`;
-  div.innerHTML = `
-    <div class="toast-icon">${ico}</div>
-    <div class="toast-body">
-      <div class="toast-title">${title}</div>
-      ${msg ? `<div class="toast-msg">${msg}</div>` : ""}
-    </div>`;
+  div.innerHTML = `<div class="toast-icon">${ico}</div><div class="toast-body"><div class="toast-title">${title}</div>${msg ? `<div class="toast-msg">${msg}</div>` : ""}</div>`;
   el("toastWrap").prepend(div);
   if (dur > 0) setTimeout(() => removeToast(id), dur);
   return id;
@@ -1104,10 +1152,6 @@ function removeToast(id) {
   if (!t) return;
   t.classList.add("toast-out");
   setTimeout(() => t.remove(), 320);
-}
-function updateToast(id, type, title, msg) {
-  removeToast(id);
-  toast(type, title, msg, 4000);
 }
 
 /* ════════════════════════════════════════
@@ -1122,37 +1166,21 @@ function closeWalletModal() {
   el("walletModal").classList.remove("open");
   document.body.style.overflow = "";
 }
-function modalBackdrop(e) {
-  if (e.target === el("walletModal")) closeWalletModal();
-}
+function modalBackdrop(e) { if (e.target === el("walletModal")) closeWalletModal(); }
 
 /* ════════════════════════════════════════
    NETWORK HELPER
 ════════════════════════════════════════ */
 async function ensureArcNetwork(ethereum) {
   try {
-    await ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: ARC_CHAIN_ID }]
-    });
+    await ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: ARC_CHAIN_ID }] });
   } catch (switchErr) {
-    // 4902 = chain unknown (MetaMask); -32603 = internal error used by Rabby/Coinbase
     const code = switchErr.code ?? switchErr?.data?.originalError?.code;
     if (code === 4902 || code === -32603) {
-      // Add the network, then switch to it
-      await ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [ARC_CHAIN_CFG]
-      });
-      // Some wallets (Rabby, Coinbase) don't auto-switch after add — retry silently
-      try {
-        await ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: ARC_CHAIN_ID }]
-        });
-      } catch { /* already on the chain, or wallet handled it — safe to ignore */ }
+      await ethereum.request({ method: "wallet_addEthereumChain", params: [ARC_CHAIN_CFG] });
+      try { await ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: ARC_CHAIN_ID }] }); } catch {}
     } else {
-      throw switchErr; // re-throw user rejection (4001) and unexpected errors
+      throw switchErr;
     }
   }
 }
@@ -1163,26 +1191,19 @@ async function ensureArcNetwork(ethereum) {
 async function connectWallet(type, label="Wallet") {
   let statusToast = toast("loading", `Connecting ${label}…`, "Please approve in your wallet", 0);
   let networkSwitchAttempted = false;
-
   try {
     let ethereum = window.ethereum;
-
     if (type === "walletconnect") {
       removeToast(statusToast);
-      toast("info", "WalletConnect", "Scan with your mobile wallet app (QR flow requires WalletConnect SDK setup with a project ID). Use any injected wallet instead.", 6000);
+      toast("info", "WalletConnect", "QR flow requires WalletConnect SDK. Use an injected wallet instead.", 6000);
       return;
     }
-
-    if (type === "coinbase" && window.coinbaseWalletExtension) {
-      ethereum = window.coinbaseWalletExtension;
-    }
-
+    if (type === "coinbase" && window.coinbaseWalletExtension) ethereum = window.coinbaseWalletExtension;
     if (!ethereum) {
       removeToast(statusToast);
-      toast("error", "No Wallet Found", `Install ${label} or another EVM wallet extension to continue.`, 6000);
+      toast("error", "No Wallet Found", `Install ${label} or another EVM wallet extension.`, 6000);
       return;
     }
-
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
     if (!accounts || accounts.length === 0) throw new Error("No accounts returned");
 
@@ -1190,27 +1211,22 @@ async function connectWallet(type, label="Wallet") {
     app.provider = new ethers.BrowserProvider(ethereum);
     app.signer   = await app.provider.getSigner();
 
-    // ── Ensure user is on Arc Testnet ──
     const currentChain = await ethereum.request({ method: "eth_chainId" });
     if (currentChain.toLowerCase() !== ARC_CHAIN_ID.toLowerCase()) {
       removeToast(statusToast);
-      statusToast = toast("loading", "Switching to Arc Testnet…", "Approve the network switch in your wallet", 0);
+      statusToast = toast("loading", "Switching to Arc Testnet…", "Approve the network switch", 0);
       networkSwitchAttempted = true;
       await ensureArcNetwork(ethereum);
-      // Re-init provider on the correct chain
       app.provider = new ethers.BrowserProvider(ethereum);
       app.signer   = await app.provider.getSigner();
     }
 
     app.connected = true;
-
     el("connectBtn").classList.add("connected");
     el("connectBtn").innerHTML = `<span class="wallet-dot"></span><span id="connectBtnText">${shortAddr(app.address)}</span>`;
-
     closeWalletModal();
     removeToast(statusToast);
     toast("success", "Wallet Connected", shortAddr(app.address));
-
     await loadData();
 
     ethereum.on("accountsChanged", () => window.location.reload());
@@ -1218,27 +1234,20 @@ async function connectWallet(type, label="Wallet") {
 
   } catch (err) {
     removeToast(statusToast);
-    if (err.code === 4001 && networkSwitchAttempted) {
-      toast("info", "Network Switch Cancelled", "Please switch to Arc Testnet to use ArcStash.", 6000);
-    } else if (err.code === 4001) {
-      toast("info", "Connection Cancelled", "You rejected the wallet request.");
-    } else {
-      toast("error", "Connection Failed", (err.message || "Unknown error").slice(0, 140));
-    }
+    if (err.code === 4001 && networkSwitchAttempted) toast("info", "Network Switch Cancelled", "Please switch to Arc Testnet to use ArcStash.", 6000);
+    else if (err.code === 4001) toast("info", "Connection Cancelled", "You rejected the wallet request.");
+    else toast("error", "Connection Failed", (err.message || "Unknown error").slice(0, 140));
   }
 }
 
 function handleDisconnect() {
-  app.connected  = false;
-  app.address    = null;
-  app.provider   = null;
-  app.signer     = null;
-  app.vaults     = { usdc: [], eurc: [] };
-  app.history    = { usdc: [], eurc: [] };
-  app.balances   = { usdc: "0.00", eurc: "0.00" };
-  app.tvl        = { usdc: "—", eurc: "—" };
+  app.connected = false; app.address = null; app.provider = null; app.signer = null;
+  app.vaults   = { usdc: [], eurc: [] };
+  app.incoming = { usdc: [], eurc: [] };
+  app.history  = { usdc: [], eurc: [] };
+  app.balances = { usdc: "0.00", eurc: "0.00" };
+  app.tvl      = { usdc: "—", eurc: "—" };
   app.earlyWithdrawTarget = null;
-
   el("connectBtn").classList.remove("connected");
   el("connectBtn").innerHTML = `<span id="connectBtnText">Connect Wallet</span>`;
   stopAllCountdowns();
@@ -1246,42 +1255,73 @@ function handleDisconnect() {
 }
 
 /* ════════════════════════════════════════
-   LOAD ON-CHAIN DATA
+   LOAD ON-CHAIN DATA (V3)
 ════════════════════════════════════════ */
 async function loadData() {
   if (!app.connected || !app.signer) return;
 
   for (const key of ["usdc", "eurc"]) {
-    const cfg = VAULTS[key];
+    const cfg    = VAULTS[key];
     try {
       const tokenC = new ethers.Contract(cfg.tokenAddress, ERC20_ABI, app.provider);
       const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.provider);
 
-      const [rawBal, rawVaults, rawTvl] = await Promise.all([
+      // Fetch balance, TVL, and vault ID lists in parallel
+      const [rawBal, rawTvl, depositedIds, receivableIds] = await Promise.all([
         tokenC.balanceOf(app.address),
-        vaultC.getUserVaults(app.address),
-        vaultC.totalLocked()
+        vaultC.totalLocked(),
+        vaultC.getUserDepositedVaults(app.address),
+        vaultC.getUserReceivableVaults(app.address)
       ]);
 
       app.balances[key] = fmt(ethers.formatUnits(rawBal, cfg.decimals));
       app.tvl[key]      = fmt(ethers.formatUnits(rawTvl, cfg.decimals));
 
-      const active  = [];
-      const history = [];
-      rawVaults.forEach((v, i) => {
-        const vObj = {
-          index:     i,
-          amount:    fmt(ethers.formatUnits(v.amount, cfg.decimals)),
-          unlockTs:  Number(v.unlockTime) * 1000,
-          createdTs: Number(v.createdAt)  * 1000,
-          active:    v.active
-        };
-        if (v.active) active.push(vObj);
-        else          history.push(vObj);
-      });
+      // Collect all unique vault IDs to fetch
+      const allIds = [...new Set([
+        ...depositedIds.map(Number),
+        ...receivableIds.map(Number)
+      ])];
 
-      app.vaults[key]  = active;
-      app.history[key] = history;
+      // Fetch each vault struct
+      const vaultStructs = await Promise.all(allIds.map(id => vaultC.getVault(BigInt(id))));
+      const vaultMap = {};
+      allIds.forEach((id, i) => { vaultMap[id] = vaultStructs[i]; });
+
+      const deposited   = new Set(depositedIds.map(Number));
+      const receivable  = new Set(receivableIds.map(Number));
+
+      const active  = [];
+      const inc     = [];
+      const history = [];
+
+      for (const id of allIds) {
+        const v = vaultMap[id];
+        const vObj = {
+          id:             id,
+          amount:         fmt(ethers.formatUnits(v.amount, cfg.decimals)),
+          unlockTs:       Number(v.unlockTime) * 1000,
+          createdTs:      Number(v.createdAt)  * 1000,
+          depositor:      v.depositor,
+          recipient:      v.recipient,
+          label:          v.label || "",
+          active:         v.active,
+          earlyWithdrawn: v.earlyWithdrawn
+        };
+
+        if (deposited.has(id)) {
+          // Vault user created
+          if (v.active) active.push(vObj);
+          else          history.push(vObj);
+        } else if (receivable.has(id) && v.active) {
+          // Incoming: vault created by someone else for this user
+          if (v.depositor.toLowerCase() !== app.address.toLowerCase()) inc.push(vObj);
+        }
+      }
+
+      app.vaults[key]   = active;
+      app.incoming[key] = inc;
+      app.history[key]  = history;
     } catch (err) {
       console.error(`loadData [${key}]:`, err);
     }
@@ -1297,8 +1337,14 @@ function switchTab(tab) {
   app.tab = tab;
   el("tabUsdc").classList.toggle("active", tab === "usdc");
   el("tabEurc").classList.toggle("active", tab === "eurc");
+  el("tabPay").classList.toggle("active",  tab === "pay");
   el("tabUsdc").setAttribute("aria-selected", tab === "usdc");
   el("tabEurc").setAttribute("aria-selected", tab === "eurc");
+  el("tabPay").setAttribute("aria-selected",  tab === "pay");
+
+  el("depositSection").classList.toggle("hidden", tab === "pay");
+  el("paySection").classList.toggle("hidden", tab !== "pay");
+
   stopAllCountdowns();
   renderUI();
 }
@@ -1306,118 +1352,111 @@ function switchTab(tab) {
 /* ════════════════════════════════════════
    RENDER UI
 ════════════════════════════════════════ */
-function fmtDateLong(ts) {
-  return new Date(ts).toLocaleDateString("en-US", {
-    weekday: "short", month: "long", day: "numeric", year: "numeric"
-  });
-}
-
 function renderUI() {
-  const key     = app.tab;
-  const cfg     = VAULTS[key];
-  const sym     = cfg.symbol;
-  const isDemo  = !app.connected;
+  const key    = app.tab === "pay" ? "usdc" : app.tab; // use usdc data for meta when on pay tab
+  const cfg    = VAULTS[key];
+  const sym    = cfg.symbol;
+  const isDemo = !app.connected;
+
+  // ── Pay tab ──
+  if (app.tab === "pay") {
+    // Update wallet balance shown in pay form
+    const pTok = app.payToken;
+    const pSym = VAULTS[pTok].symbol;
+    const pBal = isDemo ? "—" : app.balances[pTok];
+    el("payWalletBal").textContent = isDemo ? "—" : `${pBal} ${pSym}`;
+    const payDisabled = isDemo || app.txPending;
+    el("payBtn").disabled     = payDisabled || false;
+    el("bulkSendBtn").disabled = payDisabled || false;
+    if (isDemo) {
+      el("payBtnContent").textContent = "Connect Wallet to Pay";
+    } else {
+      el("payBtnContent").textContent = `Send & Lock ${pSym}`;
+    }
+    return;
+  }
+
   const balance = isDemo ? "0.00" : app.balances[key];
   const active  = isDemo ? [] : app.vaults[key];
+  const inc     = isDemo ? [] : app.incoming[key];
   const hist    = isDemo ? [] : app.history[key];
   const tvlVal  = isDemo ? "—" : app.tvl[key];
 
   // ── TVL + counter ──
   el("tvlDisplay").textContent = tvlVal === "—" ? "—" : `${tvlVal} ${sym}`;
-  const count = active.length;
-  el("vaultCounter").textContent = `${count} / 5 vaults used`;
+  el("vaultCounter").textContent = `${active.length} / 5 vaults used`;
 
   // ── Deposit panel ──
   el("dfTokenLabel").textContent   = `${sym} Vault`;
   el("dfAmountSuffix").textContent = sym;
   el("dfWalletBal").innerHTML      = `${balance} <span id="dfWalletBalSym">${sym}</span>`;
 
-  const maxed    = count >= 5 && !isDemo;
-  const formDis  = isDemo || app.txPending || maxed;
+  const maxed   = active.length >= 5 && !isDemo;
+  const formDis = app.txPending || maxed;
 
   el("dfAmount").disabled = formDis;
   el("dfDays").disabled   = formDis;
+  el("dfLabel").disabled  = formDis;
   el("dfMaxBtn").disabled = formDis;
-  document.querySelectorAll(".vs-qd").forEach(b => b.disabled = formDis);
+  document.querySelectorAll(".vs-qd:not(.pay-qd)").forEach(b => b.disabled = formDis);
 
   const hint = el("v2VaultCountHint");
   const btn  = el("dfDepositBtn");
-
   if (maxed) {
     hint.innerHTML = '';
-    btn.disabled = true;
+    btn.disabled   = true;
     el("dfDepositBtnContent").textContent = "Maximum 5 vaults reached";
   } else if (isDemo) {
     hint.innerHTML = '';
     btn.disabled   = false;
     el("dfDepositBtnContent").textContent = "Connect Wallet to Deposit";
   } else {
-    const slots = 5 - count;
-    hint.innerHTML = count > 0
-      ? `<strong>${slots}</strong> slot${slots !== 1 ? "s" : ""} remaining`
-      : "";
-    btn.disabled = app.txPending;
+    const slots = 5 - active.length;
+    hint.innerHTML = active.length > 0 ? `<strong>${slots}</strong> slot${slots!==1?"s":""} remaining` : "";
+    btn.disabled   = app.txPending;
     el("dfDepositBtnContent").textContent = `Deposit ${sym}`;
   }
 
-  // ── Your Vaults section header ──
-  const vcHd    = el("vcVaultsHd");
-  const vcCount = el("vcVaultsSectionCount");
+  // ── Your Vaults ──
+  const vcHd = el("vcVaultsHd");
   if (active.length > 0) {
     vcHd.classList.remove("hidden");
-    vcCount.textContent = `${active.length} / 5 active`;
+    el("vcVaultsSectionCount").textContent = `${active.length} / 5 active`;
   } else {
     vcHd.classList.add("hidden");
   }
 
-  // ── Active vault cards — rebuild DOM and restart timers ──
-  stopAllCountdowns();    // clear before rebuilding so no orphaned intervals
+  stopAllCountdowns();
   const grid = el("v2VaultsGrid");
   grid.innerHTML = "";
+  active.forEach(v => renderVaultRow(v, key, sym, false, grid));
 
-  active.forEach(v => {
-    const isLocked = v.unlockTs > Date.now();
-    const card     = document.createElement("div");
-    card.className = `vault-row${isLocked ? "" : " unlocked"}`;
-    card.dataset.key   = key;
-    card.dataset.index = v.index;
+  // ── Incoming Payments ──
+  const incHd   = el("incomingHd");
+  const incGrid = el("incomingGrid");
+  incGrid.innerHTML = "";
+  if (inc.length > 0) {
+    incHd.classList.remove("hidden");
+    el("incomingSectionCount").textContent = `${inc.length} incoming`;
+    inc.forEach(v => renderVaultRow(v, key, sym, true, incGrid));
+  } else {
+    incHd.classList.add("hidden");
+  }
 
-    card.innerHTML = `
-      <div class="vault-row-left">
-        ${isLocked
-          ? `<div class="vault-row-timer" id="vc-remain-${key}-${v.index}">—</div>`
-          : `<div class="vault-row-timer ready">Ready to withdraw</div>`
-        }
-        <div class="vault-row-date">${isLocked ? "unlocks" : "unlocked"} ${fmtDate(v.unlockTs)}</div>
-      </div>
-      <div class="vault-row-right">
-        <div class="vault-row-amount">${v.amount}<span class="vault-row-unit">${sym}</span></div>
-        ${isLocked ? `
-          <button class="vault-row-btn early" ${app.txPending ? "disabled" : ""}
-                  onclick="event.stopPropagation();openEarlyWithdrawModal('${key}',${v.index},'${v.amount}')">−10%</button>
-        ` : `
-          <button class="vault-row-btn withdraw" ${app.txPending ? "disabled" : ""}
-                  onclick="event.stopPropagation();handleWithdraw('${key}',${v.index})">Withdraw</button>
-        `}
-      </div>
-    `;
-
-    grid.appendChild(card);
-    if (isLocked) startVaultCountdown(key, v.index, v.unlockTs);
-  });
-
-  // ── Vault history ──
+  // ── Vault History ──
   const histSection = el("v2HistorySection");
   const histList    = el("v2HistoryList");
   if (hist.length > 0) {
     histSection.classList.remove("hidden");
     histList.innerHTML = hist.map(v => {
-      const dur = Math.max(1, Math.round((v.unlockTs - v.createdTs) / 86400000));
+      const labelTxt = v.label ? v.label : "—";
+      const isEarly  = v.earlyWithdrawn;
+      const statusCls = isEarly ? "early-withdrawn" : "withdrawn";
+      const statusTxt = isEarly ? "Early Withdrawn" : "Withdrawn";
       return `<div class="v2-history-row">
         <span class="v2-hist-amount">${v.amount} ${sym}</span>
-        <span class="v2-hist-duration">${dur} day${dur !== 1 ? "s" : ""}</span>
-        <span class="v2-hist-created">${fmtDate(v.createdTs)}</span>
-        <span class="v2-hist-status">Withdrawn</span>
+        <span class="v2-hist-label">${labelTxt}</span>
+        <span class="v2-hist-status ${statusCls}">${statusTxt}</span>
       </div>`;
     }).join("");
   } else {
@@ -1425,11 +1464,50 @@ function renderUI() {
   }
 }
 
+function renderVaultRow(v, key, sym, isIncoming, container) {
+  const isLocked = v.unlockTs > Date.now();
+  const row      = document.createElement("div");
+  row.className  = `vault-row${isLocked ? "" : " unlocked"}${isIncoming ? " incoming" : ""}`;
+  row.dataset.key = key;
+  row.dataset.id  = v.id;
+
+  const labelHtml = v.label
+    ? `<div class="vault-row-label">${v.label}</div>`
+    : "";
+  const fromHtml = isIncoming
+    ? `<div class="vault-row-from">from ${shortAddr(v.depositor)}</div>`
+    : "";
+
+  row.innerHTML = `
+    <div class="vault-row-left">
+      ${labelHtml}
+      ${isLocked
+        ? `<div class="vault-row-timer" id="vc-remain-${key}-${v.id}">—</div>`
+        : `<div class="vault-row-timer ready">Ready</div>`
+      }
+      <div class="vault-row-date">${isLocked ? "unlocks" : "unlocked"} ${fmtDate(v.unlockTs)}</div>
+      ${fromHtml}
+    </div>
+    <div class="vault-row-right">
+      <div class="vault-row-amount">${v.amount}<span class="vault-row-unit">${sym}</span></div>
+      ${isLocked
+        ? `<button class="vault-row-btn early" ${app.txPending ? "disabled" : ""}
+               onclick="event.stopPropagation();openEarlyWithdrawModal('${key}',${v.id},'${v.amount}',${v.createdTs},${v.unlockTs})">−${getPenaltyPct(v.createdTs, v.unlockTs)}%</button>`
+        : `<button class="vault-row-btn withdraw" ${app.txPending ? "disabled" : ""}
+               onclick="event.stopPropagation();handleWithdraw('${key}',${v.id})">Withdraw</button>`
+      }
+    </div>
+  `;
+
+  container.appendChild(row);
+  if (isLocked) startVaultCountdown(key, v.id, v.unlockTs);
+}
+
 /* ════════════════════════════════════════
-   COUNTDOWN TIMERS (per vault)
+   COUNTDOWN TIMERS
 ════════════════════════════════════════ */
-function startVaultCountdown(key, index, unlockTs) {
-  const tKey = `${key}-${index}`;
+function startVaultCountdown(key, id, unlockTs) {
+  const tKey = `${key}-${id}`;
   if (app.cdTimers[tKey]) clearInterval(app.cdTimers[tKey]);
 
   function tick() {
@@ -1439,23 +1517,14 @@ function startVaultCountdown(key, index, unlockTs) {
     const m = Math.floor((remaining % 3600) / 60);
     const s = remaining % 60;
 
-    // Compact one-liner (always visible on the card)
-    const remEl = el(`vc-remain-${key}-${index}`);
+    const remEl = el(`vc-remain-${key}-${id}`);
     if (!remEl) { clearInterval(app.cdTimers[tKey]); return; }
+
     remEl.textContent = d > 0
       ? `${d}d ${String(h).padStart(2,"0")}h left`
       : h > 0
         ? `${h}h ${String(m).padStart(2,"0")}m left`
         : `${m}m ${String(s).padStart(2,"0")}s left`;
-
-    // Full D:H:M:S blocks (only present when the card is expanded)
-    const dEl = el(`mcd-${key}-${index}-d`);
-    if (dEl) {
-      dEl.textContent                         = String(d).padStart(2, "0");
-      el(`mcd-${key}-${index}-h`).textContent = String(h).padStart(2, "0");
-      el(`mcd-${key}-${index}-m`).textContent = String(m).padStart(2, "0");
-      el(`mcd-${key}-${index}-s`).textContent = String(s).padStart(2, "0");
-    }
 
     if (remaining === 0) {
       clearInterval(app.cdTimers[tKey]);
@@ -1472,74 +1541,101 @@ function stopAllCountdowns() {
   app.cdTimers = {};
 }
 
-function toggleVaultExpand(key, index) {
-  const card   = document.querySelector(`.vc-card[data-key="${key}"][data-index="${index}"]`);
-  if (!card) return;
-  const expand    = el(`vc-expand-${key}-${index}`);
-  const isOpen    = card.classList.contains("expanded");
-
-  // Collapse any other open card first
-  document.querySelectorAll(".vc-card.expanded").forEach(c => {
-    c.classList.remove("expanded");
-    const ex = c.querySelector(".vc-expand");
-    if (ex) ex.style.display = "none";
-  });
-
-  if (!isOpen) {
-    card.classList.add("expanded");
-    if (expand) expand.style.display = "block";
-  }
-}
-
 /* ════════════════════════════════════════
    FORM HELPERS
 ════════════════════════════════════════ */
 function setDays(n, btnEl) {
   el("dfDays").value = n;
-  document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".vs-qd:not(.pay-qd)").forEach(b => b.classList.remove("active"));
   btnEl.classList.add("active");
 }
-
 function onDaysInput() {
-  document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".vs-qd:not(.pay-qd)").forEach(b => b.classList.remove("active"));
 }
-
-function onAmountInput() { /* live validation placeholder */ }
+function onAmountInput() {}
 
 function setMax() {
   if (!app.connected) return;
-  const bal = app.balances[app.tab];
-  el("dfAmount").value = bal;
+  el("dfAmount").value = app.balances[app.tab];
+}
+
+function setPayDays(n, btnEl) {
+  el("payDays").value = n;
+  document.querySelectorAll(".pay-qd").forEach(b => b.classList.remove("active"));
+  btnEl.classList.add("active");
+}
+function onPayDaysInput() {
+  document.querySelectorAll(".pay-qd").forEach(b => b.classList.remove("active"));
+}
+
+function setPayToken(tok) {
+  app.payToken = tok;
+  el("payBtnUsdc").classList.toggle("active", tok === "usdc");
+  el("payBtnEurc").classList.toggle("active", tok === "eurc");
+  el("payAmountSuffix").textContent = VAULTS[tok].symbol;
+  el("bulkSymLabel").textContent    = VAULTS[tok].symbol;
+  const bal = app.connected ? `${app.balances[tok]} ${VAULTS[tok].symbol}` : "—";
+  el("payWalletBal").textContent = bal;
+  el("payBtnContent").textContent = `Send & Lock ${VAULTS[tok].symbol}`;
+}
+
+function toggleBulkForm() {
+  const single = el("singlePayPanel");
+  const bulk   = el("bulkPayPanel");
+  const showBulk = single.classList.contains("hidden") === false;
+  single.classList.toggle("hidden", showBulk);
+  bulk.classList.toggle("hidden", !showBulk);
+  if (!showBulk) { /* entering single */ } else if (el("bulkRows").children.length === 0) {
+    addBulkRow();
+  }
+}
+
+function addBulkRow() {
+  if (el("bulkRows").children.length >= 10) {
+    toast("info", "Max 10 recipients", "Remove a row to add another.");
+    return;
+  }
+  const idx = app.bulkRowCount++;
+  const row = document.createElement("div");
+  row.className  = "bulk-row";
+  row.dataset.idx = idx;
+  row.innerHTML = `
+    <input type="text"   class="vs-input-text" placeholder="0x... address" data-field="address">
+    <input type="number" class="vs-input-text" placeholder="Amount" step="0.01" min="0.01" data-field="amount">
+    <input type="number" class="vs-input-text" placeholder="Days" min="1" max="3650" data-field="days">
+    <input type="text"   class="vs-input-text" placeholder="Label" maxlength="50" data-field="label">
+    <button class="bulk-row-del" onclick="removeBulkRow(this)" type="button">×</button>
+  `;
+  el("bulkRows").appendChild(row);
+}
+
+function removeBulkRow(btn) {
+  btn.closest(".bulk-row").remove();
 }
 
 /* ════════════════════════════════════════
-   DEPOSIT  (approve → deposit)
+   DEPOSIT (V3: approve → deposit(amount, days, label))
 ════════════════════════════════════════ */
 async function handleDeposit() {
   if (!app.connected || !app.signer) { openWalletModal(); return; }
 
   const amtInput  = el("dfAmount").value.trim();
   const daysInput = el("dfDays").value.trim();
+  const label     = el("dfLabel").value.trim();
   const cfg       = VAULTS[app.tab];
   const sym       = cfg.symbol;
+  const isEurc    = app.tab === "eurc";
 
-  if (!amtInput || parseFloat(amtInput) <= 0)  { toast("error","Invalid amount","Enter a positive amount to lock."); return; }
-  if (!daysInput || parseInt(daysInput) < 1)    { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
-  if (parseInt(daysInput) > 3650)               { toast("error","Too long","Maximum lock period is 3650 days (10 years)."); return; }
+  if (!amtInput || parseFloat(amtInput) <= 0) { toast("error","Invalid amount","Enter a positive amount."); return; }
+  if (!daysInput || parseInt(daysInput) < 1)   { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
+  if (parseInt(daysInput) > 3650)              { toast("error","Too long","Maximum is 3650 days."); return; }
 
-  // ── Nonce check — detect stuck pending transactions ──
+  // Stuck tx check
   try {
-    const pendingNonce   = await app.provider.getTransactionCount(app.address, "pending");
-    const confirmedNonce = await app.provider.getTransactionCount(app.address, "latest");
-    console.log('[Nonce] pending:', pendingNonce, '| confirmed:', confirmedNonce);
-    if (pendingNonce > confirmedNonce) {
-      toast("error", "Stuck Transactions Detected",
-        "You have pending stuck transactions. Go to MetaMask → Settings → Advanced → Clear activity tab data, then try again.", 10000);
-      return;
-    }
-  } catch (nonceErr) {
-    console.warn('[Nonce] check failed (continuing):', nonceErr.message);
-  }
+    const pn = await app.provider.getTransactionCount(app.address, "pending");
+    const cn = await app.provider.getTransactionCount(app.address, "latest");
+    if (pn > cn) { toast("error","Stuck Transactions","Clear MetaMask activity data, then try again.", 10000); return; }
+  } catch {}
 
   app.txPending = true;
   renderUI();
@@ -1549,62 +1645,168 @@ async function handleDeposit() {
   const amount = ethers.parseUnits(amtInput, cfg.decimals);
   const days   = parseInt(daysInput);
 
-  console.log('[Deposit] Tab:', app.tab, '| Token:', cfg.tokenAddress, '| Vault:', cfg.vaultAddress);
-  console.log('[Deposit] Amount (raw):', amount.toString(), '| Days:', days);
-
   let txId;
   try {
-    // ── Step 1: Approve exact amount if needed ──
-    const allowance = await withTimeout(tokenC.allowance(app.address, cfg.vaultAddress));
-    console.log('[Deposit] Current allowance:', allowance.toString(), '| Needed:', amount.toString(), '| Skip approve:', allowance >= amount);
+    el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Approving…`;
+    await approveIfNeeded(tokenC, cfg.vaultAddress, amount, sym, isEurc);
 
-    if (allowance < amount) {
-      txId = toast("loading", `Approving ${sym}…`, "Step 1 of 2 — confirm in wallet", 0);
-      el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Approving…`;
-
-      // Use exact amount — Arc's USDC at 0x360... is a precompile; MaxUint256 may fail to mine
-      console.log('[Deposit] Calling approve — token:', cfg.tokenAddress, '| spender:', cfg.vaultAddress, '| amount:', amount.toString());
-      const approveOverrides = await getEIP1559Overrides(200000n);
-      const approveTx = await withTimeout(
-        tokenC.approve(cfg.vaultAddress, amount, approveOverrides)
-      );
-      console.log('[Deposit] Approve tx sent:', approveTx.hash, '| type:', approveTx.type);
-      const approveReceipt = await waitForReceipt(approveTx.hash);
-      console.log('[Deposit] Approve confirmed — block:', approveReceipt.blockNumber);
-      removeToast(txId);
-      txId = null;
-    }
-
-    // ── Step 2: Deposit ──
-    txId = toast("loading", `Depositing ${sym}…`, `Step ${allowance < amount ? "2 of 2" : "1 of 1"} — confirm in wallet`, 0);
+    txId = toast("loading", `Depositing ${sym}…`, "Confirm in wallet", 0);
     el("dfDepositBtnContent").innerHTML = `<span class="spin"></span> Depositing…`;
 
-    console.log('[Deposit] Calling deposit — amount:', amount.toString(), '| lockDays:', days);
-    const depositOverrides = await getEIP1559Overrides(300000n);
-    const depositTx = await withTimeout(
-      vaultC.deposit(amount, BigInt(days), depositOverrides)
-    );
-    console.log('[Deposit] Deposit tx sent:', depositTx.hash, '| type:', depositTx.type);
-    const depositReceipt = await waitForReceipt(depositTx.hash);
-    console.log('[Deposit] Deposit confirmed — block:', depositReceipt.blockNumber);
+    console.log('[Deposit]', sym, amount.toString(), 'days:', days, 'label:', label);
+    const ov = await getEIP1559Overrides(350000n);
+    const tx = await withTimeout(vaultC.deposit(amount, BigInt(days), label, ov));
+    console.log('[Deposit] tx:', tx.hash);
+    await waitForReceipt(tx.hash);
 
     removeToast(txId);
-    toast("success", "Vault Created! 🎉", `${fmt(amtInput)} ${sym} locked for ${days} day${days===1?"":"s"}.`, 7000);
+    toast("success", "Vault Created! 🎉", `${fmt(amtInput)} ${sym} locked for ${days} day${days===1?"":"s"}${label ? ` · "${label}"` : ""}.`, 7000);
 
     el("dfAmount").value = "";
     el("dfDays").value   = "";
-    document.querySelectorAll(".vs-qd").forEach(b => b.classList.remove("active"));
-
+    el("dfLabel").value  = "";
+    document.querySelectorAll(".vs-qd:not(.pay-qd)").forEach(b => b.classList.remove("active"));
     await loadData();
 
   } catch (err) {
     if (txId) removeToast(txId);
     const msg = txErrMsg(err);
-    if (msg === null) {
-      toast("info", "Cancelled", "Transaction cancelled.");
-    } else {
-      toast("error", "Transaction Failed", msg);
-    }
+    if (msg === null) toast("info", "Cancelled", "Transaction cancelled.");
+    else toast("error", "Transaction Failed", msg);
+  } finally {
+    app.txPending = false;
+    renderUI();
+  }
+}
+
+/* ════════════════════════════════════════
+   DEPOSIT FOR (payroll: single)
+════════════════════════════════════════ */
+async function handleDepositFor() {
+  if (!app.connected || !app.signer) { openWalletModal(); return; }
+
+  const tok       = app.payToken;
+  const cfg       = VAULTS[tok];
+  const sym       = cfg.symbol;
+  const isEurc    = tok === "eurc";
+  const recipient = el("payRecipient").value.trim();
+  const amtInput  = el("payAmount").value.trim();
+  const daysInput = el("payDays").value.trim();
+  const label     = el("payLabel").value.trim();
+
+  if (!ethers.isAddress(recipient)) { toast("error","Invalid address","Enter a valid recipient wallet address."); return; }
+  if (!amtInput || parseFloat(amtInput) <= 0) { toast("error","Invalid amount","Enter a positive amount."); return; }
+  if (!daysInput || parseInt(daysInput) < 1)  { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
+  if (parseInt(daysInput) > 3650)             { toast("error","Too long","Maximum is 3650 days."); return; }
+
+  app.txPending = true;
+  renderUI();
+
+  const tokenC = new ethers.Contract(cfg.tokenAddress, ERC20_ABI, app.signer);
+  const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
+  const amount = ethers.parseUnits(amtInput, cfg.decimals);
+  const days   = parseInt(daysInput);
+
+  let txId;
+  try {
+    el("payBtnContent").innerHTML = `<span class="spin"></span> Approving…`;
+    await approveIfNeeded(tokenC, cfg.vaultAddress, amount, sym, isEurc);
+
+    txId = toast("loading", `Sending ${sym} to ${shortAddr(recipient)}…`, "Confirm in wallet", 0);
+    el("payBtnContent").innerHTML = `<span class="spin"></span> Sending…`;
+
+    console.log('[DepositFor]', sym, amount.toString(), 'days:', days, 'recipient:', recipient, 'label:', label);
+    const ov = await getEIP1559Overrides(400000n);
+    const tx = await withTimeout(vaultC.depositFor(recipient, amount, BigInt(days), label, ov));
+    console.log('[DepositFor] tx:', tx.hash);
+    await waitForReceipt(tx.hash);
+
+    removeToast(txId);
+    toast("success", "Payment Sent! 💸", `${fmt(amtInput)} ${sym} locked for ${shortAddr(recipient)}${label ? ` · "${label}"` : ""}.`, 7000);
+
+    el("payRecipient").value = "";
+    el("payAmount").value    = "";
+    el("payDays").value      = "";
+    el("payLabel").value     = "";
+    document.querySelectorAll(".pay-qd").forEach(b => b.classList.remove("active"));
+    await loadData();
+
+  } catch (err) {
+    if (txId) removeToast(txId);
+    const msg = txErrMsg(err);
+    if (msg === null) toast("info", "Cancelled", "Transaction cancelled.");
+    else toast("error", "Transaction Failed", msg);
+  } finally {
+    app.txPending = false;
+    renderUI();
+  }
+}
+
+/* ════════════════════════════════════════
+   BULK DEPOSIT FOR (payroll: multiple)
+════════════════════════════════════════ */
+async function handleBulkDeposit() {
+  if (!app.connected || !app.signer) { openWalletModal(); return; }
+
+  const tok    = app.payToken;
+  const cfg    = VAULTS[tok];
+  const sym    = cfg.symbol;
+  const isEurc = tok === "eurc";
+
+  const rows = Array.from(el("bulkRows").querySelectorAll(".bulk-row"));
+  if (rows.length === 0) { toast("error","No recipients","Add at least one recipient."); return; }
+
+  const recipients = [], amounts = [], lockDays = [], labels = [];
+  for (let i = 0; i < rows.length; i++) {
+    const r    = rows[i];
+    const addr = r.querySelector('[data-field="address"]').value.trim();
+    const amt  = r.querySelector('[data-field="amount"]').value.trim();
+    const days = r.querySelector('[data-field="days"]').value.trim();
+    const lbl  = r.querySelector('[data-field="label"]').value.trim();
+
+    if (!ethers.isAddress(addr)) { toast("error",`Row ${i+1}: Invalid address`,"Check the recipient wallet address."); return; }
+    if (!amt || parseFloat(amt) <= 0) { toast("error",`Row ${i+1}: Invalid amount`,"Enter a positive amount."); return; }
+    if (!days || parseInt(days) < 1)  { toast("error",`Row ${i+1}: Invalid days`,"Enter at least 1 day."); return; }
+
+    recipients.push(addr);
+    amounts.push(ethers.parseUnits(amt, cfg.decimals));
+    lockDays.push(BigInt(parseInt(days)));
+    labels.push(lbl);
+  }
+
+  const totalAmount = amounts.reduce((a, b) => a + b, 0n);
+  app.txPending = true;
+  renderUI();
+
+  const tokenC = new ethers.Contract(cfg.tokenAddress, ERC20_ABI, app.signer);
+  const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
+
+  let txId;
+  try {
+    el("bulkSendContent").innerHTML = `<span class="spin"></span> Approving…`;
+    await approveIfNeeded(tokenC, cfg.vaultAddress, totalAmount, sym, isEurc);
+
+    txId = toast("loading", `Sending to ${recipients.length} recipients…`, "Confirm in wallet", 0);
+    el("bulkSendContent").innerHTML = `<span class="spin"></span> Sending…`;
+
+    console.log('[BulkDeposit]', sym, 'recipients:', recipients.length, 'total:', totalAmount.toString());
+    const ov = await getEIP1559Overrides(BigInt(200000 + 150000 * recipients.length));
+    const tx = await withTimeout(vaultC.bulkDepositFor(recipients, amounts, lockDays, labels, ov));
+    console.log('[BulkDeposit] tx:', tx.hash);
+    await waitForReceipt(tx.hash);
+
+    removeToast(txId);
+    toast("success", `${recipients.length} Payments Sent! 💸`, `Total ${ethers.formatUnits(totalAmount, cfg.decimals)} ${sym} distributed.`, 7000);
+
+    el("bulkRows").innerHTML = "";
+    addBulkRow(); // reset with one empty row
+    await loadData();
+
+  } catch (err) {
+    if (txId) removeToast(txId);
+    const msg = txErrMsg(err);
+    if (msg === null) toast("info", "Cancelled", "Transaction cancelled.");
+    else toast("error", "Bulk Send Failed", msg);
   } finally {
     app.txPending = false;
     renderUI();
@@ -1614,30 +1816,26 @@ async function handleDeposit() {
 /* ════════════════════════════════════════
    WITHDRAW
 ════════════════════════════════════════ */
-async function handleWithdraw(key, vaultIndex) {
+async function handleWithdraw(key, vaultId) {
   if (!app.connected || !app.signer) return;
 
   const cfg = VAULTS[key];
   const sym = cfg.symbol;
-
   app.txPending = true;
   renderUI();
 
   const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
   const txId   = toast("loading", `Withdrawing ${sym}…`, "Confirm in your wallet", 0);
 
-  console.log('[Withdraw] Key:', key, '| Vault:', cfg.vaultAddress, '| vaultIndex:', vaultIndex);
+  console.log('[Withdraw] key:', key, 'vaultId:', vaultId);
   try {
-    const withdrawOverrides = await getEIP1559Overrides(200000n);
-    const tx = await withTimeout(vaultC.withdraw(BigInt(vaultIndex), withdrawOverrides));
-    console.log('[Withdraw] Tx sent:', tx.hash, '| type:', tx.type);
-    const receipt = await waitForReceipt(tx.hash);
-    console.log('[Withdraw] Confirmed — block:', receipt.blockNumber);
-
+    const ov = await getEIP1559Overrides(200000n);
+    const tx = await withTimeout(vaultC.withdraw(BigInt(vaultId), ov));
+    console.log('[Withdraw] tx:', tx.hash);
+    await waitForReceipt(tx.hash);
     removeToast(txId);
     toast("success", "Withdrawal Complete 💸", `${sym} returned to your wallet!`, 6000);
     await loadData();
-
   } catch (err) {
     removeToast(txId);
     const msg = txErrMsg(err);
@@ -1652,12 +1850,23 @@ async function handleWithdraw(key, vaultIndex) {
 /* ════════════════════════════════════════
    EARLY WITHDRAW
 ════════════════════════════════════════ */
-function openEarlyWithdrawModal(key, vaultIndex, amount) {
-  app.earlyWithdrawTarget = { key, vaultIndex, amount };
-  const sym     = VAULTS[key].symbol;
-  const penalty = fmt(parseFloat(amount) * 0.1);
-  const receive = fmt(parseFloat(amount) * 0.9);
+function getPenaltyPct(createdTs, unlockTs) {
+  const total    = unlockTs - createdTs;
+  const elapsed  = Date.now() - createdTs;
+  const progress = total > 0 ? elapsed / total : 0;
+  if (progress < 0.5)  return 2;
+  if (progress < 0.9)  return 0.5;
+  return 0.1;
+}
 
+function openEarlyWithdrawModal(key, vaultId, amount, createdTs, unlockTs) {
+  const penaltyPct = getPenaltyPct(createdTs, unlockTs);
+  app.earlyWithdrawTarget = { key, vaultId, amount, penaltyPct };
+  const sym     = VAULTS[key].symbol;
+  const penalty = fmt(parseFloat(amount) * penaltyPct / 100);
+  const receive = fmt(parseFloat(amount) * (1 - penaltyPct / 100));
+  el("ewmWarningTitle").textContent = `⚠️ ${penaltyPct}% Penalty applies`;
+  el("ewmPenaltyLabel").textContent = `Penalty (${penaltyPct}%)`;
   el("ewmLocked").textContent  = `${amount} ${sym}`;
   el("ewmPenalty").textContent = `−${penalty} ${sym}`;
   el("ewmReceive").textContent = `${receive} ${sym}`;
@@ -1671,14 +1880,12 @@ function closeEarlyWithdrawModal() {
   app.earlyWithdrawTarget = null;
 }
 
-function ewModalBackdrop(e) {
-  if (e.target === el("earlyWithdrawModal")) closeEarlyWithdrawModal();
-}
+function ewModalBackdrop(e) { if (e.target === el("earlyWithdrawModal")) closeEarlyWithdrawModal(); }
 
 async function confirmEarlyWithdraw() {
   if (!app.earlyWithdrawTarget || !app.connected || !app.signer) return;
 
-  const { key, vaultIndex, amount } = app.earlyWithdrawTarget;
+  const { key, vaultId, amount, penaltyPct } = app.earlyWithdrawTarget;
   const cfg = VAULTS[key];
   const sym = cfg.symbol;
 
@@ -1689,40 +1896,32 @@ async function confirmEarlyWithdraw() {
   const vaultC = new ethers.Contract(cfg.vaultAddress, VAULT_ABI, app.signer);
   const txId   = toast("loading", `Early Withdrawing ${sym}…`, "Confirm in your wallet", 0);
 
-  console.log('[EarlyWithdraw] Key:', key, '| Vault:', cfg.vaultAddress, '| vaultIndex:', vaultIndex);
+  console.log('[EarlyWithdraw] key:', key, 'vaultId:', vaultId);
   try {
-    const ewOverrides = await getEIP1559Overrides(300000n);
-    const tx = await withTimeout(vaultC.earlyWithdraw(BigInt(vaultIndex), ewOverrides));
-    console.log('[EarlyWithdraw] Tx sent:', tx.hash, '| type:', tx.type);
-    const ewReceipt = await waitForReceipt(tx.hash);
-    console.log('[EarlyWithdraw] Confirmed — block:', ewReceipt.blockNumber);
-
+    const ov = await getEIP1559Overrides(300000n);
+    const tx = await withTimeout(vaultC.earlyWithdraw(BigInt(vaultId), ov));
+    console.log('[EarlyWithdraw] tx:', tx.hash);
+    await waitForReceipt(tx.hash);
     removeToast(txId);
-    const receive = fmt(parseFloat(amount) * 0.9);
-    toast("success", "Early Withdrawal Complete", `Received ${receive} ${sym} after 10% penalty.`, 7000);
+    const receive = fmt(parseFloat(amount) * (1 - penaltyPct / 100));
+    toast("success", "Early Withdrawal Complete", `Received ${receive} ${sym} after ${penaltyPct}% penalty.`, 7000);
     await loadData();
-
   } catch (err) {
     removeToast(txId);
     const msg = txErrMsg(err);
     if (msg === null) toast("info", "Cancelled", "Transaction cancelled.");
     else toast("error", "Early Withdrawal Failed", msg);
   } finally {
-    // Always clear loading state — no stuck spinner
     app.txPending = false;
     renderUI();
   }
 }
 
-
 /* ════════════════════════════════════════
    KEYBOARD
 ════════════════════════════════════════ */
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    closeWalletModal();
-    closeEarlyWithdrawModal();
-  }
+  if (e.key === "Escape") { closeWalletModal(); closeEarlyWithdrawModal(); }
 });
 
 /* ════════════════════════════════════════
@@ -1730,19 +1929,14 @@ document.addEventListener("keydown", e => {
 ════════════════════════════════════════ */
 (async function init() {
   renderUI();
-
-  // Silent auto-reconnect — no popup, uses cached permission only
   try {
     const ethereum = window.ethereum;
     if (!ethereum) return;
-
     const accounts = await ethereum.request({ method: "eth_accounts" });
     if (!accounts || accounts.length === 0) return;
-
     const chainId = await ethereum.request({ method: "eth_chainId" });
     if (chainId.toLowerCase() !== ARC_CHAIN_ID.toLowerCase()) return;
 
-    // Already authorised on the right chain — reconnect silently
     app.address   = accounts[0];
     app.provider  = new ethers.BrowserProvider(ethereum);
     app.signer    = await app.provider.getSigner();
@@ -1756,7 +1950,6 @@ document.addEventListener("keydown", e => {
 
     await loadData();
   } catch (e) {
-    // Fail silently — user can connect manually
     console.log("[Init] Auto-reconnect skipped:", e.message);
   }
 })();
