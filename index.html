@@ -890,19 +890,6 @@ body {
       </div>
     </div>
 
-    <!-- Sent Payments History -->
-    <div class="v2-history-section hidden" id="sentPaymentsSection" style="max-width:550px;margin:0 auto 12px">
-      <div class="v2-history-hd">
-        <div class="v2-history-title">Sent Payments</div>
-      </div>
-      <div class="v2-history-table">
-        <div class="sent-pay-row sent-pay-hdr">
-          <span>Recipient</span><span>Amount</span><span>Status</span>
-        </div>
-        <div id="sentPaymentsList"></div>
-      </div>
-    </div>
-
     <!-- Bulk pay form -->
     <div class="pay-panel hidden" id="bulkPayPanel">
       <div class="vault-card">
@@ -917,6 +904,19 @@ body {
         <button class="vs-btn vs-btn-primary" id="bulkSendBtn" onclick="handleBulkDeposit()" style="margin-top:16px">
           <span id="bulkSendContent">Send All</span>
         </button>
+      </div>
+    </div>
+
+    <!-- Sent Payments History — always below both form panels -->
+    <div class="v2-history-section hidden" id="sentPaymentsSection" style="max-width:550px;margin:0 auto 12px">
+      <div class="v2-history-hd">
+        <div class="v2-history-title">Sent Payments</div>
+      </div>
+      <div class="v2-history-table">
+        <div class="sent-pay-row sent-pay-hdr">
+          <span>Recipient</span><span>Amount</span><span>Status</span>
+        </div>
+        <div id="sentPaymentsList"></div>
       </div>
     </div>
 
@@ -1877,6 +1877,7 @@ async function handleBulkDeposit() {
     else toast("error", "Bulk Send Failed", msg);
   } finally {
     app.txPending = false;
+    el("bulkSendContent").textContent = "Send All";
     renderUI();
   }
 }
