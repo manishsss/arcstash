@@ -571,45 +571,6 @@ body {
 .sent-pay-sym { font-size: 10px; color: var(--text-3); font-weight: 500; }
 
 /* ─────────────────────────────────────────
-   BRIDGE / CROSS-CHAIN
-───────────────────────────────────────── */
-.bridge-chain-sel { display: flex; gap: 8px; }
-.bridge-chain-btn {
-  flex: 1; padding: 10px 12px; border-radius: 10px;
-  background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.10);
-  color: var(--text-2); font-size: 13px; font-weight: 600;
-  cursor: pointer; font-family: inherit; transition: all .18s;
-  display: flex; align-items: center; gap: 6px; justify-content: center;
-}
-.bridge-chain-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
-.bridge-chain-btn:hover:not(.active) { color: var(--text-1); background: var(--surface-hover); }
-
-.bridge-progress {
-  display: flex; align-items: center;
-  margin: 20px 0 4px; padding: 14px 16px;
-  background: var(--surface-hi); border-radius: 12px;
-}
-.bridge-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
-.bridge-step-num {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: rgba(0,0,0,0.08); color: var(--text-3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; transition: all .3s;
-}
-.bridge-step.active .bridge-step-num { background: var(--primary); color: #fff; box-shadow: 0 0 0 3px rgba(42,54,217,0.2); animation: pulse 1.5s ease infinite; }
-.bridge-step.done   .bridge-step-num { background: var(--green); color: #fff; }
-.bridge-step-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
-.bridge-step.active .bridge-step-label { color: var(--primary); }
-.bridge-step.done   .bridge-step-label { color: var(--green); }
-.bridge-step-line { flex: 1; height: 2px; background: rgba(0,0,0,0.08); margin: 0 6px 18px; }
-.bridge-step.done ~ .bridge-step-line { background: var(--green); }
-.bridge-note { font-size: 12px; color: var(--text-2); text-align: center; margin-top: 14px; line-height: 1.6; padding: 10px 14px; background: var(--surface-hi); border-radius: 10px; }
-.bridge-dir-sel { display: flex; gap: 8px; margin-bottom: 16px; }
-.bridge-dir-btn { flex: 1; padding: 10px 12px; border-radius: 10px; background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.10); color: var(--text-2); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.bridge-dir-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
-.bridge-dir-btn:hover:not(.active) { color: var(--text-1); background: var(--surface-hover); }
-
-/* ─────────────────────────────────────────
    EARLY WITHDRAW MODAL
 ───────────────────────────────────────── */
 .ewm-warning { background: #fef3c7; border: none; border-radius: 12px; padding: 14px; margin-bottom: 18px; }
@@ -780,10 +741,6 @@ body {
     <button class="vault-tab" id="tabPay" role="tab" aria-selected="false" onclick="switchTab('pay')">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Pay Someone
-    </button>
-    <button class="vault-tab" id="tabBridge" role="tab" aria-selected="false" onclick="switchTab('bridge')">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 10h3V6h6v4h3M4 6V4a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Bridge
     </button>
   </div>
 
@@ -965,86 +922,6 @@ body {
 
   </div><!-- /paySection -->
 
-  <!-- ── Bridge (Cross-Chain) tab ── -->
-  <div id="bridgeSection" class="hidden">
-    <div class="v2-deposit-panel">
-      <div class="vault-card">
-        <div class="vs-token-label">
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="color:var(--primary)"><path d="M1 11h3.5V6.5h6V11H14M4.5 6.5V4a3 3 0 0 1 6 0v2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Cross-Chain Bridge
-        </div>
-
-        <div class="bridge-dir-sel">
-          <button class="bridge-dir-btn active" id="bridgeDirToArc" onclick="setBridgeDirection('toArc')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-            Bridge to Arc
-          </button>
-          <button class="bridge-dir-btn" id="bridgeDirFromArc" onclick="setBridgeDirection('fromArc')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-            Bridge from Arc
-          </button>
-        </div>
-
-        <div class="vs-form-grp">
-          <label class="vs-field-lbl" id="bridgeChainLabel">Source Chain</label>
-          <div class="bridge-chain-sel">
-            <button class="bridge-chain-btn active" id="btnEthSep" onclick="setCctpSource('ethereumSepolia')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.75l-6.25 10.5L12 15.25l6.25-3L12 1.75zM5.75 13.5L12 22.25l6.25-8.75L12 17l-6.25-3.5z"/></svg>
-              Ethereum Sepolia
-            </button>
-            <button class="bridge-chain-btn" id="btnBaseSep" onclick="setCctpSource('baseSepolia')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z" fill="white"/></svg>
-              Base Sepolia
-            </button>
-          </div>
-        </div>
-
-        <div class="vs-form-grp">
-          <label class="vs-field-lbl" for="bridgeAmount">Amount (USDC)</label>
-          <div class="vs-input-wrap">
-            <input type="number" class="vs-input" id="bridgeAmount" placeholder="0.00" step="0.01" min="0.01">
-            <span class="vs-input-sym">USDC</span>
-          </div>
-          <div class="vs-balance-hint">
-            <span id="bridgeBalLabel">Balance on source chain</span>
-            <span id="bridgeSrcBal">—</span>
-          </div>
-        </div>
-
-        <button class="vs-btn vs-btn-primary" id="bridgeBtn" onclick="handleBridgeDeposit()">
-          <span id="bridgeBtnContent">Bridge to Arc</span>
-        </button>
-
-        <!-- Progress stepper -->
-        <div class="bridge-progress hidden" id="bridgeProgress">
-          <div class="bridge-step" id="bStep1">
-            <div class="bridge-step-num">1</div>
-            <div class="bridge-step-label">Approve</div>
-          </div>
-          <div class="bridge-step-line"></div>
-          <div class="bridge-step" id="bStep2">
-            <div class="bridge-step-num">2</div>
-            <div class="bridge-step-label">Burn</div>
-          </div>
-          <div class="bridge-step-line"></div>
-          <div class="bridge-step" id="bStep3">
-            <div class="bridge-step-num">3</div>
-            <div class="bridge-step-label">Attest</div>
-          </div>
-          <div class="bridge-step-line"></div>
-          <div class="bridge-step" id="bStep4">
-            <div class="bridge-step-num">4</div>
-            <div class="bridge-step-label">Mint</div>
-          </div>
-        </div>
-
-        <div class="bridge-note">
-          <span id="bridgeNoteText">Bridges USDC to your Arc wallet using Circle CCTP. Once arrived, use the USDC tab to lock it in a vault.</span>
-        </div>
-      </div>
-    </div>
-  </div><!-- /bridgeSection -->
-
 </section>
 
 <!-- ═══════════════════════════════════════
@@ -1163,64 +1040,6 @@ const ERC20_ABI = [
 ];
 
 /* ════════════════════════════════════════
-   CCTP CONSTANTS
-════════════════════════════════════════ */
-const CCTP_CONFIG = {
-  ethereumSepolia: {
-    chainId:            "0xaa36a7",
-    domain:             0,
-    rpc:                "https://rpc.sepolia.org",
-    tokenMessenger:     "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-    messageTransmitter: "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-    usdc:               "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-    name:               "Ethereum Sepolia",
-    explorer:           "https://sepolia.etherscan.io",
-    addParams: {
-      chainId: "0xaa36a7", chainName: "Ethereum Sepolia",
-      nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
-      rpcUrls: ["https://rpc.sepolia.org"],
-      blockExplorerUrls: ["https://sepolia.etherscan.io"]
-    }
-  },
-  baseSepolia: {
-    chainId:            "0x14a34",
-    domain:             6,
-    rpc:                "https://sepolia.base.org",
-    tokenMessenger:     "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-    messageTransmitter: "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-    usdc:               "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-    name:               "Base Sepolia",
-    explorer:           "https://sepolia.basescan.org",
-    addParams: {
-      chainId: "0x14a34", chainName: "Base Sepolia",
-      nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
-      rpcUrls: ["https://sepolia.base.org"],
-      blockExplorerUrls: ["https://sepolia.basescan.org"]
-    }
-  },
-  arcTestnet: {
-    chainId:            "0x4CEF52",
-    domain:             26,
-    rpc:                "https://rpc.testnet.arc.network",
-    tokenMessenger:     "0x8FE6B999Dc680CcFDD5Bf7EB0974218be2542DAA",
-    messageTransmitter: "0xE737e5cEBEEBa77EFE34D4aa090756590b1CE275",
-    usdc:               "0x3600000000000000000000000000000000000000",
-    name:               "Arc Testnet",
-    explorer:           "https://testnet.arcscan.app"
-  }
-};
-
-const IRIS_API = "https://iris-api-sandbox.circle.com/v1/attestations";
-
-const TOKEN_MESSENGER_ABI = [
-  "function depositForBurn(uint256 amount, uint32 destinationDomain, bytes32 mintRecipient, address burnToken, bytes32 destinationCaller, uint256 maxFee, uint32 minFinalityThreshold) external returns (uint64 nonce)"
-];
-const MESSAGE_TRANSMITTER_ABI = [
-  "function receiveMessage(bytes message, bytes attestation) returns (bool success)",
-  "event MessageSent(bytes message)"
-];
-
-/* ════════════════════════════════════════
    APP STATE
 ════════════════════════════════════════ */
 const app = {
@@ -1239,11 +1058,7 @@ const app = {
   txPending:           false,
   cdTimers:            {},
   earlyWithdrawTarget: null,
-  bulkRowCount:        0,
-  cctpSource:          "ethereumSepolia",
-  cctpBridging:        false,
-  bridgeDirection:     "toArc",
-  listenersRegistered: false
+  bulkRowCount:        0
 };
 
 /* ════════════════════════════════════════
@@ -1401,33 +1216,6 @@ async function ensureArcNetwork(ethereum) {
 }
 
 /* ════════════════════════════════════════
-   WALLET EVENT LISTENERS (registered once)
-════════════════════════════════════════ */
-function registerWalletListeners() {
-  if (app.listenersRegistered) return;
-  app.listenersRegistered = true;
-
-  const ethereum = window.ethereum;
-  if (!ethereum) return;
-
-  ethereum.on("accountsChanged", () => {
-    if (app.cctpBridging) {
-      console.log("[AccountsChanged] Suppressed reload - bridge in progress");
-      return;
-    }
-    window.location.reload();
-  });
-
-  ethereum.on("chainChanged", (newChainId) => {
-    if (app.cctpBridging) {
-      console.log("[ChainChanged] Suppressed reload - bridge in progress, newChain:", newChainId);
-      return;
-    }
-    window.location.reload();
-  });
-}
-
-/* ════════════════════════════════════════
    CONNECT WALLET
 ════════════════════════════════════════ */
 async function connectWallet(type, label="Wallet") {
@@ -1470,7 +1258,9 @@ async function connectWallet(type, label="Wallet") {
     removeToast(statusToast);
     toast("success", "Wallet Connected", shortAddr(app.address));
     await loadData();
-    registerWalletListeners();
+
+    ethereum.on("accountsChanged", () => window.location.reload());
+    ethereum.on("chainChanged",    () => window.location.reload());
 
   } catch (err) {
     removeToast(statusToast);
@@ -1584,21 +1374,17 @@ async function loadData() {
 ════════════════════════════════════════ */
 function switchTab(tab) {
   app.tab = tab;
-  el("tabUsdc").classList.toggle("active",   tab === "usdc");
-  el("tabEurc").classList.toggle("active",   tab === "eurc");
-  el("tabPay").classList.toggle("active",    tab === "pay");
-  el("tabBridge").classList.toggle("active", tab === "bridge");
-  el("tabUsdc").setAttribute("aria-selected",   tab === "usdc");
-  el("tabEurc").setAttribute("aria-selected",   tab === "eurc");
-  el("tabPay").setAttribute("aria-selected",    tab === "pay");
-  el("tabBridge").setAttribute("aria-selected", tab === "bridge");
+  el("tabUsdc").classList.toggle("active", tab === "usdc");
+  el("tabEurc").classList.toggle("active", tab === "eurc");
+  el("tabPay").classList.toggle("active",  tab === "pay");
+  el("tabUsdc").setAttribute("aria-selected", tab === "usdc");
+  el("tabEurc").setAttribute("aria-selected", tab === "eurc");
+  el("tabPay").setAttribute("aria-selected",  tab === "pay");
 
-  el("depositSection").classList.toggle("hidden", tab === "pay" || tab === "bridge");
-  el("paySection").classList.toggle("hidden",     tab !== "pay");
-  el("bridgeSection").classList.toggle("hidden",  tab !== "bridge");
+  el("depositSection").classList.toggle("hidden", tab === "pay");
+  el("paySection").classList.toggle("hidden", tab !== "pay");
 
   stopAllCountdowns();
-  if (tab === "bridge") { loadBridgeSrcBalance(); return; }
   renderUI();
 }
 
@@ -1606,8 +1392,7 @@ function switchTab(tab) {
    RENDER UI
 ════════════════════════════════════════ */
 function renderUI() {
-  if (app.tab === "bridge") return;
-  const key    = app.tab === "pay" ? "usdc" : app.tab;
+  const key    = app.tab === "pay" ? "usdc" : app.tab; // use usdc data for meta when on pay tab
   const cfg    = VAULTS[key];
   const sym    = cfg.symbol;
   const isDemo = !app.connected;
@@ -2202,344 +1987,6 @@ async function confirmEarlyWithdraw() {
 }
 
 /* ════════════════════════════════════════
-   CCTP — CROSS-CHAIN BRIDGE
-════════════════════════════════════════ */
-
-// Generic receipt poller — works on any EVM chain given an RPC URL
-async function waitForReceiptOnChain(txHash, rpcUrl, timeoutMs = 120000, intervalMs = 3000) {
-  const start = Date.now();
-  while (Date.now() - start < timeoutMs) {
-    try {
-      const res  = await fetch(rpcUrl, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", method: "eth_getTransactionReceipt", params: [txHash], id: 1 })
-      });
-      const data = await res.json();
-      if (data.result?.status) {
-        if (data.result.status === "0x0") throw new Error("Transaction reverted on-chain");
-        return data.result;
-      }
-    } catch (err) { if (err.message === "Transaction reverted on-chain") throw err; }
-    await new Promise(r => setTimeout(r, intervalMs));
-  }
-  throw new Error("TIMEOUT");
-}
-
-// Poll Circle IRIS attestation API until complete
-async function pollAttestation(messageHash, timeoutMs = 600000) {
-  const start = Date.now();
-  while (Date.now() - start < timeoutMs) {
-    try {
-      const res  = await fetch(`${IRIS_API}/${messageHash}`);
-      const data = await res.json();
-      const att  = data?.attestation;
-      if (att?.status === "complete" && att.attestation) {
-        return { message: att.message, attestation: att.attestation };
-      }
-    } catch {}
-    await new Promise(r => setTimeout(r, 5000));
-  }
-  throw new Error("Attestation timed out after 10 minutes");
-}
-
-// Switch wallet to source chain; add chain if wallet doesn't know it
-async function switchToSourceChain(srcKey) {
-  const cfg = CCTP_CONFIG[srcKey];
-  try {
-    await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: cfg.chainId }] });
-  } catch (err) {
-    if (err.code === 4902) {
-      await window.ethereum.request({ method: "wallet_addEthereumChain", params: [cfg.addParams] });
-    } else throw err;
-  }
-}
-
-// Switch wallet back to Arc Testnet
-async function switchToArcTestnet() {
-  try {
-    await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: ARC_CHAIN_ID }] });
-  } catch (err) {
-    if (err.code === 4902) {
-      await window.ethereum.request({ method: "wallet_addEthereumChain", params: [ARC_CHAIN_CFG] });
-    } else throw err;
-  }
-}
-
-// Update progress stepper (step 1-4 active; step >4 = all done; step 0 = hide)
-function setBridgeStep(step) {
-  const prog = el("bridgeProgress");
-  if (step === 0) { prog.classList.add("hidden"); return; }
-  prog.classList.remove("hidden");
-  for (let i = 1; i <= 4; i++) {
-    const s = el(`bStep${i}`);
-    s.classList.remove("active", "done");
-    if (step > 4 || i < step) s.classList.add("done");
-    else if (i === step)       s.classList.add("active");
-  }
-}
-
-// Toggle bridge direction (toArc / fromArc)
-function setBridgeDirection(dir) {
-  app.bridgeDirection = dir;
-  el("bridgeDirToArc").classList.toggle("active",   dir === "toArc");
-  el("bridgeDirFromArc").classList.toggle("active", dir === "fromArc");
-  updateBridgeUI();
-  el("bridgeSrcBal").textContent = "—";
-  loadBridgeSrcBalance();
-}
-
-// Sync UI labels to current direction
-function updateBridgeUI() {
-  const fromArc = app.bridgeDirection === "fromArc";
-  el("bridgeChainLabel").textContent  = fromArc ? "Destination Chain" : "Source Chain";
-  el("bridgeBalLabel").textContent    = fromArc ? "Balance on Arc Testnet" : "Balance on source chain";
-  el("bridgeBtnContent").textContent  = fromArc ? "Bridge from Arc" : "Bridge to Arc";
-  el("bridgeNoteText").textContent    = fromArc
-    ? "Bridges USDC from Arc to the selected chain using Circle CCTP."
-    : "Bridges USDC to your Arc wallet using Circle CCTP. Once arrived, use the USDC tab to lock it in a vault.";
-}
-
-// Fetch and display source-chain USDC balance using a read-only provider
-async function loadBridgeSrcBalance() {
-  if (!app.connected) { el("bridgeSrcBal").textContent = "—"; return; }
-  if (app.bridgeDirection === "fromArc") {
-    el("bridgeSrcBal").textContent = `${app.balances.usdc} USDC`;
-    return;
-  }
-  try {
-    const srcCfg  = CCTP_CONFIG[app.cctpSource];
-    const rdProv  = new ethers.JsonRpcProvider(srcCfg.rpc);
-    const tokenC  = new ethers.Contract(srcCfg.usdc, ERC20_ABI, rdProv);
-    const raw     = await tokenC.balanceOf(app.address);
-    el("bridgeSrcBal").textContent = `${fmt(ethers.formatUnits(raw, 6))} USDC`;
-  } catch { el("bridgeSrcBal").textContent = "—"; }
-}
-
-// Select source/destination chain
-function setCctpSource(srcKey) {
-  app.cctpSource = srcKey;
-  el("btnEthSep").classList.toggle("active", srcKey === "ethereumSepolia");
-  el("btnBaseSep").classList.toggle("active", srcKey === "baseSepolia");
-  el("bridgeSrcBal").textContent = "—";
-  updateBridgeUI();
-  loadBridgeSrcBalance();
-}
-
-// Main bridge handler — executes the full CCTP V2 4-step flow
-async function handleBridgeDeposit() {
-  if (!app.connected) { openWalletModal(); return; }
-  if (app.cctpBridging) return;
-
-  const amountStr = el("bridgeAmount").value.trim();
-  if (!amountStr || parseFloat(amountStr) <= 0) {
-    toast("error", "Invalid amount", "Enter a USDC amount greater than 0.");
-    return;
-  }
-
-  const amount = ethers.parseUnits(amountStr, 6);
-  app.cctpBridging = true;
-  el("bridgeBtn").disabled = true;
-  el("bridgeBtnContent").innerHTML = `<span class="spin"></span> Bridging…`;
-
-  let stepId;
-  try {
-    if (app.bridgeDirection === "fromArc") {
-      await _bridgeFromArc(amountStr, amount);
-    } else {
-      await _bridgeToArc(amountStr, amount);
-    }
-  } catch (err) {
-    if (stepId) removeToast(stepId);
-    setBridgeStep(0);
-    const msg = txErrMsg(err);
-    if (msg === null) toast("info", "Cancelled", "Bridge cancelled.");
-    else toast("error", "Bridge Failed", msg || err.message);
-  } finally {
-    app.cctpBridging = false;
-    console.log("[Bridge] Finished");
-    el("bridgeBtn").disabled = false;
-    updateBridgeUI();
-    loadBridgeSrcBalance();
-  }
-}
-
-// ── Direction: External chain → Arc ─────────────────────────────────────────
-async function _bridgeToArc(amountStr, amount) {
-  const srcKey = app.cctpSource;
-  const srcCfg = CCTP_CONFIG[srcKey];
-  const arcCfg = CCTP_CONFIG.arcTestnet;
-  let stepId;
-  try {
-
-  console.log("[Bridge→Arc] Started, src:", srcKey);
-
-  // Step 1: Switch to source chain + approve
-  setBridgeStep(1);
-  stepId = toast("loading", `Switching to ${srcCfg.name}…`, "Approve the chain switch in your wallet", 0);
-  await switchToSourceChain(srcKey);
-  removeToast(stepId);
-
-  const srcProvider = new ethers.BrowserProvider(window.ethereum);
-  const srcSigner   = await srcProvider.getSigner();
-  const tokenC      = new ethers.Contract(srcCfg.usdc, ERC20_ABI, srcSigner);
-
-  const allowance = await tokenC.allowance(app.address, srcCfg.tokenMessenger);
-  if (allowance < amount) {
-    stepId = toast("loading", "Approving USDC…", "Confirm in wallet", 0);
-    const approveTx = await tokenC.approve(srcCfg.tokenMessenger, amount);
-    await waitForReceiptOnChain(approveTx.hash, srcCfg.rpc);
-    removeToast(stepId);
-  }
-
-  // Step 2: Burn (depositForBurn)
-  setBridgeStep(2);
-  stepId = toast("loading", "Burning USDC on source chain…", "Confirm in wallet", 0);
-
-  const messenger = new ethers.Contract(srcCfg.tokenMessenger, TOKEN_MESSENGER_ABI, srcSigner);
-  const mintRecip = ethers.zeroPadValue(app.address, 32);
-  const burnTx    = await messenger.depositForBurn(
-    amount, arcCfg.domain, mintRecip, srcCfg.usdc,
-    ethers.zeroPadValue("0x", 32), 0n, 0
-  );
-  console.log("[CCTP] burn tx:", burnTx.hash);
-  const burnReceipt = await waitForReceiptOnChain(burnTx.hash, srcCfg.rpc);
-  removeToast(stepId);
-
-  const messageBytes = _extractMessageBytes(burnReceipt.logs, srcCfg.messageTransmitter);
-  if (!messageBytes) throw new Error("MessageSent event not found — check MessageTransmitter address");
-  const messageHash = ethers.keccak256(messageBytes);
-  console.log("[CCTP] messageHash:", messageHash);
-
-  // Step 3: Attestation
-  setBridgeStep(3);
-  stepId = toast("loading", "Waiting for Circle attestation…", "Typically takes 1–3 minutes", 0);
-  const { message, attestation } = await pollAttestation(messageHash);
-  removeToast(stepId);
-
-  // Step 4: Mint on Arc
-  setBridgeStep(4);
-  stepId = toast("loading", "Switching to Arc Testnet…", "Approve the chain switch in your wallet", 0);
-  await switchToArcTestnet();
-  removeToast(stepId);
-
-  const arcProvider = new ethers.BrowserProvider(window.ethereum);
-  const arcSigner   = await arcProvider.getSigner();
-  const transmitter = new ethers.Contract(arcCfg.messageTransmitter, MESSAGE_TRANSMITTER_ABI, arcSigner);
-
-  stepId = toast("loading", "Minting USDC on Arc…", "Confirm in wallet", 0);
-  let mintTx;
-  const prevProvider = app.provider;
-  try {
-    app.provider = arcProvider;
-    const mintOv = await getEIP1559Overrides(350000n);
-    mintTx = await transmitter.receiveMessage(message, attestation, mintOv);
-  } finally {
-    app.provider = prevProvider;
-  }
-
-  console.log("[CCTP] mint tx:", mintTx.hash);
-  await waitForReceiptOnChain(mintTx.hash, arcCfg.rpc);
-  removeToast(stepId);
-
-  setBridgeStep(5);
-  toast("success", "Bridge Complete! 🎉",
-    `${amountStr} USDC arrived on Arc Testnet. Switch to the USDC tab to lock it in a vault.`, 10000);
-  el("bridgeAmount").value = "";
-
-  await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x4CEF52" }] });
-  await loadData();
-  } catch (err) { if (stepId) removeToast(stepId); throw err; }
-}
-
-// ── Direction: Arc → External chain ─────────────────────────────────────────
-async function _bridgeFromArc(amountStr, amount) {
-  const destKey = app.cctpSource; // "source" selector = destination in fromArc mode
-  const destCfg = CCTP_CONFIG[destKey];
-  const arcCfg  = CCTP_CONFIG.arcTestnet;
-  let stepId;
-  try {
-
-  console.log("[Arc→Bridge] Started, dest:", destKey);
-
-  // Step 1: Approve on Arc (already on Arc, use app.signer)
-  setBridgeStep(1);
-  const tokenC    = new ethers.Contract(arcCfg.usdc, ERC20_ABI, app.signer);
-  const allowance = await tokenC.allowance(app.address, arcCfg.tokenMessenger);
-  if (allowance < amount) {
-    stepId = toast("loading", "Approving USDC on Arc…", "Confirm in wallet", 0);
-    const approveTx = await tokenC.approve(arcCfg.tokenMessenger, amount, await getEIP1559Overrides(60000n));
-    await waitForReceiptOnChain(approveTx.hash, arcCfg.rpc);
-    removeToast(stepId);
-  }
-
-  // Step 2: Burn on Arc
-  setBridgeStep(2);
-  stepId = toast("loading", "Burning USDC on Arc…", "Confirm in wallet", 0);
-
-  const messenger = new ethers.Contract(arcCfg.tokenMessenger, TOKEN_MESSENGER_ABI, app.signer);
-  const mintRecip = ethers.zeroPadValue(app.address, 32);
-  const burnOv    = await getEIP1559Overrides(200000n);
-  const burnTx    = await messenger.depositForBurn(
-    amount, destCfg.domain, mintRecip, arcCfg.usdc,
-    ethers.zeroPadValue("0x", 32), 0n, 0,
-    burnOv
-  );
-  console.log("[CCTP] burn tx:", burnTx.hash);
-  const burnReceipt = await waitForReceiptOnChain(burnTx.hash, arcCfg.rpc);
-  removeToast(stepId);
-
-  const messageBytes = _extractMessageBytes(burnReceipt.logs, arcCfg.messageTransmitter);
-  if (!messageBytes) throw new Error("MessageSent event not found — check Arc MessageTransmitter address");
-  const messageHash = ethers.keccak256(messageBytes);
-  console.log("[CCTP] messageHash:", messageHash);
-
-  // Step 3: Attestation
-  setBridgeStep(3);
-  stepId = toast("loading", "Waiting for Circle attestation…", "Typically takes 1–3 minutes", 0);
-  const { message, attestation } = await pollAttestation(messageHash);
-  removeToast(stepId);
-
-  // Step 4: Mint on destination chain
-  setBridgeStep(4);
-  stepId = toast("loading", `Switching to ${destCfg.name}…`, "Approve the chain switch in your wallet", 0);
-  await switchToSourceChain(destKey);
-  removeToast(stepId);
-
-  const destProvider = new ethers.BrowserProvider(window.ethereum);
-  const destSigner   = await destProvider.getSigner();
-  const transmitter  = new ethers.Contract(destCfg.messageTransmitter, MESSAGE_TRANSMITTER_ABI, destSigner);
-
-  stepId = toast("loading", `Minting USDC on ${destCfg.name}…`, "Confirm in wallet", 0);
-  const mintTx = await transmitter.receiveMessage(message, attestation);
-  console.log("[CCTP] mint tx:", mintTx.hash);
-  await waitForReceiptOnChain(mintTx.hash, destCfg.rpc);
-  removeToast(stepId);
-
-  setBridgeStep(5);
-  toast("success", "Bridge Complete! 🎉",
-    `${amountStr} USDC sent to ${destCfg.name}. Returning you to Arc Testnet.`, 10000);
-  el("bridgeAmount").value = "";
-
-  // Auto-return to Arc
-  await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x4CEF52" }] });
-  await loadData();
-  } catch (err) { if (stepId) removeToast(stepId); throw err; }
-}
-
-// Extract MessageSent log bytes from a receipt's logs
-function _extractMessageBytes(logs, transmitterAddress) {
-  const msgSentTopic = ethers.id("MessageSent(bytes)");
-  for (const log of logs) {
-    if (log.address.toLowerCase() === transmitterAddress.toLowerCase() &&
-        log.topics[0] === msgSentTopic) {
-      const [bytes] = ethers.AbiCoder.defaultAbiCoder().decode(["bytes"], log.data);
-      return bytes;
-    }
-  }
-  return null;
-}
-
-/* ════════════════════════════════════════
    KEYBOARD
 ════════════════════════════════════════ */
 document.addEventListener("keydown", e => {
@@ -2567,7 +2014,9 @@ document.addEventListener("keydown", e => {
     el("connectBtn").classList.add("connected");
     el("connectBtn").innerHTML = `<span class="wallet-dot"></span><span id="connectBtnText">${shortAddr(app.address)}</span>`;
 
-    registerWalletListeners();
+    ethereum.on("accountsChanged", () => window.location.reload());
+    ethereum.on("chainChanged",    () => window.location.reload());
+
     await loadData();
   } catch (e) {
     console.log("[Init] Auto-reconnect skipped:", e.message);
