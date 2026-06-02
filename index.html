@@ -538,7 +538,7 @@ body {
 .v2-history-title { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); }
 .v2-history-table { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
 .v2-history-row {
-  display: grid; grid-template-columns: 1.2fr 1.4fr auto;
+  display: grid; grid-template-columns: 1.2fr 1.4fr auto auto;
   gap: 8px; padding: 11px 16px; font-size: 12px;
   border-bottom: 1px solid rgba(0,0,0,0.04); align-items: center;
 }
@@ -569,6 +569,68 @@ body {
 .sent-pay-label { font-family: 'Inter', sans-serif; font-weight: 400; font-style: italic; color: var(--text-2); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sent-pay-amount { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sent-pay-sym { font-size: 10px; color: var(--text-3); font-weight: 500; }
+
+/* ─────────────────────────────────────────
+   BRIDGE / CROSS-CHAIN
+───────────────────────────────────────── */
+.bridge-chain-sel { display: flex; gap: 8px; }
+.bridge-chain-btn {
+  flex: 1; padding: 10px 12px; border-radius: 10px;
+  background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.10);
+  color: var(--text-2); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all .18s;
+  display: flex; align-items: center; gap: 6px; justify-content: center;
+}
+.bridge-chain-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+.bridge-chain-btn:hover:not(.active) { color: var(--text-1); background: var(--surface-hover); }
+
+.bridge-progress {
+  display: flex; align-items: center;
+  margin: 20px 0 4px; padding: 14px 16px;
+  background: var(--surface-hi); border-radius: 12px;
+}
+.bridge-step { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.bridge-step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,0.08); color: var(--text-3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; transition: all .3s;
+}
+.bridge-step.active .bridge-step-num { background: var(--primary); color: #fff; box-shadow: 0 0 0 3px rgba(42,54,217,0.2); animation: pulse 1.5s ease infinite; }
+.bridge-step.done   .bridge-step-num { background: var(--green); color: #fff; }
+.bridge-step-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
+.bridge-step.active .bridge-step-label { color: var(--primary); }
+.bridge-step.done   .bridge-step-label { color: var(--green); }
+.bridge-step-line { flex: 1; height: 2px; background: rgba(0,0,0,0.08); margin: 0 6px 18px; }
+.bridge-step.done ~ .bridge-step-line { background: var(--green); }
+.bridge-note { font-size: 12px; color: var(--text-2); text-align: center; margin-top: 14px; line-height: 1.6; padding: 10px 14px; background: var(--surface-hi); border-radius: 10px; }
+.bridge-dir-sel { display: flex; gap: 8px; margin-bottom: 16px; }
+.bridge-dir-btn { flex: 1; padding: 10px 12px; border-radius: 10px; background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.10); color: var(--text-2); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.bridge-dir-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+.bridge-dir-btn:hover:not(.active) { color: var(--text-1); background: var(--surface-hover); }
+
+/* Bridge history */
+.bridge-history-section { max-width: 550px; margin: 0 auto 12px; padding: 4px 0 8px; }
+.bridge-hist-row { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 13px 16px; margin-bottom: 8px; box-shadow: var(--shadow); }
+.bridge-hist-main { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.bridge-hist-amount { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text-1); font-size: 14px; }
+.bridge-hist-dest { color: var(--text-2); font-size: 13px; }
+.bridge-hist-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 8px; }
+.bridge-hist-pending  { background: #fef3c7; color: #92400e; }
+.bridge-hist-complete { background: #f0fdf4; color: #166534; }
+.bridge-hist-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bridge-hist-date { font-size: 11px; color: var(--text-3); }
+.bridge-hist-hash { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--primary); text-decoration: none; }
+.bridge-hist-hash:hover { text-decoration: underline; }
+.bridge-hist-btn { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 7px; background: var(--primary-soft); border: 1px solid var(--primary); color: var(--primary); cursor: pointer; font-family: inherit; transition: all .15s; }
+.bridge-hist-btn:hover { background: var(--primary); color: #fff; }
+/* Toast explorer links */
+.toast-link { color: inherit; font-weight: 700; text-decoration: underline; opacity: 0.9; }
+.toast-link:hover { opacity: 1; }
+/* Vault history TX link */
+.v2-hist-tx { font-size: 13px; color: var(--primary); text-decoration: none; font-weight: 600; text-align: right; }
+.v2-hist-tx:hover { text-decoration: underline; }
+.v2-hist-tx-none { font-size: 12px; color: var(--text-3); text-align: right; }
 
 /* ─────────────────────────────────────────
    EARLY WITHDRAW MODAL
@@ -607,7 +669,7 @@ body {
   .how-grid { grid-template-columns: repeat(2, 1fr); }
   .how-section { padding: 1.5rem 16px; }
   .vault-section { padding: 0 14px 32px; }
-  .v2-history-row { grid-template-columns: 1fr auto; }
+  .v2-history-row { grid-template-columns: 1fr auto auto; }
   .v2-history-row.hdr span:nth-child(2),
   .v2-history-row:not(.hdr) .v2-hist-label { display: none; }
   .bulk-row { grid-template-columns: 1fr 1fr; gap: 4px; }
@@ -742,6 +804,10 @@ body {
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Pay Someone
     </button>
+    <button class="vault-tab" id="tabBridge" role="tab" aria-selected="false" onclick="switchTab('bridge')">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 10h3V6h6v4h3M4 6V4a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Bridge
+    </button>
   </div>
 
   <!-- ── Deposit / Vault section (USDC + EURC tabs) ── -->
@@ -749,7 +815,7 @@ body {
 
     <!-- TVL + vault counter row -->
     <div class="v2-meta-row" id="v2MetaRow">
-      TVL: <span class="v2-tvl-amount" id="tvlDisplay">—</span> &nbsp;·&nbsp; <span id="vaultCounter">0 / 5 vaults used</span>
+      <span id="vaultCounter">0 / 5 vaults used</span>
     </div>
 
     <!-- Create Vault form -->
@@ -922,6 +988,80 @@ body {
 
   </div><!-- /paySection -->
 
+  <!-- ── Bridge (Cross-Chain) tab ── -->
+  <div id="bridgeSection" class="hidden">
+    <div class="v2-deposit-panel">
+      <div class="vault-card">
+        <div class="vs-token-label">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="color:var(--primary)"><path d="M1 11h3.5V6.5h6V11H14M4.5 6.5V4a3 3 0 0 1 6 0v2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Cross-Chain Bridge
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl">Destination Chain</label>
+          <div class="bridge-chain-sel">
+            <button class="bridge-chain-btn active" id="btnEthSep" onclick="setCctpSource('ethereumSepolia')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.75l-6.25 10.5L12 15.25l6.25-3L12 1.75zM5.75 13.5L12 22.25l6.25-8.75L12 17l-6.25-3.5z"/></svg>
+              Ethereum Sepolia
+            </button>
+            <button class="bridge-chain-btn" id="btnBaseSep" onclick="setCctpSource('baseSepolia')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z" fill="white"/></svg>
+              Base Sepolia
+            </button>
+          </div>
+        </div>
+
+        <div class="vs-form-grp">
+          <label class="vs-field-lbl" for="bridgeAmount">Amount (USDC)</label>
+          <div class="vs-input-wrap">
+            <input type="number" class="vs-input" id="bridgeAmount" placeholder="0.00" step="0.01" min="0.01">
+            <span class="vs-input-sym">USDC</span>
+          </div>
+          <div class="vs-balance-hint">
+            <span id="bridgeBalLabel">Balance on Arc Testnet</span>
+            <span id="bridgeSrcBal">—</span>
+          </div>
+        </div>
+
+        <button class="vs-btn vs-btn-primary" id="bridgeBtn" onclick="handleBridgeDeposit()">
+          <span id="bridgeBtnContent">Bridge from Arc</span>
+        </button>
+
+        <!-- Progress stepper -->
+        <div class="bridge-progress hidden" id="bridgeProgress">
+          <div class="bridge-step" id="bStep1">
+            <div class="bridge-step-num">1</div>
+            <div class="bridge-step-label">Approve</div>
+          </div>
+          <div class="bridge-step-line"></div>
+          <div class="bridge-step" id="bStep2">
+            <div class="bridge-step-num">2</div>
+            <div class="bridge-step-label">Burn</div>
+          </div>
+          <div class="bridge-step-line"></div>
+          <div class="bridge-step" id="bStep3">
+            <div class="bridge-step-num">3</div>
+            <div class="bridge-step-label">Delivering</div>
+          </div>
+        </div>
+
+        <div class="bridge-note">
+          <span id="bridgeNoteText">Bridges USDC from Arc to the selected chain using Circle CCTP.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="v2-deposit-panel">
+      <div class="bridge-history-section hidden" id="bridgeHistorySection">
+        <div class="v2-history-hd">
+          <span class="v2-history-title">Bridge History</span>
+        </div>
+        <div class="v2-history-table" id="bridgeHistoryList"></div>
+      </div>
+    </div>
+
+  </div><!-- /bridgeSection -->
+
 </section>
 
 <!-- ═══════════════════════════════════════
@@ -1040,6 +1180,64 @@ const ERC20_ABI = [
 ];
 
 /* ════════════════════════════════════════
+   CCTP CONSTANTS
+════════════════════════════════════════ */
+const CCTP_CONFIG = {
+  ethereumSepolia: {
+    chainId:            "0xaa36a7",
+    domain:             0,
+    rpc:                "https://ethereum-sepolia-rpc.publicnode.com",
+    tokenMessenger:     "0x8FE6B999Dc680CcFDD5Bf7EB0974218be2542DAA",
+    messageTransmitter: "0xE737e5cEBEEBa77EFE34D4aa090756590b1CE275",
+    usdc:               "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+    name:               "Ethereum Sepolia",
+    explorer:           "https://sepolia.etherscan.io",
+    addParams: {
+      chainId: "0xaa36a7", chainName: "Ethereum Sepolia",
+      nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
+      rpcUrls: ["https://rpc.sepolia.org"],
+      blockExplorerUrls: ["https://sepolia.etherscan.io"]
+    }
+  },
+  baseSepolia: {
+    chainId:            "0x14a34",
+    domain:             6,
+    rpc:                "https://sepolia.base.org",
+    tokenMessenger:     "0x8FE6B999Dc680CcFDD5Bf7EB0974218be2542DAA",
+    messageTransmitter: "0xE737e5cEBEEBa77EFE34D4aa090756590b1CE275",
+    usdc:               "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    name:               "Base Sepolia",
+    explorer:           "https://sepolia.basescan.org",
+    addParams: {
+      chainId: "0x14a34", chainName: "Base Sepolia",
+      nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
+      rpcUrls: ["https://sepolia.base.org"],
+      blockExplorerUrls: ["https://sepolia.basescan.org"]
+    }
+  },
+  arcTestnet: {
+    chainId:            "0x4CEF52",
+    domain:             26,
+    rpc:                "https://rpc.testnet.arc.network",
+    tokenMessenger:     "0x8FE6B999Dc680CcFDD5Bf7EB0974218be2542DAA",
+    messageTransmitter: "0xE737e5cEBEEBa77EFE34D4aa090756590b1CE275",
+    usdc:               "0x3600000000000000000000000000000000000000",
+    name:               "Arc Testnet",
+    explorer:           "https://testnet.arcscan.app"
+  }
+};
+
+const IRIS_API = "https://iris-api-sandbox.circle.com/v2/messages";
+
+const TOKEN_MESSENGER_ABI = [
+  "function depositForBurn(uint256 amount, uint32 destinationDomain, bytes32 mintRecipient, address burnToken, bytes32 destinationCaller, uint256 maxFee, uint32 minFinalityThreshold) external returns (uint64 nonce)"
+];
+const MESSAGE_TRANSMITTER_ABI = [
+  "function receiveMessage(bytes message, bytes attestation) returns (bool success)",
+  "event MessageSent(bytes message)"
+];
+
+/* ════════════════════════════════════════
    APP STATE
 ════════════════════════════════════════ */
 const app = {
@@ -1058,7 +1256,11 @@ const app = {
   txPending:           false,
   cdTimers:            {},
   earlyWithdrawTarget: null,
-  bulkRowCount:        0
+  bulkRowCount:        0,
+  cctpSource:          "ethereumSepolia",
+  cctpBridging:        false,
+  bridgeDirection:     "toArc",
+  listenersRegistered: false
 };
 
 /* ════════════════════════════════════════
@@ -1216,6 +1418,33 @@ async function ensureArcNetwork(ethereum) {
 }
 
 /* ════════════════════════════════════════
+   WALLET EVENT LISTENERS (registered once)
+════════════════════════════════════════ */
+function registerWalletListeners() {
+  if (app.listenersRegistered) return;
+  app.listenersRegistered = true;
+
+  const ethereum = window.ethereum;
+  if (!ethereum) return;
+
+  ethereum.on("accountsChanged", () => {
+    if (app.cctpBridging) {
+      console.log("[AccountsChanged] Suppressed reload - bridge in progress");
+      return;
+    }
+    window.location.reload();
+  });
+
+  ethereum.on("chainChanged", (newChainId) => {
+    if (app.cctpBridging) {
+      console.log('[ChainChanged] Suppressed reload — bridge in progress');
+      return;
+    }
+    window.location.reload();
+  });
+}
+
+/* ════════════════════════════════════════
    CONNECT WALLET
 ════════════════════════════════════════ */
 async function connectWallet(type, label="Wallet") {
@@ -1258,9 +1487,7 @@ async function connectWallet(type, label="Wallet") {
     removeToast(statusToast);
     toast("success", "Wallet Connected", shortAddr(app.address));
     await loadData();
-
-    ethereum.on("accountsChanged", () => window.location.reload());
-    ethereum.on("chainChanged",    () => window.location.reload());
+    registerWalletListeners();
 
   } catch (err) {
     removeToast(statusToast);
@@ -1374,17 +1601,21 @@ async function loadData() {
 ════════════════════════════════════════ */
 function switchTab(tab) {
   app.tab = tab;
-  el("tabUsdc").classList.toggle("active", tab === "usdc");
-  el("tabEurc").classList.toggle("active", tab === "eurc");
-  el("tabPay").classList.toggle("active",  tab === "pay");
-  el("tabUsdc").setAttribute("aria-selected", tab === "usdc");
-  el("tabEurc").setAttribute("aria-selected", tab === "eurc");
-  el("tabPay").setAttribute("aria-selected",  tab === "pay");
+  el("tabUsdc").classList.toggle("active",   tab === "usdc");
+  el("tabEurc").classList.toggle("active",   tab === "eurc");
+  el("tabPay").classList.toggle("active",    tab === "pay");
+  el("tabBridge").classList.toggle("active", tab === "bridge");
+  el("tabUsdc").setAttribute("aria-selected",   tab === "usdc");
+  el("tabEurc").setAttribute("aria-selected",   tab === "eurc");
+  el("tabPay").setAttribute("aria-selected",    tab === "pay");
+  el("tabBridge").setAttribute("aria-selected", tab === "bridge");
 
-  el("depositSection").classList.toggle("hidden", tab === "pay");
-  el("paySection").classList.toggle("hidden", tab !== "pay");
+  el("depositSection").classList.toggle("hidden", tab === "pay" || tab === "bridge");
+  el("paySection").classList.toggle("hidden",     tab !== "pay");
+  el("bridgeSection").classList.toggle("hidden",  tab !== "bridge");
 
   stopAllCountdowns();
+  if (tab === "bridge") { loadBridgeSrcBalance(); renderBridgeHistory(); return; }
   renderUI();
 }
 
@@ -1392,7 +1623,8 @@ function switchTab(tab) {
    RENDER UI
 ════════════════════════════════════════ */
 function renderUI() {
-  const key    = app.tab === "pay" ? "usdc" : app.tab; // use usdc data for meta when on pay tab
+  if (app.tab === "bridge") return;
+  const key    = app.tab === "pay" ? "usdc" : app.tab;
   const cfg    = VAULTS[key];
   const sym    = cfg.symbol;
   const isDemo = !app.connected;
@@ -1451,7 +1683,6 @@ function renderUI() {
   const tvlVal  = isDemo ? "—" : app.tvl[key];
 
   // ── TVL + counter ──
-  el("tvlDisplay").textContent = tvlVal === "—" ? "—" : `${tvlVal} ${sym}`;
   el("vaultCounter").textContent = `${active.length} / 5 vaults used`;
 
   // ── Deposit panel ──
@@ -1517,14 +1748,22 @@ function renderUI() {
   if (hist.length > 0) {
     histSection.classList.remove("hidden");
     histList.innerHTML = hist.map(v => {
-      const labelTxt = v.label ? v.label : "—";
-      const isEarly  = v.earlyWithdrawn;
+      const labelTxt  = v.label ? v.label : "—";
+      const isEarly   = v.earlyWithdrawn;
       const statusCls = isEarly ? "early-withdrawn" : "withdrawn";
       const statusTxt = isEarly ? "Early Withdrawn" : "Withdrawn";
+      const txEntry   = getTxHistory().find(t =>
+        t.token === sym && t.amount === v.amount &&
+        Math.abs(t.timestamp - v.createdTs) < 300000
+      );
+      const txLink = txEntry
+        ? `<a class="v2-hist-tx" href="https://testnet.arcscan.app/tx/${txEntry.txHash}" target="_blank" rel="noopener" title="${txEntry.txHash}">↗</a>`
+        : `<span class="v2-hist-tx-none">—</span>`;
       return `<div class="v2-history-row">
         <span class="v2-hist-amount">${v.amount} ${sym}</span>
         <span class="v2-hist-label">${labelTxt}</span>
         <span class="v2-hist-status ${statusCls}">${statusTxt}</span>
+        ${txLink}
       </div>`;
     }).join("");
   } else {
@@ -1728,7 +1967,8 @@ async function handleDeposit() {
     await waitForReceipt(tx.hash);
 
     removeToast(txId);
-    toast("success", "Vault Created! 🎉", `${fmt(amtInput)} ${sym} locked for ${days} day${days===1?"":"s"}${label ? ` · "${label}"` : ""}.`, 7000);
+    saveTxHistory({ type: "deposit", txHash: tx.hash, amount: fmt(amtInput), token: sym, timestamp: Date.now() });
+    toast("success", "Vault Created! 🎉", `${fmt(amtInput)} ${sym} locked for ${days} day${days===1?"":"s"}${label ? ` · "${label}"` : ""}. <a href="https://testnet.arcscan.app/tx/${tx.hash}" target="_blank" rel="noopener" class="toast-link">View on ArcScan ↗</a>`, 7000);
 
     el("dfAmount").value = "";
     el("dfDays").value   = "";
@@ -1790,7 +2030,8 @@ async function handleDepositFor() {
     await waitForReceipt(tx.hash);
 
     removeToast(txId);
-    toast("success", "Payment Sent! 💸", `${fmt(amtInput)} ${sym} locked for ${shortAddr(recipient)}${label ? ` · "${label}"` : ""}.`, 7000);
+    saveTxHistory({ type: "send", txHash: tx.hash, amount: fmt(amtInput), token: sym, timestamp: Date.now() });
+    toast("success", "Payment Sent! 💸", `${fmt(amtInput)} ${sym} sent. <a href="https://testnet.arcscan.app/tx/${tx.hash}" target="_blank" rel="noopener" class="toast-link">View on ArcScan ↗</a>`, 7000);
 
     el("payRecipient").value = "";
     el("payAmount").value    = "";
@@ -1864,7 +2105,8 @@ async function handleBulkDeposit() {
     await waitForReceipt(tx.hash);
 
     removeToast(txId);
-    toast("success", `${recipients.length} Payments Sent! 💸`, `Total ${ethers.formatUnits(totalAmount, cfg.decimals)} ${sym} distributed.`, 7000);
+    saveTxHistory({ type: "bulkSend", txHash: tx.hash, amount: ethers.formatUnits(totalAmount, cfg.decimals), token: sym, timestamp: Date.now() });
+    toast("success", `${recipients.length} Payments Sent! 💸`, `${ethers.formatUnits(totalAmount, cfg.decimals)} ${sym} distributed. <a href="https://testnet.arcscan.app/tx/${tx.hash}" target="_blank" rel="noopener" class="toast-link">View on ArcScan ↗</a>`, 7000);
 
     el("bulkRows").innerHTML = "";
     addBulkRow(); // reset with one empty row
@@ -1903,7 +2145,8 @@ async function handleWithdraw(key, vaultId) {
     console.log('[Withdraw] tx:', tx.hash);
     await waitForReceipt(tx.hash);
     removeToast(txId);
-    toast("success", "Withdrawal Complete 💸", `${sym} returned to your wallet!`, 6000);
+    saveTxHistory({ type: "withdraw", txHash: tx.hash, amount: "", token: sym, timestamp: Date.now() });
+    toast("success", "Withdrawal Complete 💸", `${sym} returned to your wallet. <a href="https://testnet.arcscan.app/tx/${tx.hash}" target="_blank" rel="noopener" class="toast-link">View on ArcScan ↗</a>`, 6000);
     await loadData();
   } catch (err) {
     removeToast(txId);
@@ -1973,7 +2216,8 @@ async function confirmEarlyWithdraw() {
     await waitForReceipt(tx.hash);
     removeToast(txId);
     const receive = fmt(parseFloat(amount) * (1 - penaltyPct / 100));
-    toast("success", "Early Withdrawal Complete", `Received ${receive} ${sym} after ${penaltyPct}% penalty.`, 7000);
+    saveTxHistory({ type: "earlyWithdraw", txHash: tx.hash, amount: receive, token: sym, timestamp: Date.now() });
+    toast("success", "Early Withdrawal Complete", `Received ${receive} ${sym} after ${penaltyPct}% penalty. <a href="https://testnet.arcscan.app/tx/${tx.hash}" target="_blank" rel="noopener" class="toast-link">View on ArcScan ↗</a>`, 7000);
     await loadData();
   } catch (err) {
     removeToast(txId);
@@ -1984,6 +2228,298 @@ async function confirmEarlyWithdraw() {
     app.txPending = false;
     renderUI();
   }
+}
+
+/* ════════════════════════════════════════
+   CCTP — CROSS-CHAIN BRIDGE
+════════════════════════════════════════ */
+
+// Generic receipt poller — works on any EVM chain given an RPC URL
+async function waitForReceiptOnChain(txHash, rpcUrl, timeoutMs = 120000, intervalMs = 3000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const res  = await fetch(rpcUrl, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", method: "eth_getTransactionReceipt", params: [txHash], id: 1 })
+      });
+      const data = await res.json();
+      if (data.result?.status) {
+        if (data.result.status === "0x0") throw new Error("Transaction reverted on-chain");
+        return data.result;
+      }
+    } catch (err) { if (err.message === "Transaction reverted on-chain") throw err; }
+    await new Promise(r => setTimeout(r, intervalMs));
+  }
+  throw new Error("TIMEOUT");
+}
+
+// Poll Circle IRIS V2 attestation API until complete
+async function pollAttestation(sourceDomain, burnTxHash) {
+  const url = `${IRIS_API}/${sourceDomain}?transactionHash=${burnTxHash}`;
+  const maxAttempts = 60;
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      console.log("[CCTP] IRIS poll attempt", i + 1, "| URL:", url);
+      const res  = await fetch(url);
+      const data = await res.json();
+      console.log("[CCTP] IRIS Status:", res.status, "| Response:", JSON.stringify(data).slice(0, 200));
+      if (data.messages && data.messages.length > 0 &&
+          data.messages[0].attestation && data.messages[0].attestation !== "PENDING") {
+        console.log("[CCTP] Attestation received!");
+        return { message: data.messages[0].message, attestation: data.messages[0].attestation };
+      }
+    } catch (err) {
+      console.warn("[CCTP] IRIS poll error:", err.message);
+    }
+    await new Promise(r => setTimeout(r, 5000));
+  }
+  throw new Error("Attestation timeout — Circle did not sign after 5 minutes");
+}
+
+// Unified chain switcher — adds chain if wallet doesn't know it, then re-creates provider
+async function switchChain(chainId, chainName, rpcUrl) {
+  const nativeCurrency = chainId === "0x4CEF52"
+    ? { name: "USDC", symbol: "USDC", decimals: 18 }
+    : { name: "ETH",  symbol: "ETH",  decimals: 18 };
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId }]
+    });
+  } catch (err) {
+    if (err.code === 4902 || err.code === -32603) {
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [{ chainId, chainName, nativeCurrency, rpcUrls: [rpcUrl] }]
+      });
+    } else {
+      throw err;
+    }
+  }
+  await new Promise(r => setTimeout(r, 1000));
+  app.provider = new ethers.BrowserProvider(window.ethereum);
+  app.signer   = await app.provider.getSigner();
+}
+
+// Update progress stepper (steps 1-3; step >3 = all done; step 0 = hide)
+function setBridgeStep(step) {
+  const prog = el("bridgeProgress");
+  if (step === 0) { prog.classList.add("hidden"); return; }
+  prog.classList.remove("hidden");
+  for (let i = 1; i <= 3; i++) {
+    const s = el(`bStep${i}`);
+    s.classList.remove("active", "done");
+    if (step > 3 || i < step) s.classList.add("done");
+    else if (i === step)       s.classList.add("active");
+  }
+}
+
+// Kept as no-op — direction toggle removed, bridge is always fromArc
+function updateBridgeUI() {}
+
+// Display Arc USDC balance in the bridge form
+async function loadBridgeSrcBalance() {
+  if (!app.connected) { el("bridgeSrcBal").textContent = "—"; return; }
+  el("bridgeSrcBal").textContent = `${app.balances.usdc} USDC`;
+}
+
+// Select source/destination chain
+function setCctpSource(srcKey) {
+  app.cctpSource = srcKey;
+  el("btnEthSep").classList.toggle("active", srcKey === "ethereumSepolia");
+  el("btnBaseSep").classList.toggle("active", srcKey === "baseSepolia");
+  el("bridgeSrcBal").textContent = "—";
+  updateBridgeUI();
+  loadBridgeSrcBalance();
+}
+
+// Main bridge handler — executes the full CCTP V2 4-step flow
+async function handleBridgeDeposit() {
+  if (!app.connected) { openWalletModal(); return; }
+  if (app.cctpBridging) return;
+
+  const amountStr = el("bridgeAmount").value.trim();
+  if (!amountStr || parseFloat(amountStr) <= 0) {
+    toast("error", "Invalid amount", "Enter a USDC amount greater than 0.");
+    return;
+  }
+
+  const amount = ethers.parseUnits(amountStr, 6);
+  app.cctpBridging = true;
+  el("bridgeBtn").disabled = true;
+  el("bridgeBtnContent").innerHTML = `<span class="spin"></span> Bridging…`;
+
+  let stepId;
+  try {
+    await _bridgeFromArc(amountStr, amount);
+  } catch (err) {
+    if (stepId) removeToast(stepId);
+    setBridgeStep(0);
+    const msg = txErrMsg(err);
+    if (msg === null) toast("info", "Cancelled", "Bridge cancelled.");
+    else toast("error", "Bridge Failed", msg || err.message);
+  } finally {
+    app.cctpBridging = false;
+    console.log("[Bridge] Finished");
+    el("bridgeBtn").disabled = false;
+    el("bridgeBtnContent").textContent = "Bridge from Arc";
+    setBridgeStep(0);
+    loadBridgeSrcBalance();
+  }
+}
+
+// ── Direction: Arc → External chain ─────────────────────────────────────────
+async function _bridgeFromArc(amountStr, amount) {
+  const destKey = app.cctpSource; // "source" selector = destination in fromArc mode
+  const destCfg = CCTP_CONFIG[destKey];
+  const arcCfg  = CCTP_CONFIG.arcTestnet;
+  let stepId;
+  try {
+
+  console.log("[Arc→Bridge] Started, dest:", destKey);
+
+  // Step 1: Approve on Arc (already on Arc, use app.signer)
+  setBridgeStep(1);
+  const tokenC    = new ethers.Contract(arcCfg.usdc, ERC20_ABI, app.signer);
+  const allowance = await tokenC.allowance(app.address, arcCfg.tokenMessenger);
+  if (allowance < amount) {
+    stepId = toast("loading", "Approving USDC on Arc…", "Confirm in wallet", 0);
+    const approveTx = await tokenC.approve(arcCfg.tokenMessenger, amount, await getEIP1559Overrides(60000n));
+    await waitForReceiptOnChain(approveTx.hash, arcCfg.rpc);
+    removeToast(stepId);
+  }
+
+  // Step 2: Burn on Arc
+  setBridgeStep(2);
+  stepId = toast("loading", "Burning USDC on Arc…", "Confirm in wallet", 0);
+
+  const messenger = new ethers.Contract(arcCfg.tokenMessenger, TOKEN_MESSENGER_ABI, app.signer);
+  const mintRecip = ethers.zeroPadValue(app.address, 32);
+  const burnOv    = await getEIP1559Overrides(200000n);
+  const burnTx    = await messenger.depositForBurn(
+    amount, destCfg.domain, mintRecip, arcCfg.usdc,
+    ethers.zeroPadValue("0x00", 32), amount < 500000n ? 50000n : amount / 100n, 0,
+    burnOv
+  );
+  console.log("[CCTP] Burn Tx Hash:", burnTx.hash);
+  const burnReceipt = await waitForReceiptOnChain(burnTx.hash, arcCfg.rpc);
+  removeToast(stepId);
+  console.log("[CCTP] Burn Receipt:", JSON.stringify(burnReceipt, null, 2));
+  console.log("[CCTP] Receipt Logs:", JSON.stringify(burnReceipt.logs, null, 2));
+
+  // Step 3: Wait for Circle to sign — delivery is automatic, no manual mint needed
+  setBridgeStep(3);
+  stepId = toast("loading", "Waiting for Circle delivery…", "Circle forwards USDC automatically — usually 1–5 min", 0);
+  await pollAttestation(arcCfg.domain, burnTx.hash);
+  removeToast(stepId);
+
+  setBridgeStep(4); // marks all 3 steps done
+  saveBridgeTx({
+    timestamp:   Date.now(),
+    amount:      amountStr,
+    token:       "USDC",
+    destination: destCfg.name,
+    burnTxHash:  burnTx.hash,
+    status:      "pending",
+    irisUrl:     `${IRIS_API}/${arcCfg.domain}?transactionHash=${burnTx.hash}`
+  });
+  renderBridgeHistory();
+  toast("success", "Bridge submitted! 🎉",
+    `Circle is delivering ${amountStr} USDC to ${destCfg.name}. May take a few minutes to arrive. <a href="https://testnet.arcscan.app/tx/${burnTx.hash}" target="_blank" rel="noopener" class="toast-link">View burn ↗</a>`, 12000);
+  el("bridgeAmount").value = "";
+  await loadData();
+  } catch (err) { if (stepId) removeToast(stepId); throw err; }
+}
+
+/* ════════════════════════════════════════
+   BRIDGE & TX HISTORY (localStorage)
+════════════════════════════════════════ */
+const BRIDGE_HISTORY_KEY = "arcstash_bridge_history";
+const TX_HISTORY_KEY     = "arcstash_tx_history";
+
+function saveBridgeTx(entry) {
+  const h = getBridgeHistory();
+  h.unshift(entry);
+  localStorage.setItem(BRIDGE_HISTORY_KEY, JSON.stringify(h.slice(0, 50)));
+}
+function getBridgeHistory() {
+  try { return JSON.parse(localStorage.getItem(BRIDGE_HISTORY_KEY) || "[]"); } catch { return []; }
+}
+function saveTxHistory(entry) {
+  const h = getTxHistory();
+  h.unshift(entry);
+  localStorage.setItem(TX_HISTORY_KEY, JSON.stringify(h.slice(0, 200)));
+}
+function getTxHistory() {
+  try { return JSON.parse(localStorage.getItem(TX_HISTORY_KEY) || "[]"); } catch { return []; }
+}
+
+function renderBridgeHistory() {
+  const section = el("bridgeHistorySection");
+  const list    = el("bridgeHistoryList");
+  if (!section || !list) return;
+  const history = getBridgeHistory();
+  if (history.length === 0) { section.classList.add("hidden"); return; }
+  section.classList.remove("hidden");
+  list.innerHTML = history.map((entry, i) => {
+    const date      = new Date(entry.timestamp).toLocaleString();
+    const shortHash = entry.burnTxHash.slice(0, 10) + "…" + entry.burnTxHash.slice(-6);
+    const statusCls = entry.status === "complete" ? "bridge-hist-complete" : "bridge-hist-pending";
+    const statusTxt = entry.status === "complete" ? "Complete" : "Pending";
+    const checkBtn  = entry.status !== "complete"
+      ? `<button class="bridge-hist-btn" onclick="checkBridgeStatus(${i})">Check Status</button>` : "";
+    return `<div class="bridge-hist-row">
+      <div class="bridge-hist-main">
+        <span class="bridge-hist-amount">${entry.amount} ${entry.token}</span>
+        <span class="bridge-hist-dest">→ ${entry.destination}</span>
+        <span class="bridge-hist-badge ${statusCls}">${statusTxt}</span>
+      </div>
+      <div class="bridge-hist-meta">
+        <span class="bridge-hist-date">${date}</span>
+        <a class="bridge-hist-hash" href="https://testnet.arcscan.app/tx/${entry.burnTxHash}" target="_blank" rel="noopener">${shortHash} ↗</a>
+        ${checkBtn}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+async function checkBridgeStatus(index) {
+  const history = getBridgeHistory();
+  const entry   = history[index];
+  if (!entry || entry.status === "complete") return;
+  try {
+    const res  = await fetch(entry.irisUrl);
+    const data = await res.json();
+    const msg  = data?.messages?.[0];
+    if (msg && msg.attestation && msg.attestation !== "PENDING") {
+      history[index].status = "complete";
+      localStorage.setItem(BRIDGE_HISTORY_KEY, JSON.stringify(history));
+      renderBridgeHistory();
+      toast("success", "Bridge Complete!", `${entry.amount} USDC confirmed on ${entry.destination}.`, 6000);
+    } else {
+      toast("info", "Still Pending", "Circle hasn't signed this transfer yet. Try again in a minute.", 4000);
+    }
+  } catch (err) {
+    toast("error", "Check Failed", err.message, 4000);
+  }
+}
+
+// Extract MessageSent log bytes from a receipt's logs
+function _extractMessageBytes(logs, transmitterAddress) {
+  const msgSentTopic = ethers.id("MessageSent(bytes)");
+  for (const log of logs) {
+    console.log("[CCTP] Candidate Log Address:", log.address);
+    console.log("[CCTP] Candidate Topic0:", log.topics?.[0]);
+    if (log.address.toLowerCase() === transmitterAddress.toLowerCase() &&
+        log.topics[0] === msgSentTopic) {
+      console.log("[CCTP] Selected Message Log:", JSON.stringify(log, null, 2));
+      const [bytes] = ethers.AbiCoder.defaultAbiCoder().decode(["bytes"], log.data);
+      console.log("[CCTP] Decoded Message Bytes:", bytes);
+      return bytes;
+    }
+  }
+  return null;
 }
 
 /* ════════════════════════════════════════
@@ -2014,9 +2550,7 @@ document.addEventListener("keydown", e => {
     el("connectBtn").classList.add("connected");
     el("connectBtn").innerHTML = `<span class="wallet-dot"></span><span id="connectBtnText">${shortAddr(app.address)}</span>`;
 
-    ethereum.on("accountsChanged", () => window.location.reload());
-    ethereum.on("chainChanged",    () => window.location.reload());
-
+    registerWalletListeners();
     await loadData();
   } catch (e) {
     console.log("[Init] Auto-reconnect skipped:", e.message);
