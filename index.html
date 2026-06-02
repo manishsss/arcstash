@@ -2557,5 +2557,14 @@ document.addEventListener("keydown", e => {
   }
 })();
 </script>
+<script>
+// Hide bridge tab on all non-localhost environments
+if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+  const t = document.getElementById('tabBridge');
+  const s = document.getElementById('bridgeSection');
+  if (t) t.style.display = 'none';
+  if (s) s.style.display = 'none';
+}
+</script>
 </body>
 </html>
