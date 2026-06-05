@@ -126,7 +126,7 @@ body {
    HERO
 ───────────────────────────────────────── */
 .hero {
-  padding: 40px 24px 20px;
+  padding: 28px 24px 14px;
   max-width: 1100px; margin: 0 auto;
   text-align: center;
   position: relative; z-index: 1;
@@ -159,8 +159,8 @@ body {
    HOW IT WORKS (bottom, compact)
 ───────────────────────────────────────── */
 .how-section {
-  max-width: 1100px; margin: 2rem auto 0;
-  padding: 2rem 24px 2rem;
+  max-width: 1100px; margin: 0 auto;
+  padding: 1rem 24px 1rem;
   border-top: 1px solid rgba(0,0,0,0.06);
   position: relative; z-index: 1;
 }
@@ -206,14 +206,14 @@ body {
 }
 .vault-tab {
   padding: 9px 22px; border-radius: 10px;
-  font-size: 14px; font-weight: 600;
+  font-size: 14px; font-weight: 400;
   cursor: pointer; border: none; background: none;
   font-family: inherit; color: var(--text-2);
   display: flex; align-items: center; gap: 7px;
   transition: all .18s;
 }
 .vault-tab:not(.active):hover { color: var(--text-1); background: var(--surface-hi); }
-.vault-tab.active { background: var(--primary); color: #fff; }
+.vault-tab.active { background: var(--primary); color: #fff; font-weight: 600; }
 
 /* Deposit/vault card */
 .vault-card {
@@ -222,13 +222,13 @@ body {
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: var(--r-lg); padding: 2rem 1.75rem;
   position: relative; overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.04);
 }
 
 /* ─ Shared label row ─ */
 .vs-token-label {
-  font-size: 11px; font-weight: 700; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--text-2);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #b0b0c0;
   margin-bottom: 20px;
   display: flex; align-items: center; gap: 8px;
 }
@@ -262,7 +262,7 @@ body {
   width: 100%; padding: 11px 16px;
   background: var(--surface-hi); border: 2px solid transparent;
   border-radius: 12px; color: var(--text-1);
-  font-size: 14px; font-weight: 500;
+  font-size: 14px; font-weight: 600;
   font-family: 'Inter', sans-serif;
   outline: none; transition: all .18s;
 }
@@ -297,14 +297,14 @@ body {
 .vs-qd:disabled { opacity:.3; cursor:not-allowed; }
 .vs-balance-hint {
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: var(--text-2); margin-top: 7px; padding: 0 2px;
+  font-size: 12px; color: #b0b0c0; margin-top: 7px; padding: 0 2px;
 }
-.vs-balance-hint span { color: var(--text-1); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+.vs-balance-hint span { color: #b0b0c0; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
 
 /* ─ Action buttons ─ */
 .vs-btn {
-  width: 100%; padding: 15px 18px;
-  border-radius: 14px; font-size: 15px; font-weight: 700;
+  width: 100%; padding: 18px;
+  border-radius: 14px; font-size: 16px; font-weight: 700;
   cursor: pointer; font-family: inherit; border: none;
   display: flex; align-items: center; justify-content: center; gap: 8px;
   transition: all .18s; text-transform: uppercase; letter-spacing: 0.4px;
@@ -426,19 +426,33 @@ body {
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
-.footer { background: var(--surface); border-top: 1px solid rgba(0,0,0,0.06); padding: 24px; position: relative; z-index: 1; }
-.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
-.footer-copy { font-size: 12px; color: var(--text-3); }
-.footer-links { display: flex; align-items: center; gap: 18px; }
-.footer-link { font-size: 12px; color: var(--text-3); text-decoration: none; transition: color .18s; }
-.footer-link:hover { color: var(--text-1); }
-.footer-x {
-  display: flex; align-items: center; justify-content: center;
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1px solid var(--border); color: var(--text-3); text-decoration: none;
-  transition: color .18s, border-color .18s, background .18s;
+.footer {
+  background: transparent;
+  border-top: 1px solid rgba(60,70,120,0.08);
+  padding: 1.75rem 2.5rem;
+  position: relative; z-index: 1;
 }
-.footer-x:hover { color: var(--primary); border-color: var(--border-hi); background: var(--primary-soft); }
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy {
+  font-size: 12px; font-weight: 500;
+  color: #9ca3af; letter-spacing: 0.01em;
+}
+.footer-links { display: flex; align-items: center; gap: 28px; }
+.footer-link, .footer-x {
+  font-size: 12px; font-weight: 500;
+  color: #9ca3af; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 5px;
+  opacity: 1;
+  transition: color .2s ease, opacity .2s ease, transform .2s ease;
+}
+.footer-link:hover, .footer-x:hover {
+  color: #6d28d9;
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
 .chain-badge {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 4px 11px; border-radius: 20px;
@@ -603,7 +617,36 @@ body {
 .bridge-step.done   .bridge-step-label { color: var(--green); }
 .bridge-step-line { flex: 1; height: 2px; background: rgba(0,0,0,0.08); margin: 0 6px 18px; }
 .bridge-step.done ~ .bridge-step-line { background: var(--green); }
-.bridge-note { font-size: 12px; color: var(--text-2); text-align: center; margin-top: 14px; line-height: 1.6; padding: 10px 14px; background: var(--surface-hi); border-radius: 10px; }
+.bridge-note { font-size: 12px; color: var(--text-2); text-align: center; margin-top: 14px; line-height: 1.8; padding: 10px 14px; background: var(--surface-hi); border-radius: 10px; }
+.bridge-faucet-link { color: var(--primary); text-decoration: none; font-weight: 600; }
+.bridge-faucet-link:hover { text-decoration: underline; }
+
+/* Route indicator */
+.bridge-route-indicator { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px; font-size: 13px; font-weight: 600; color: var(--text-3); }
+.bridge-route-arrow { color: var(--text-3); font-size: 14px; }
+.bridge-route-from { color: var(--text-2); }
+.bridge-route-to { color: var(--primary); }
+
+/* Chain button layout with (testnet) subtitle */
+.bridge-chain-btn { flex-direction: column; gap: 2px; }
+.bridge-chain-name { font-size: 13px; font-weight: 600; }
+.bridge-chain-net  { font-size: 10px; color: var(--text-3); font-weight: 400; }
+.bridge-chain-btn.active .bridge-chain-net { color: var(--primary); opacity: 0.7; }
+
+/* Dynamic destination text — driven by which chain button is active */
+/* Default: Ethereum selected */
+.btn-dest-base { display: none; }
+.btn-dest-eth  { display: inline; }
+/* When Base is selected */
+.vault-card:has(#btnBaseSep.active) .btn-dest-eth  { display: none; }
+.vault-card:has(#btnBaseSep.active) .btn-dest-base { display: inline; }
+
+/* Route indicator destination text */
+.bridge-route-base { display: none; }
+.bridge-route-eth  { display: inline; }
+.vault-card:has(#btnBaseSep.active) .bridge-route-eth  { display: none; }
+.vault-card:has(#btnBaseSep.active) .bridge-route-base { display: inline; }
+
 .bridge-dir-sel { display: flex; gap: 8px; margin-bottom: 16px; }
 .bridge-dir-btn { flex: 1; padding: 10px 12px; border-radius: 10px; background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.10); color: var(--text-2); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .bridge-dir-btn.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
@@ -781,7 +824,7 @@ body {
   </div>
   <h1>Lock. Hold.<br><span class="grad">Earn.</span></h1>
   <p class="hero-sub">
-    Time-locked stablecoin vaults on Arc. Yield coming soon.
+    Non-custodial stablecoin vaults &amp; payroll on Arc.
   </p>
 </section>
 
@@ -997,16 +1040,26 @@ body {
           Cross-Chain Bridge
         </div>
 
+        <!-- Route indicator -->
+        <div class="bridge-route-indicator">
+          <span class="bridge-route-from">Arc Testnet</span>
+          <span class="bridge-route-arrow">→</span>
+          <span class="bridge-route-to bridge-route-eth">Ethereum</span>
+          <span class="bridge-route-to bridge-route-base">Base</span>
+        </div>
+
         <div class="vs-form-grp">
-          <label class="vs-field-lbl">Destination Chain</label>
+          <label class="vs-field-lbl">Send To</label>
           <div class="bridge-chain-sel">
             <button class="bridge-chain-btn active" id="btnEthSep" onclick="setCctpSource('ethereumSepolia')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.75l-6.25 10.5L12 15.25l6.25-3L12 1.75zM5.75 13.5L12 22.25l6.25-8.75L12 17l-6.25-3.5z"/></svg>
-              Ethereum Sepolia
+              <span class="bridge-chain-name">Ethereum</span>
+              <span class="bridge-chain-net">(testnet)</span>
             </button>
             <button class="bridge-chain-btn" id="btnBaseSep" onclick="setCctpSource('baseSepolia')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z" fill="white"/></svg>
-              Base Sepolia
+              <span class="bridge-chain-name">Base</span>
+              <span class="bridge-chain-net">(testnet)</span>
             </button>
           </div>
         </div>
@@ -1024,7 +1077,7 @@ body {
         </div>
 
         <button class="vs-btn vs-btn-primary" id="bridgeBtn" onclick="handleBridgeDeposit()">
-          <span id="bridgeBtnContent">Bridge from Arc</span>
+          <span id="bridgeBtnContent">Send to <span class="btn-dest-eth">Ethereum</span><span class="btn-dest-base">Base</span></span>
         </button>
 
         <!-- Progress stepper -->
@@ -1041,12 +1094,20 @@ body {
           <div class="bridge-step-line"></div>
           <div class="bridge-step" id="bStep3">
             <div class="bridge-step-num">3</div>
-            <div class="bridge-step-label">Delivering</div>
+            <div class="bridge-step-label">Attest</div>
+          </div>
+          <div class="bridge-step-line"></div>
+          <div class="bridge-step" id="bStep4">
+            <div class="bridge-step-num">4</div>
+            <div class="bridge-step-label">Mint</div>
           </div>
         </div>
 
         <div class="bridge-note">
-          <span id="bridgeNoteText">Bridges USDC from Arc to the selected chain using Circle CCTP.</span>
+          You'll need testnet ETH on the receiving chain.<br>
+          <a class="bridge-faucet-link" href="https://www.alchemy.com/faucets/ethereum-sepolia" target="_blank" rel="noopener">Get Sepolia ETH</a>
+          &nbsp;·&nbsp;
+          <a class="bridge-faucet-link" href="https://www.alchemy.com/faucets/base-sepolia" target="_blank" rel="noopener">Get Base ETH</a>
         </div>
       </div>
     </div>
@@ -1110,13 +1171,12 @@ body {
 ═══════════════════════════════════════ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-copy">© 2026 ArcStash</div>
-    <div class="chain-badge"><span class="chain-dot"></span>Arc Testnet · Chain 5042002</div>
+    <div class="footer-copy">ArcStash © 2026</div>
     <div class="footer-links">
       <a class="footer-link" href="https://faucet.circle.com/" target="_blank" rel="noopener">Faucet ↗</a>
       <a class="footer-link" href="https://testnet.arcscan.app" target="_blank" rel="noopener">Explorer ↗</a>
       <a class="footer-x" href="https://x.com/arcstash" target="_blank" rel="noopener" aria-label="ArcStash on X">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
       </a>
     </div>
   </div>
@@ -2302,15 +2362,15 @@ async function switchChain(chainId, chainName, rpcUrl) {
   app.signer   = await app.provider.getSigner();
 }
 
-// Update progress stepper (steps 1-3; step >3 = all done; step 0 = hide)
+// Update progress stepper (steps 1-4; step >4 = all done; step 0 = hide)
 function setBridgeStep(step) {
   const prog = el("bridgeProgress");
   if (step === 0) { prog.classList.add("hidden"); return; }
   prog.classList.remove("hidden");
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= 4; i++) {
     const s = el(`bStep${i}`);
     s.classList.remove("active", "done");
-    if (step > 3 || i < step) s.classList.add("done");
+    if (step > 4 || i < step) s.classList.add("done");
     else if (i === step)       s.classList.add("active");
   }
 }
@@ -2344,6 +2404,9 @@ async function handleBridgeDeposit() {
     toast("error", "Invalid amount", "Enter a USDC amount greater than 0.");
     return;
   }
+  if (parseFloat(amountStr) < 0.5) {
+    toast("info", "Low amount warning", "Minimum bridge amount is 0.50 USDC (forwarding fee is $0.20).");
+  }
 
   const amount = ethers.parseUnits(amountStr, 6);
   app.cctpBridging = true;
@@ -2371,10 +2434,11 @@ async function handleBridgeDeposit() {
 
 // ── Direction: Arc → External chain ─────────────────────────────────────────
 async function _bridgeFromArc(amountStr, amount) {
-  const destKey = app.cctpSource; // "source" selector = destination in fromArc mode
+  const destKey = app.cctpSource;
   const destCfg = CCTP_CONFIG[destKey];
   const arcCfg  = CCTP_CONFIG.arcTestnet;
   let stepId;
+  let burnTxHash;
   try {
 
   console.log("[Arc→Bridge] Started, dest:", destKey);
@@ -2390,7 +2454,7 @@ async function _bridgeFromArc(amountStr, amount) {
     removeToast(stepId);
   }
 
-  // Step 2: Burn on Arc
+  // Step 2: Burn on Arc (standard depositForBurn — no forwarding hook)
   setBridgeStep(2);
   stepId = toast("loading", "Burning USDC on Arc…", "Confirm in wallet", 0);
 
@@ -2399,37 +2463,74 @@ async function _bridgeFromArc(amountStr, amount) {
   const burnOv    = await getEIP1559Overrides(200000n);
   const burnTx    = await messenger.depositForBurn(
     amount, destCfg.domain, mintRecip, arcCfg.usdc,
-    ethers.zeroPadValue("0x00", 32), amount < 500000n ? 50000n : amount / 100n, 0,
+    ethers.zeroPadValue("0x00", 32), 0n, 0,
     burnOv
   );
-  console.log("[CCTP] Burn Tx Hash:", burnTx.hash);
-  const burnReceipt = await waitForReceiptOnChain(burnTx.hash, arcCfg.rpc);
+  burnTxHash = burnTx.hash;
+  console.log("[CCTP] Burn Tx Hash:", burnTxHash);
+  const burnReceipt = await waitForReceiptOnChain(burnTxHash, arcCfg.rpc);
   removeToast(stepId);
-  console.log("[CCTP] Burn Receipt:", JSON.stringify(burnReceipt, null, 2));
-  console.log("[CCTP] Receipt Logs:", JSON.stringify(burnReceipt.logs, null, 2));
+  console.log("[CCTP] Burn Receipt status:", burnReceipt.status);
 
-  // Step 3: Wait for Circle to sign — delivery is automatic, no manual mint needed
+  // Step 3: Wait for Circle attestation
   setBridgeStep(3);
-  stepId = toast("loading", "Waiting for Circle delivery…", "Circle forwards USDC automatically — usually 1–5 min", 0);
-  await pollAttestation(arcCfg.domain, burnTx.hash);
+  stepId = toast("loading", "Waiting for Circle attestation…", "", 0);
+  const { message, attestation } = await pollAttestation(arcCfg.domain, burnTxHash);
+  removeToast(stepId);
+  console.log("[CCTP] Attestation received, message length:", message?.length);
+
+  // Step 4: Switch to destination chain and call receiveMessage
+  setBridgeStep(4);
+  stepId = toast("loading", `Switching to ${destCfg.name}…`, "Approve the chain switch in your wallet", 0);
+  await switchChain(destCfg.chainId, destCfg.name, destCfg.rpc);
   removeToast(stepId);
 
-  setBridgeStep(4); // marks all 3 steps done
+  const destProvider  = new ethers.BrowserProvider(window.ethereum);
+  const destSigner    = await destProvider.getSigner();
+  const transmitter   = new ethers.Contract(destCfg.messageTransmitter, MESSAGE_TRANSMITTER_ABI, destSigner);
+
+  stepId = toast("loading", `Minting USDC on ${destCfg.name}…`, "Confirm in wallet — requires ETH for gas", 0);
+  const mintTx = await transmitter.receiveMessage(message, attestation, { gasLimit: 300000n });
+  console.log("[CCTP] Mint tx sent:", mintTx.hash);
+  const mintReceipt = await waitForReceiptOnChain(mintTx.hash, destCfg.rpc);
+  console.log("[CCTP] Mint confirmed, status:", mintReceipt.status);
+  removeToast(stepId);
+
+  // Switch back to Arc
+  await switchChain("0x4CEF52", "Arc Testnet", "https://rpc.testnet.arc.network");
+  await loadData();
+
+  setBridgeStep(5); // marks all 4 steps done
   saveBridgeTx({
     timestamp:   Date.now(),
     amount:      amountStr,
     token:       "USDC",
     destination: destCfg.name,
-    burnTxHash:  burnTx.hash,
-    status:      "pending",
-    irisUrl:     `${IRIS_API}/${arcCfg.domain}?transactionHash=${burnTx.hash}`
+    burnTxHash,
+    status:      "complete",
+    irisUrl:     `${IRIS_API}/${arcCfg.domain}?transactionHash=${burnTxHash}`
   });
   renderBridgeHistory();
-  toast("success", "Bridge submitted! 🎉",
-    `Circle is delivering ${amountStr} USDC to ${destCfg.name}. May take a few minutes to arrive. <a href="https://testnet.arcscan.app/tx/${burnTx.hash}" target="_blank" rel="noopener" class="toast-link">View burn ↗</a>`, 12000);
+  toast("success", "Bridge Complete! 🎉",
+    `${amountStr} USDC delivered to ${destCfg.name}. <a href="https://testnet.arcscan.app/tx/${burnTxHash}" target="_blank" rel="noopener" class="toast-link">View burn ↗</a>`, 12000);
   el("bridgeAmount").value = "";
-  await loadData();
-  } catch (err) { if (stepId) removeToast(stepId); throw err; }
+
+  } catch (err) {
+    if (stepId) removeToast(stepId);
+    if (burnTxHash) {
+      saveBridgeTx({
+        timestamp:   Date.now(),
+        amount:      amountStr,
+        token:       "USDC",
+        destination: destCfg.name,
+        burnTxHash,
+        status:      "failed",
+        irisUrl:     `${IRIS_API}/${arcCfg.domain}?transactionHash=${burnTxHash}`
+      });
+      renderBridgeHistory();
+    }
+    throw err;
+  }
 }
 
 /* ════════════════════════════════════════
