@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js-anim');</script>
 <title>Arc Stash</title>
 <link rel="icon" type="image/png" href="arclogo.png.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,7 +52,7 @@ input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 }
 
 /* ─── Base ─── */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; width: 100%; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -59,13 +60,22 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  background: var(--bg);
+  /* Barely-perceptible depth — soft tinted glows over the base, no palette change */
+  background:
+    radial-gradient(1100px 520px at 50% -260px, rgba(42,54,217,0.05), transparent 70%),
+    radial-gradient(900px 600px at 100% 0%, rgba(124,58,237,0.035), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
 }
+
+/* Text selection — subtle brand tint */
+::selection { background: rgba(124,58,237,0.15); }
+::-moz-selection { background: rgba(124,58,237,0.15); }
 
 /* ─── Keyframes ─── */
 @keyframes fadeUp   { from { opacity:0; transform:translateY(14px) } to { opacity:1; transform:translateY(0) } }
-@keyframes slideIn  { from { opacity:0; transform:translateX(110%) } to { opacity:1; transform:translateX(0) } }
-@keyframes slideOut { from { opacity:1; transform:translateX(0)    } to { opacity:0; transform:translateX(110%) } }
+@keyframes slideIn  { from { opacity:0; transform:translateY(-16px) } to { opacity:1; transform:translateY(0) } }
+@keyframes slideOut { from { opacity:1; transform:translateY(0)     } to { opacity:0; transform:translateY(-12px) } }
 @keyframes spin     { to   { transform:rotate(360deg) } }
 @keyframes pulse    { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
 @keyframes dotPulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
@@ -105,9 +115,10 @@ body {
   border-radius: 10px;
   color: var(--text-2); font-size: 13px; font-weight: 500;
   text-decoration: none; cursor: pointer;
-  transition: color .18s; white-space: nowrap; font-family: inherit;
+  transition: all 0.2s ease; white-space: nowrap; font-family: inherit;
 }
-.btn-faucet:hover { color: var(--text-1); }
+.btn-faucet:hover { color: var(--text-1); transform: translateY(-1px); }
+.btn-faucet:active { transform: translateY(0); }
 
 .btn-connect {
   display: flex; align-items: center; gap: 8px;
@@ -116,9 +127,11 @@ body {
   border: none; border-radius: 999px;
   color: #fff; font-size: 14px; font-weight: 600;
   cursor: pointer; font-family: inherit; white-space: nowrap;
-  transition: background .18s, box-shadow .18s;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.25);
 }
-.btn-connect:hover { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(42,54,217,0.35); }
+.btn-connect:hover { background: var(--primary-hover); box-shadow: 0 6px 18px rgba(42,54,217,0.4); transform: translateY(-1px); }
+.btn-connect:active { transform: translateY(0); }
 .btn-connect.connected { background: var(--primary); }
 .wallet-dot { width:8px; height:8px; border-radius:50%; background:#fff; opacity:.85; flex-shrink:0; }
 
@@ -126,11 +139,10 @@ body {
    HERO
 ───────────────────────────────────────── */
 .hero {
-  padding: 28px 24px 14px;
+  padding: 28px 24px 24px;
   max-width: 1100px; margin: 0 auto;
   text-align: center;
   position: relative; z-index: 1;
-  animation: fadeUp .5s ease both;
 }
 
 .hero-badge {
@@ -145,7 +157,7 @@ body {
 
 .hero h1 {
   font-size: clamp(28px, 4.5vw, 42px);
-  font-weight: 700; letter-spacing: -1px; line-height: 1.12;
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.05;
   color: var(--text-1); margin-bottom: 14px;
 }
 .hero h1 .grad { color: var(--primary); }
@@ -160,13 +172,13 @@ body {
 ───────────────────────────────────────── */
 .how-section {
   max-width: 1100px; margin: 0 auto;
-  padding: 1rem 24px 1rem;
+  padding: 1.5rem 24px 1.5rem;
   border-top: 1px solid rgba(0,0,0,0.06);
   position: relative; z-index: 1;
 }
 .how-label {
   text-align: center; font-size: 11px; font-weight: 700;
-  letter-spacing: 1.2px; text-transform: uppercase;
+  letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--text-3); margin-bottom: 14px;
 }
 .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -191,7 +203,7 @@ body {
 ───────────────────────────────────────── */
 .vault-section {
   max-width: 840px; margin: 0 auto;
-  padding: 0 20px 48px;
+  padding: 0 20px 72px;
   position: relative; z-index: 1;
 }
 
@@ -200,7 +212,7 @@ body {
   display: flex;
   background: var(--surface);
   border: none; border-radius: 12px; padding: 4px;
-  width: fit-content; margin: 0 auto 18px;
+  width: fit-content; margin: 0 auto 28px;
   gap: 4px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
@@ -210,7 +222,7 @@ body {
   cursor: pointer; border: none; background: none;
   font-family: inherit; color: var(--text-2);
   display: flex; align-items: center; gap: 7px;
-  transition: all .18s;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 .vault-tab:not(.active):hover { color: var(--text-1); background: var(--surface-hi); }
 .vault-tab.active { background: var(--primary); color: #fff; font-weight: 600; }
@@ -223,11 +235,13 @@ body {
   border-radius: var(--r-lg); padding: 2rem 1.75rem;
   position: relative; overflow: hidden;
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+.vault-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.08); }
 
 /* ─ Shared label row ─ */
 .vs-token-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
   text-transform: uppercase; color: #b0b0c0;
   margin-bottom: 20px;
   display: flex; align-items: center; gap: 8px;
@@ -240,7 +254,7 @@ body {
 .vs-form-grp { margin-bottom: 16px; }
 .vs-field-lbl {
   display: block; font-size: 11px; font-weight: 600;
-  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
+  color: var(--text-2); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px;
 }
 .vs-input-wrap { position: relative; }
 
@@ -251,7 +265,7 @@ body {
   border-radius: 12px; color: var(--text-1);
   font-size: 22px; font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
-  outline: none; transition: all .18s; box-sizing: border-box;
+  outline: none; transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; box-sizing: border-box;
 }
 .vs-input:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(42,54,217,0.08); }
 .vs-input::placeholder { color: #9ca3af; opacity: 1; font-weight: 400; font-size: 16px; font-family: 'Inter', sans-serif; }
@@ -264,7 +278,7 @@ body {
   border-radius: 12px; color: var(--text-1);
   font-size: 14px; font-weight: 600;
   font-family: 'Inter', sans-serif;
-  outline: none; transition: all .18s;
+  outline: none; transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 .vs-input-text:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(42,54,217,0.08); }
 .vs-input-text::placeholder { color: #9ca3af; opacity: 1; font-weight: 400; }
@@ -290,9 +304,10 @@ body {
   background: var(--surface-hi); border: 2px solid rgba(0,0,0,0.12);
   border-radius: 10px; color: var(--text-2);
   font-size: 12px; font-weight: 600; cursor: pointer;
-  font-family: inherit; transition: all .18s;
+  font-family: inherit; transition: all 0.2s ease;
 }
-.vs-qd:hover:not(:disabled) { background: var(--primary-soft); color: var(--primary); }
+.vs-qd:hover:not(:disabled) { background: var(--primary-soft); color: var(--primary); transform: scale(1.03); }
+.vs-qd:active:not(:disabled) { transform: scale(1); }
 .vs-qd.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); font-weight: 700; }
 .vs-qd:disabled { opacity:.3; cursor:not-allowed; }
 .vs-balance-hint {
@@ -307,11 +322,13 @@ body {
   border-radius: 14px; font-size: 16px; font-weight: 700;
   cursor: pointer; font-family: inherit; border: none;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: all .18s; text-transform: uppercase; letter-spacing: 0.4px;
+  transition: all 0.2s ease; letter-spacing: 0.01em;
 }
 .vs-btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.vs-btn:hover:not(:disabled)  { transform: translateY(-1px); }
+.vs-btn:active:not(:disabled) { transform: translateY(0); }
 .vs-btn-primary { background: var(--primary); color: #fff; }
-.vs-btn-primary:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(42,54,217,0.35); }
+.vs-btn-primary:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 6px 18px rgba(42,54,217,0.4); }
 
 /* Spinner */
 .spin { width:16px; height:16px; border:2.5px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:spin .65s linear infinite; }
@@ -386,7 +403,7 @@ body {
   font-size: 15px; line-height: 1; transition: background .18s; font-family: inherit;
 }
 .modal-close:hover { background: var(--surface-hover); color: var(--text-1); }
-.modal-sub { font-size: 12px; color: var(--text-3); margin-bottom: 16px; line-height: 1.5; }
+.modal-sub { font-size: 12px; color: var(--text-3); margin-bottom: 16px; line-height: 1.6; }
 
 .wallet-list { display: flex; flex-direction: column; gap: 8px; }
 .wallet-opt {
@@ -411,7 +428,7 @@ body {
 .toast {
   display: flex; align-items: flex-start; gap: 11px;
   padding: 13px 15px; border-radius: 14px;
-  animation: slideIn .3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  animation: slideIn .35s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 .toast.toast-success { background:#f0fdf4; border:1px solid #bbf7d0; color:#166534; }
 .toast.toast-error   { background:#fef2f2; border:1px solid #fecaca; color:#991b1b; }
@@ -420,8 +437,13 @@ body {
 .toast-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 .toast-body { flex: 1; }
 .toast-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-.toast-msg   { font-size: 11px; opacity: 0.75; line-height: 1.5; }
+.toast-msg   { font-size: 11px; opacity: 0.75; line-height: 1.6; }
 .toast-out { animation: slideOut .3s ease forwards; }
+/* Loading indicator — pulsing dots instead of a static glyph */
+.toast-dots { display: inline-flex; align-items: center; gap: 3px; height: 18px; }
+.toast-dots i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; display: inline-block; animation: dotPulse 1s ease infinite; }
+.toast-dots i:nth-child(2) { animation-delay: 0.16s; }
+.toast-dots i:nth-child(3) { animation-delay: 0.32s; }
 
 /* ─────────────────────────────────────────
    FOOTER
@@ -471,7 +493,7 @@ body {
    SECTION HEADERS
 ───────────────────────────────────────── */
 .vc-section-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.vc-section-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-2); }
+.vc-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2); }
 .vc-section-count { font-size: 11px; font-weight: 600; color: var(--primary); }
 
 /* ─────────────────────────────────────────
@@ -522,8 +544,10 @@ body {
 .vault-row-btn {
   border: none; border-radius: 10px;
   padding: 7px 12px; font-size: 11px; font-weight: 700;
-  cursor: pointer; font-family: inherit; white-space: nowrap; transition: opacity .15s;
+  cursor: pointer; font-family: inherit; white-space: nowrap; transition: all 0.2s ease;
 }
+.vault-row-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.vault-row-btn:active:not(:disabled) { transform: translateY(0); }
 .vault-row-btn:disabled { opacity: .4; cursor: not-allowed; }
 .vault-row-btn.early    { background: #fef3c7; color: #d97706; }
 .vault-row-btn.early:hover:not(:disabled)    { background: #fde68a; }
@@ -680,7 +704,7 @@ body {
 ───────────────────────────────────────── */
 .ewm-warning { background: #fef3c7; border: none; border-radius: 12px; padding: 14px; margin-bottom: 18px; }
 .ewm-warning-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
-.ewm-warning-desc { font-size: 12px; color: #78350f; line-height: 1.55; }
+.ewm-warning-desc { font-size: 12px; color: #78350f; line-height: 1.6; }
 .ewm-breakdown { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .ewm-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-2); padding: 0 2px; }
 .ewm-row.total { padding-top: 10px; border-top: 1px solid var(--border); color: var(--text-1); font-weight: 700; font-size: 14px; }
@@ -699,28 +723,205 @@ body {
   cursor: pointer; font-family: inherit; transition: all .18s;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.ewm-confirm:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 4px 14px rgba(42,54,217,0.35); }
+.ewm-confirm:hover:not(:disabled) { background: var(--primary-hover); box-shadow: 0 6px 18px rgba(42,54,217,0.4); transform: translateY(-1px); }
+.ewm-confirm:active:not(:disabled) { transform: translateY(0); }
 .ewm-confirm:disabled { opacity: .5; cursor: not-allowed; }
 
 /* ─────────────────────────────────────────
-   RESPONSIVE
+   MICRO-INTERACTIONS (shared)
 ───────────────────────────────────────── */
-@media (max-width: 640px) {
-  .nav-inner { padding: 12px 16px; }
+/* cursor pointer on every clickable element */
+button, a[href], [onclick], .vault-tab, label[for] { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+/* secondary buttons — consistent ease + subtle lift */
+.pay-token-btn, .bridge-chain-btn, .bridge-dir-btn,
+.bulk-toggle-btn, .bulk-add-btn, .bulk-row-del,
+.ewm-cancel, .bridge-hist-btn, .modal-close, .vs-max-btn {
+  transition: all 0.2s ease;
+}
+.pay-token-btn:hover:not(.active), .bridge-chain-btn:hover:not(.active),
+.bridge-dir-btn:hover:not(.active), .bulk-toggle-btn:hover,
+.bulk-add-btn:hover, .ewm-cancel:hover, .bridge-hist-btn:hover,
+.modal-close:hover { transform: translateY(-1px); }
+.pay-token-btn:active, .bridge-chain-btn:active, .bridge-dir-btn:active,
+.bulk-toggle-btn:active, .bulk-add-btn:active, .ewm-cancel:active,
+.bridge-hist-btn:active, .modal-close:active { transform: translateY(0); }
+
+/* wallet options — slide hint on hover */
+.wallet-opt { transition: background .2s ease, transform .2s ease; }
+.wallet-opt:hover:not(:disabled) { transform: translateY(-1px); }
+.wallet-opt:active:not(:disabled) { transform: translateY(0); }
+
+/* ─────────────────────────────────────────
+   ENTRANCE ANIMATIONS (scroll-reveal + load)
+───────────────────────────────────────── */
+@keyframes revealUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+/* Hidden only when JS is active — degrades gracefully without scripts */
+.js-anim .reveal { opacity: 0; }
+.js-anim .reveal.visible { animation: revealUp 0.6s ease both; }
+/* Sequential page-load stagger: hero → tab bar → card (0.15s apart) */
+.js-anim .reveal.r-load-1.visible { animation-delay: 0s; }
+.js-anim .reveal.r-load-2.visible { animation-delay: 0.15s; }
+.js-anim .reveal.r-load-3.visible { animation-delay: 0.3s; }
+/* How-it-works cards — 0.1s cascade */
+.js-anim .how-card.reveal.visible:nth-child(1) { animation-delay: 0s; }
+.js-anim .how-card.reveal.visible:nth-child(2) { animation-delay: 0.1s; }
+.js-anim .how-card.reveal.visible:nth-child(3) { animation-delay: 0.2s; }
+.js-anim .how-card.reveal.visible:nth-child(4) { animation-delay: 0.3s; }
+
+/* Accessibility — honor reduced-motion: no entrance, no transitions */
+@media (prefers-reduced-motion: reduce) {
+  .js-anim .reveal, .js-anim .reveal.visible { opacity: 1 !important; animation: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────
+   NUMERIC POLISH
+───────────────────────────────────────── */
+/* Tabular figures so digits line up across balances, amounts & timers */
+.vs-input, .vs-input-text,
+.vs-balance-hint span,
+.vault-row-amount, .vault-row-timer,
+.v2-hist-amount, .v2-tvl-amount,
+.bridge-hist-amount, .sent-pay-amount,
+.ewm-row span:last-child {
+  font-variant-numeric: tabular-nums;
+}
+/* Countdown — fade smoothly when it ticks / flips to ready */
+.vault-row-timer { transition: color 0.3s ease, opacity 0.3s ease; }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — 768px (tablets and below)
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Navbar */
+  .nav-inner { padding: 10px 16px; }
+  .nav-logo img { width: 28px !important; height: 28px !important; }
+  .logo-name { font-size: 17px; }
   .btn-faucet .faucet-label { display: none; }
-  .hero { padding: 32px 16px 20px; }
-  .how-grid { grid-template-columns: repeat(2, 1fr); }
-  .how-section { padding: 1.5rem 16px; }
-  .vault-section { padding: 0 14px 32px; }
+  .btn-connect { padding: 8px 14px; font-size: 12px; gap: 6px; }
+
+  /* Hero */
+  .hero { padding: 2rem 1rem 1rem; }
+  .hero h1 { font-size: 32px; letter-spacing: -0.5px; }
+  .hero-sub { font-size: 14px; }
+
+  /* Tab bar — horizontal scroll, no wrap */
+  .vault-tabs {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+  .vault-tabs::-webkit-scrollbar { display: none; }
+  .vault-tab { white-space: nowrap; flex-shrink: 0; padding: 9px 16px; }
+
+  /* Section layout — remove side padding, apply margins per element */
+  .vault-section { padding: 0 0 32px; }
+  .v2-deposit-panel { padding: 0; margin: 0 12px 28px; }
+  .pay-panel { padding: 0; margin: 0 12px; }
+  .vc-grid { margin: 0 12px 28px; }
+  .v2-history-section { margin: 0 12px 12px; }
+  .sentPaymentsSection { margin: 0 12px 12px; }
+  .bridge-history-section { margin: 0 0 12px; }
+
+  /* Cards */
+  .vault-card { padding: 1.25rem 1rem; }
+
+  /* Vault history — hide label column */
   .v2-history-row { grid-template-columns: 1fr auto auto; }
   .v2-history-row.hdr span:nth-child(2),
   .v2-history-row:not(.hdr) .v2-hist-label { display: none; }
+
+  /* Bulk pay */
   .bulk-row { grid-template-columns: 1fr 1fr; gap: 4px; }
   .bulk-row :nth-child(3),
   .bulk-row :nth-child(4) { display: none; }
+
+  /* Early withdraw modal */
   .ewm-actions { flex-direction: column; }
+
+  /* Toast */
   .toast-wrap { bottom: 14px; right: 14px; left: 14px; max-width: none; }
-  .footer-links { display: none; }
+
+  /* How it works — 2 columns */
+  .how-section { padding: 1.5rem 16px; }
+  .how-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Footer — stack and center */
+  .footer { padding: 1.25rem 1.5rem; }
+  .footer-inner { flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .footer-links { gap: 20px; }
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — 480px (small phones)
+───────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Navbar */
+  .btn-connect { padding: 8px 12px; font-size: 11px; }
+
+  /* Tab bar — scrollable, no overflow cut-off */
+  .vault-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .vault-tabs::-webkit-scrollbar { display: none; }
+  .vault-tabs { gap: 2px; padding: 3px; }
+  .vault-tab { padding: 8px 12px; font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+  .tab-someone { display: none; }
+
+  /* Hero */
+  .hero h1 { font-size: 28px; }
+  .hero-sub { font-size: 13px; }
+
+  /* Inputs — 16px minimum prevents iOS zoom on focus */
+  .vs-input      { font-size: 16px; }
+  .vs-input-text { font-size: 16px; }
+  input[type="number"],
+  input[type="text"] { font-size: 16px; }
+
+  /* Quick duration chips — 2×2 grid */
+  .vs-quick-days { flex-wrap: wrap; }
+  .vs-qd { flex: 0 0 calc(50% - 4px); }
+
+  /* Vault rows — stack vertically */
+  .vault-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .vault-row-right { margin-left: 0; width: 100%; justify-content: space-between; }
+  .vault-row-label { max-width: none; }
+
+  /* Vault history — scrollable */
+  .v2-history-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* How it works — single column */
+  .how-grid { grid-template-columns: 1fr; }
+
+  /* Bridge chain buttons — stack */
+  .bridge-chain-sel { flex-direction: column; }
+  .bridge-chain-btn { width: 100%; flex-direction: row; gap: 8px; justify-content: center; }
+
+  /* Full-bleed layout — section handles 12px side padding, panels/cards go edge-to-edge */
+  .vault-section { max-width: 100%; padding: 0 12px 1rem; }
+  .v2-deposit-panel { max-width: 100%; margin: 0 0 16px; padding: 0; }
+  .pay-panel { max-width: 100%; margin: 0; padding: 0; }
+  .vc-grid { max-width: 100%; margin: 0 0 16px; }
+  .v2-history-section { max-width: 100%; margin: 0 0 12px; }
+  .vault-card { width: 100%; margin: 0; }
+
+  /* Tab bar — full width, no auto-centering */
+  .vault-tabs { width: 100%; margin: 0 0 14px; }
+
+  /* Reduce excess bottom space */
+  #bridgeSection { margin-bottom: 0; padding-bottom: 0; }
+  .how-section { padding-bottom: 1rem; }
 }
 </style>
 </head>
@@ -817,7 +1018,7 @@ body {
 <!-- ═══════════════════════════════════════
      HERO
 ═══════════════════════════════════════ -->
-<section class="hero z1">
+<section class="hero z1 reveal r-load-1">
   <div class="hero-badge">
     <span class="badge-dot"></span>
     Live on Arc Testnet
@@ -834,7 +1035,7 @@ body {
 <section class="vault-section" id="vault-app">
 
   <!-- Tabs -->
-  <div class="vault-tabs" role="tablist">
+  <div class="vault-tabs reveal r-load-2" role="tablist">
     <button class="vault-tab active" id="tabUsdc" role="tab" aria-selected="true" onclick="switchTab('usdc')">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M7 3.5v7M5 5.5h2.5a1.5 1.5 0 0 1 0 3H5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
       USDC
@@ -845,7 +1046,7 @@ body {
     </button>
     <button class="vault-tab" id="tabPay" role="tab" aria-selected="false" onclick="switchTab('pay')">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Pay Someone
+      Pay <span class="tab-someone">Someone</span>
     </button>
     <button class="vault-tab" id="tabBridge" role="tab" aria-selected="false" onclick="switchTab('bridge')">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 10h3V6h6v4h3M4 6V4a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -866,7 +1067,7 @@ body {
       <span class="vc-section-label">Create Vault</span>
     </div>
     <div class="v2-deposit-panel" id="v2DepositPanel">
-      <div class="vault-card">
+      <div class="vault-card reveal r-load-3">
         <div class="vs-token-label">
           <span id="dfTokenLabel">USDC Vault</span>
         </div>
@@ -925,7 +1126,7 @@ body {
     <div class="vc-grid" id="incomingGrid"></div>
 
     <!-- Vault History -->
-    <div class="v2-history-section hidden" id="v2HistorySection">
+    <div class="v2-history-section hidden reveal" id="v2HistorySection">
       <div class="v2-history-hd">
         <div class="v2-history-title">Vault History</div>
       </div>
@@ -973,6 +1174,14 @@ body {
         </div>
 
         <div class="vs-form-grp">
+          <label class="vs-field-lbl">Payment Type</label>
+          <div class="pay-token-sel">
+            <button class="pay-token-btn active" id="paySendInstant" onclick="setPaySendMode('instant')">Send Instantly</button>
+            <button class="pay-token-btn" id="paySendLock" onclick="setPaySendMode('lock')">Lock with Timer</button>
+          </div>
+        </div>
+
+        <div class="vs-form-grp hidden" id="payLockGrp">
           <label class="vs-field-lbl" for="payDays">Lock period</label>
           <div class="vs-input-wrap">
             <input type="number" class="vs-input" id="payDays" placeholder="30" min="1" max="3650" oninput="onPayDaysInput()">
@@ -1017,7 +1226,7 @@ body {
     </div>
 
     <!-- Sent Payments History — always below both form panels -->
-    <div class="v2-history-section hidden" id="sentPaymentsSection" style="max-width:550px;margin:0 auto 12px">
+    <div class="v2-history-section hidden reveal" id="sentPaymentsSection" style="max-width:550px;margin:0 auto 12px">
       <div class="v2-history-hd">
         <div class="v2-history-title">Sent Payments</div>
       </div>
@@ -1113,7 +1322,7 @@ body {
     </div>
 
     <div class="v2-deposit-panel">
-      <div class="bridge-history-section hidden" id="bridgeHistorySection">
+      <div class="bridge-history-section hidden reveal" id="bridgeHistorySection">
         <div class="v2-history-hd">
           <span class="v2-history-title">Bridge History</span>
         </div>
@@ -1131,7 +1340,7 @@ body {
 <section class="how-section">
   <div class="how-label">How it works</div>
   <div class="how-grid">
-    <div class="how-card">
+    <div class="how-card reveal">
       <div class="how-step">Step 1</div>
       <div class="how-icon how-icon--blue">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5C7.5 1.5 4 5 4 8a3.5 3.5 0 0 0 7 0c0-3-3.5-6.5-3.5-6.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
@@ -1139,7 +1348,7 @@ body {
       <div class="how-card-title">Get Test Tokens</div>
       <div class="how-card-desc">Claim free testnet USDC or EURC from the Circle faucet to get started.</div>
     </div>
-    <div class="how-card">
+    <div class="how-card reveal">
       <div class="how-step">Step 2</div>
       <div class="how-icon how-icon--purple">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="4" width="10" height="8" rx="1.8" stroke="currentColor" stroke-width="1.3"/><path d="M11 6.5h1.8A1.2 1.2 0 0 1 14 7.7v0A1.2 1.2 0 0 1 12.8 9H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="11" cy="8" r="0.7" fill="currentColor"/></svg>
@@ -1147,7 +1356,7 @@ body {
       <div class="how-card-title">Connect Wallet</div>
       <div class="how-card-desc">Connect MetaMask, Rabby, or any EVM wallet. Arc Testnet is added automatically.</div>
     </div>
-    <div class="how-card">
+    <div class="how-card reveal">
       <div class="how-step">Step 3</div>
       <div class="how-icon how-icon--amber">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="3" y="7" width="9" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7V5a2 2 0 1 1 4 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
@@ -1155,7 +1364,7 @@ body {
       <div class="how-card-title">Deposit &amp; Lock</div>
       <div class="how-card-desc">Lock tokens for yourself, or pay someone — set the amount, period, and let the vault do the rest.</div>
     </div>
-    <div class="how-card">
+    <div class="how-card reveal">
       <div class="how-step">Step 4</div>
       <div class="how-icon how-icon--green">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 10V3M4 6.5l3.5-3.5L11 6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
@@ -1307,6 +1516,7 @@ const app = {
   signer:              null,
   tab:                 "usdc",
   payToken:            "usdc",
+  paySendMode:         "instant",
   vaults:              { usdc: [], eurc: [] },
   sent:                { usdc: [], eurc: [] },
   incoming:            { usdc: [], eurc: [] },
@@ -1430,7 +1640,7 @@ async function approveIfNeeded(tokenC, spender, amount, sym, isEurc) {
 let toastId = 0;
 function toast(type, title, msg, dur=5000) {
   const id  = "t" + (++toastId);
-  const ico = { success:"✅", error:"❌", info:"ℹ️", loading:"⏳" }[type] || "ℹ️";
+  const ico = { success:"✅", error:"❌", info:"ℹ️", loading:'<span class="toast-dots"><i></i><i></i><i></i></span>' }[type] || "ℹ️";
   const div = document.createElement("div");
   div.id = id;
   div.className = `toast toast-${type}`;
@@ -1698,7 +1908,7 @@ function renderUI() {
     const payDisabled = isDemo || app.txPending;
     el("payBtn").disabled      = payDisabled;
     el("bulkSendBtn").disabled = payDisabled;
-    el("payBtnContent").textContent = isDemo ? "Connect Wallet to Pay" : `Send & Lock ${pSym}`;
+    updatePayBtnText();
 
     // ── Sent Payments history ──
     const sentSection = el("sentPaymentsSection");
@@ -1943,7 +2153,24 @@ function setPayToken(tok) {
   el("bulkSymLabel").textContent    = VAULTS[tok].symbol;
   const bal = app.connected ? `${app.balances[tok]} ${VAULTS[tok].symbol}` : "—";
   el("payWalletBal").textContent = bal;
-  el("payBtnContent").textContent = `Send & Lock ${VAULTS[tok].symbol}`;
+  updatePayBtnText();
+}
+
+function setPaySendMode(mode) {
+  app.paySendMode = mode;
+  el("paySendInstant").classList.toggle("active", mode === "instant");
+  el("paySendLock").classList.toggle("active", mode === "lock");
+  el("payLockGrp").classList.toggle("hidden", mode === "instant");
+  updatePayBtnText();
+}
+
+function updatePayBtnText() {
+  if (!app.connected) { el("payBtnContent").textContent = "Connect Wallet to Pay"; return; }
+  if (app.txPending) return;
+  const sym = VAULTS[app.payToken].symbol;
+  el("payBtnContent").textContent = app.paySendMode === "instant"
+    ? `Send ${sym}`
+    : `Lock & Send ${sym}`;
 }
 
 function toggleBulkForm() {
@@ -2062,10 +2289,12 @@ async function handleDepositFor() {
   const daysInput = el("payDays").value.trim();
   const label     = el("payLabel").value.trim();
 
+  const instant = app.paySendMode === "instant";
+
   if (!ethers.isAddress(recipient)) { toast("error","Invalid address","Enter a valid recipient wallet address."); return; }
   if (!amtInput || parseFloat(amtInput) <= 0) { toast("error","Invalid amount","Enter a positive amount."); return; }
-  if (!daysInput || parseInt(daysInput) < 1)  { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
-  if (parseInt(daysInput) > 3650)             { toast("error","Too long","Maximum is 3650 days."); return; }
+  if (!instant && (!daysInput || parseInt(daysInput) < 1)) { toast("error","Invalid period","Enter a lock period of at least 1 day."); return; }
+  if (!instant && parseInt(daysInput) > 3650)             { toast("error","Too long","Maximum is 3650 days."); return; }
 
   app.txPending = true;
   renderUI();
@@ -2077,6 +2306,27 @@ async function handleDepositFor() {
 
   let txId;
   try {
+    if (instant) {
+      // ── Instant send: plain ERC20 transfer, no vault, no lock ──
+      txId = toast("loading", `Sending ${sym} to ${shortAddr(recipient)}…`, "Confirm in wallet", 0);
+      el("payBtnContent").innerHTML = `<span class="spin"></span> Sending…`;
+
+      const tokenT = new ethers.Contract(cfg.tokenAddress, ["function transfer(address to, uint256 amount) returns (bool)"], app.signer);
+      const ov = await getEIP1559Overrides(100000n);
+      console.log('[InstantSend]', sym, amount.toString(), 'recipient:', recipient);
+      const tx = await withTimeout(tokenT.transfer(recipient, amount, ov));
+      console.log('[InstantSend] tx:', tx.hash);
+      await waitForReceipt(tx.hash);
+
+      removeToast(txId);
+      saveTxHistory({ type: "send", txHash: tx.hash, amount: fmt(amtInput), token: sym, timestamp: Date.now() });
+      toast("success", "Sent! 💸", `Sent ${fmt(amtInput)} ${sym} to ${shortAddr(recipient)}. <a href="https://testnet.arcscan.app/tx/${tx.hash}" target="_blank" rel="noopener" class="toast-link">View on ArcScan ↗</a>`, 7000);
+
+      el("payRecipient").value = "";
+      el("payAmount").value    = "";
+      el("payLabel").value     = "";
+      await loadData();
+    } else {
     el("payBtnContent").innerHTML = `<span class="spin"></span> Approving…`;
     await approveIfNeeded(tokenC, cfg.vaultAddress, amount, sym, isEurc);
 
@@ -2099,6 +2349,7 @@ async function handleDepositFor() {
     el("payLabel").value     = "";
     document.querySelectorAll(".pay-qd").forEach(b => b.classList.remove("active"));
     await loadData();
+    }
 
   } catch (err) {
     if (txId) removeToast(txId);
@@ -2656,6 +2907,33 @@ document.addEventListener("keydown", e => {
   } catch (e) {
     console.log("[Init] Auto-reconnect skipped:", e.message);
   }
+})();
+</script>
+<script>
+/* Entrance animations — reveal elements as they enter the viewport */
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    els.forEach(function (e) { e.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries, obs) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function (e) { io.observe(e); });
+  /* Once the entrance finishes, drop the reveal classes so the held
+     animation state never blocks hover transforms on cards. */
+  document.addEventListener('animationend', function (ev) {
+    if (ev.animationName === 'revealUp') {
+      ev.target.classList.remove('reveal', 'visible');
+    }
+  });
 })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
