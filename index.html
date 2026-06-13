@@ -74,6 +74,8 @@ body {
 
 /* ─── Keyframes ─── */
 @keyframes fadeUp   { from { opacity:0; transform:translateY(14px) } to { opacity:1; transform:translateY(0) } }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:translateY(0) } }
+@keyframes fadeIn   { from { opacity:0 } to { opacity:1 } }
 @keyframes slideIn  { from { opacity:0; transform:translateY(-16px) } to { opacity:1; transform:translateY(0) } }
 @keyframes slideOut { from { opacity:1; transform:translateY(0)     } to { opacity:0; transform:translateY(-12px) } }
 @keyframes spin     { to   { transform:rotate(360deg) } }
@@ -757,6 +759,17 @@ button:disabled { cursor: not-allowed; }
    ENTRANCE ANIMATIONS (scroll-reveal + load)
 ───────────────────────────────────────── */
 @keyframes revealUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Above-the-fold: CSS-only entrance, fires instantly on load (no JS) ──
+   fill-mode "backwards" hides each element only during its delay, then
+   releases — so nothing stays hidden if scripts fail, and the card's
+   hover lift keeps working after the entrance completes. */
+.hero-badge { animation: fadeIn   0.5s ease backwards; }
+.hero h1    { animation: fadeInUp 0.6s ease 0.1s backwards; }
+.hero-sub   { animation: fadeInUp 0.6s ease 0.2s backwards; }
+.vault-tabs { animation: fadeInUp 0.5s ease 0.3s backwards; }
+#v2DepositPanel .vault-card { animation: fadeInUp 0.5s ease 0.4s backwards; }
+
 /* Hidden only when JS is active — degrades gracefully without scripts */
 .js-anim .reveal { opacity: 0; }
 .js-anim .reveal.visible { animation: revealUp 0.6s ease both; }
@@ -1374,7 +1387,7 @@ button:disabled { cursor: not-allowed; }
 <!-- ═══════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════ -->
-<footer class="footer">
+<footer class="footer reveal">
   <div class="footer-inner">
     <div class="footer-copy">ArcStash © 2026</div>
     <div class="footer-links">
